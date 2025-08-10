@@ -1,5 +1,543 @@
-<app-header></app-header>
-<main>
-  <router-outlet></router-outlet>
-</main>
-<app-footer></app-footer>
+<div class="main-layout">
+  <app-header></app-header>
+  <div class="main-content-wrapper">
+    <!-- Optional: <aside class="sidebar"></aside> -->
+    <main class="main-content">
+ 
+
+      <!-- Hero Section -->
+      <section id="home" class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <div class="hero-text">
+              <h1 class="hero-title">
+                Your Perfect <span class="text-accent">Workspace</span><br />
+                Awaits You
+              </h1>
+              <p class="hero-description">
+                Join a thriving community of freelancers, entrepreneurs, and
+                remote workers in our modern co-working spaces designed for
+                productivity and collaboration.
+              </p>
+              <div class="hero-actions">
+                <button class="btn btn-primary btn-lg">Book a Tour</button>
+                <button class="btn btn-outline btn-lg">View Pricing</button>
+              </div>
+              <div class="hero-stats">
+                <div class="stat">
+                  <span class="stat-number">500+</span>
+                  <span class="stat-label">Happy Members</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-number">24/7</span>
+                  <span class="stat-label">Access</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-number">99%</span>
+                  <span class="stat-label">Uptime</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <div class="hero-image-placeholder">
+                <i class="fas fa-building fa-8x"></i>
+                <p>Modern Co-working Space</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="features">
+        <div class="container">
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-wifi"></i>
+              </div>
+              <h3>High-Speed Internet</h3>
+              <p>Lightning-fast fiber internet with 99.9% uptime guarantee</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <h3>Networking Community</h3>
+              <p>
+                Connect with like-minded professionals and grow your network
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <h3>24/7 Access</h3>
+              <p>
+                Work on your schedule with round-the-clock access to all
+                facilities
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-coffee"></i>
+              </div>
+              <h3>Free Refreshments</h3>
+              <p>
+                Unlimited coffee, tea, and refreshments to keep you energized
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="about">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">About TVS Spaces</h2>
+            <p class="section-subtitle">
+              We're more than just a workspace - we're a community that empowers
+              professionals to achieve their best work.
+            </p>
+          </div>
+          <div class="about-content">
+            <div class="about-text">
+              <h3>Designed for Modern Professionals</h3>
+              <p>
+                TVS Spaces was founded with the vision of creating inspiring
+                work environments that foster creativity, collaboration, and
+                productivity. Our carefully designed spaces cater to
+                freelancers, startups, remote workers, and established
+                businesses.
+              </p>
+              <div class="about-features">
+                <div class="about-feature">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Prime locations in the city center</span>
+                </div>
+                <div class="about-feature">
+                  <i class="fas fa-check-circle"></i>
+                  <span>State-of-the-art facilities and equipment</span>
+                </div>
+                <div class="about-feature">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Flexible membership plans</span>
+                </div>
+                <div class="about-feature">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Professional community events</span>
+                </div>
+              </div>
+            </div>
+            <div class="about-visual">
+              <div class="about-image-placeholder">
+                <i class="fas fa-handshake fa-6x"></i>
+                <p>Building Connections</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Spaces Section -->
+      <section id="spaces" class="spaces">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Our Workspace Options</h2>
+            <p class="section-subtitle">
+              Choose the perfect space that fits your work style and needs
+            </p>
+          </div>
+          <div class="spaces-grid">
+            <div class="space-card">
+              <div class="space-image">
+                <i class="fas fa-chair fa-4x"></i>
+              </div>
+              <div class="space-content">
+                <h3>Hot Desks</h3>
+                <p>
+                  Flexible seating in our open workspace areas. Perfect for
+                  daily or occasional users.
+                </p>
+                <ul class="space-features">
+                  <li>Shared workspace</li>
+                  <li>High-speed Wi-Fi</li>
+                  <li>Power outlets</li>
+                  <li>Storage lockers</li>
+                </ul>
+                <div class="space-price">From $25/day</div>
+              </div>
+            </div>
+            <div class="space-card featured">
+              <div class="space-badge">Most Popular</div>
+              <div class="space-image">
+                <i class="fas fa-desk fa-4x"></i>
+              </div>
+              <div class="space-content">
+                <h3>Dedicated Desks</h3>
+                <p>
+                  Your own desk in a shared office environment. Ideal for
+                  regular users who need consistency.
+                </p>
+                <ul class="space-features">
+                  <li>Personal workspace</li>
+                  <li>Under-desk storage</li>
+                  <li>Monitor support</li>
+                  <li>Member perks</li>
+                </ul>
+                <div class="space-price">From $200/month</div>
+              </div>
+            </div>
+            <div class="space-card">
+              <div class="space-image">
+                <i class="fas fa-door-closed fa-4x"></i>
+              </div>
+              <div class="space-content">
+                <h3>Private Offices</h3>
+                <p>
+                  Fully private offices for teams and businesses. Complete
+                  privacy with all amenities included.
+                </p>
+                <ul class="space-features">
+                  <li>1-10 person capacity</li>
+                  <li>Lockable space</li>
+                  <li>Meeting room access</li>
+                  <li>Custom branding</li>
+                </ul>
+                <div class="space-price">From $500/month</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Amenities Section -->
+      <section id="amenities" class="amenities">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">World-Class Amenities</h2>
+            <p class="section-subtitle">
+              Everything you need to work productively and comfortably
+            </p>
+          </div>
+          <div class="amenities-grid">
+            <div class="amenity-item">
+              <div class="amenity-icon">
+                <i class="fas fa-video"></i>
+              </div>
+              <div class="amenity-content">
+                <h4>Meeting Rooms</h4>
+                <p>Fully equipped meeting rooms with video conferencing</p>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="amenity-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="amenity-content">
+                <h4>Phone Booths</h4>
+                <p>Private spaces for calls and virtual meetings</p>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="amenity-icon">
+                <i class="fas fa-print"></i>
+              </div>
+              <div class="amenity-content">
+                <h4>Printing & Scanning</h4>
+                <p>High-quality printing and scanning services</p>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="amenity-icon">
+                <i class="fas fa-utensils"></i>
+              </div>
+              <div class="amenity-content">
+                <h4>Kitchen & Lounge</h4>
+                <p>Fully stocked kitchen and comfortable lounge areas</p>
+              </div>
+            </div>
+            
+            <div class="amenity-item">
+              <div class="amenity-icon">
+                <i class="fas fa-calendar"></i>
+              </div>
+              <div class="amenity-content">
+                <h4>Events Space</h4>
+                <p>Dedicated areas for networking and community events</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing Section -->
+      <section id="pricing" class="pricing">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Simple, Transparent Pricing</h2>
+            <p class="section-subtitle">
+              Choose the plan that works best for your work style and budget
+            </p>
+          </div>
+          <div class="pricing-toggle">
+            <span class="toggle-label active" data-period="monthly"
+              >Monthly</span
+            >
+            <div class="toggle-switch">
+              <div class="toggle-slider"></div>
+            </div>
+            <span class="toggle-label" data-period="yearly"
+              >Yearly <span class="discount-badge">Save 20%</span></span
+            >
+          </div>
+          <div class="pricing-grid">
+            <div class="pricing-card">
+              <div class="pricing-header">
+                <h3>Day Pass</h3>
+                <div class="price">
+                  <span class="currency">$</span>
+                  <span class="amount" data-monthly="25" data-yearly="20"
+                    >25</span
+                  >
+                  <span class="period">/day</span>
+                </div>
+              </div>
+              <ul class="pricing-features">
+                <li>Hot desk access</li>
+                <li>High-speed Wi-Fi</li>
+                <li>Coffee & tea</li>
+                <li>Basic amenities</li>
+                <li>Community events</li>
+              </ul>
+              <button class="btn btn-outline btn-block">Choose Plan</button>
+            </div>
+            <div class="pricing-card featured">
+              <div class="pricing-badge">Most Popular</div>
+              <div class="pricing-header">
+                <h3>Monthly</h3>
+                <div class="price">
+                  <span class="currency">$</span>
+                  <span class="amount" data-monthly="200" data-yearly="160"
+                    >200</span
+                  >
+                  <span class="period">/month</span>
+                </div>
+              </div>
+              <ul class="pricing-features">
+                <li>Dedicated desk</li>
+                <li>24/7 access</li>
+                <li>Meeting room credits</li>
+                <li>Storage locker</li>
+                <li>All amenities</li>
+                <li>Priority support</li>
+              </ul>
+              <button class="btn btn-primary btn-block">Choose Plan</button>
+            </div>
+            <div class="pricing-card">
+              <div class="pricing-header">
+                <h3>Private Office</h3>
+                <div class="price">
+                  <span class="currency">$</span>
+                  <span class="amount" data-monthly="500" data-yearly="400"
+                    >500</span
+                  >
+                  <span class="period">/month</span>
+                </div>
+              </div>
+              <ul class="pricing-features">
+                <li>Private lockable office</li>
+                <li>1-4 person capacity</li>
+                <li>Unlimited meeting rooms</li>
+                <li>Custom branding</li>
+                <li>Dedicated support</li>
+                <li>All premium amenities</li>
+              </ul>
+              <button class="btn btn-outline btn-block">Choose Plan</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials Section -->
+      <section class="testimonials">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">What Our Members Say</h2>
+            <p class="section-subtitle">
+              Join hundreds of satisfied professionals who call TVS Spaces their
+              workplace
+            </p>
+          </div>
+          <div class="testimonials-grid">
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p>
+                  "TVS Spaces has transformed the way I work. The community is
+                  amazing and the facilities are top-notch."
+                </p>
+              </div>
+              <div class="testimonial-author">
+                <div class="author-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="author-info">
+                  <h4>Sarah Johnson</h4>
+                  <p>Freelance Designer</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p>
+                  "Perfect for our growing startup. The flexibility and
+                  networking opportunities are incredible."
+                </p>
+              </div>
+              <div class="testimonial-author">
+                <div class="author-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="author-info">
+                  <h4>Mike Chen</h4>
+                  <p>Tech Entrepreneur</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p>
+                  "The best co-working space in the city. Professional
+                  environment with a welcoming community."
+                </p>
+              </div>
+              <div class="testimonial-author">
+                <div class="author-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="author-info">
+                  <h4>Emily Rodriguez</h4>
+                  <p>Marketing Consultant</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta">
+        <div class="container">
+          <div class="cta-content">
+            <h2>Ready to Join Our Community?</h2>
+            <p>
+              Start your journey with TVS Spaces today. Book a tour or sign up
+              for a membership.
+            </p>
+            <div class="cta-actions">
+              <button class="btn btn-primary btn-lg">Book a Tour</button>
+              <button class="btn btn-outline btn-lg">Contact Us</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact">
+        <div class="container">
+          <div class="contact-content">
+            <div class="contact-info">
+              <h2>Get in Touch</h2>
+              <p>
+                Have questions? We'd love to hear from you. Send us a message
+                and we'll respond as soon as possible.
+              </p>
+              <div class="contact-details">
+                <div class="contact-detail">
+                  <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div class="contact-text">
+                    <h4>Location</h4>
+                    <p>123 Business District<br />Downtown, City 12345</p>
+                  </div>
+                </div>
+                <div class="contact-detail">
+                  <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                  </div>
+                  <div class="contact-text">
+                    <h4>Phone</h4>
+                    <p>+1 (555) 123-4567</p>
+                  </div>
+                </div>
+                <div class="contact-detail">
+                  <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <div class="contact-text">
+                    <h4>Email</h4>
+                    <p>hello@tvsspaces.com</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="contact-form">
+              <form>
+                <div class="form-group">
+                  <input type="text" placeholder="Your Name" required />
+                </div>
+                <div class="form-group">
+                  <input type="email" placeholder="Your Email" required />
+                </div>
+                <div class="form-group">
+                  <input type="tel" placeholder="Your Phone" />
+                </div>
+                <div class="form-group">
+                  <select required>
+                    <option value="">Select Interest</option>
+                    <option value="day-pass">Day Pass</option>
+                    <option value="monthly">Monthly Membership</option>
+                    <option value="private-office">Private Office</option>
+                    <option value="tour">Book a Tour</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <textarea placeholder="Your Message" rows="5"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <app-footer></app-footer>
+    </main>
+  </div>
+</div>

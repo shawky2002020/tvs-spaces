@@ -1,5 +1,60 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+     
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-base);
+            color: var(--primary-color);
+            background-color: var(--white-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--container-xl);
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-family-heading);
+            line-height: var(--line-height-heading);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: var(--font-weight-bold);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: var(--font-weight-bold);
+        }
+
+        h3 {
+            font-size: 2rem;
+            font-weight: var(--font-weight-medium);
+        }
+
+        h4 {
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-medium);
+        }
+
+        p {
+            margin-bottom: var(--spacing-md);
+            color: var(--black-60);
+        }

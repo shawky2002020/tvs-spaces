@@ -1,6 +1,78 @@
-footer {
-  background: $secondary-color;
-  color: #fff;
-  padding: 1rem;
+@import 'abstracts/variables';
+
+/* Footer */
+.footer {
+  background-color: $primary-color;
+  color: $white-color;
+  padding: $spacing-xl 0 $spacing-lg 0;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: $spacing-xl;
+  margin-bottom: $spacing-lg;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  color: $white-color;
+  margin-bottom: $spacing-md;
+}
+
+.footer-section p {
+  color: $accent-30;
+}
+
+.social-links {
+  display: flex;
+  gap: $spacing-md;
+  margin-top: $spacing-md;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: $secondary-color;
+  color: $white-color;
+  border-radius: $border-radius-md;
+  text-decoration: none;
+  transition: all $transition-base;
+}
+
+.social-link:hover {
+  background-color: $accent-color;
+  transform: translateY(-2px);
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: $spacing-sm;
+}
+
+.footer-links a {
+  color: $accent-30;
+  text-decoration: none;
+  transition: color $transition-base;
+}
+
+.footer-links a:hover {
+  color: $white-color;
+}
+
+.footer-bottom {
+  border-top: 1px solid $secondary-60;
+  padding-top: $spacing-lg;
   text-align: center;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: $accent-30;
 }
