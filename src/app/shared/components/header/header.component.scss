@@ -2,15 +2,16 @@
 @import "abstracts/component";
 /* Header Styles */
 .header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  background: $primary-color;
+  background-color: $secondary-color;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid $grey-30;
   z-index: $z-index-fixed;
   transition: all $transition-base;
+  padding: 0 24px;
 }
 
 .header-content {
@@ -20,10 +21,13 @@
   padding: $spacing-md 0;
 }
 
-.logo h2 {
-  margin: 0;
-  font-size: 1.75rem;
-  white-space: nowrap;
+.logo {
+  width: 150px;
+  height: auto;
+}
+.logo-img {
+  width: 100%;
+  height: auto;
 }
 
 .nav {
@@ -42,7 +46,7 @@
 
 .nav-link:hover,
 .nav-link.active {
-  color: $primary-color;
+  color: $white-40;
 }
 
 .nav-link.active::after {
@@ -52,7 +56,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background-color: $primary-color;
+  background-color: $white-40;
 }
 
 .header-actions {

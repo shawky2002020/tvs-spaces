@@ -2,11 +2,18 @@
 
 /* Footer */
 .footer {
-  background-color: $primary-color;
+  background-color: $secondary-color;
   color: $white-color;
   padding: $spacing-xl 0 $spacing-lg 0;
 }
-
+.logo {
+  width: 150px;
+  height: auto;
+}
+.logo-img {
+  width: 100%;
+  height: auto;
+}
 .footer-content {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -21,7 +28,7 @@
 }
 
 .footer-section p {
-  color: $accent-30;
+  color: $grey-color;
 }
 
 .social-links {
@@ -37,7 +44,7 @@
   width: 40px;
   height: 40px;
   background-color: $secondary-color;
-  color: $white-color;
+  color: $grey-color;
   border-radius: $border-radius-md;
   text-decoration: none;
   transition: all $transition-base;
@@ -57,7 +64,7 @@
 }
 
 .footer-links a {
-  color: $accent-30;
+  color: $grey-color;
   text-decoration: none;
   transition: color $transition-base;
 }

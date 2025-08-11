@@ -1,7 +1,7 @@
 @import "main.scss";
 .hero {
   padding: calc(80px + $spacing-xl) 0 $spacing-xl 0;
-  background: linear-gradient(135deg, $primary-10 0%, $accent-20 100%);
+  background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@
 .hero-title {
   font-size: 4rem;
   margin-bottom: $spacing-lg;
-  color: $primary-color;
+  color: $white-color;
 }
 
 .hero-title .text-accent {
@@ -27,7 +27,7 @@
 .hero-description {
   font-size: $font-size-lg;
   margin-bottom: $spacing-xl;
-  color: $black-60;
+  color: $white-60;
 }
 
 .hero-actions {
@@ -43,18 +43,20 @@
 
 .stat {
   text-align: center;
+  display: flex;
+  @include flex-center(column);
 }
 
 .stat-number {
   display: block;
   font-size: 2rem;
   font-weight: $font-weight-bold;
-  color: $primary-color;
+  color: $white-color;
 }
 
 .stat-label {
   font-size: $font-size-sm;
-  color: $black-60;
+  color: $white-60;
 }
 
 .hero-visual {

@@ -1,87 +1,87 @@
 // =========================
-// COLOR PALETTE
+// COLOR PALETTE - Modern Co-working Space
 // =========================
-$primary-color: #2F4156; // Navy
-$secondary-color: #557C8D; // Teal
-$accent-color: #C8D9E6; // Sky Blue
-$grey-color: #D6D6D6; // Soft Grey
+$primary-color: #005fa3; // Brand Blue
+$secondary-color: #181e4b; // Brand Navy
+$accent-color: #005fa3; // Use blue as accent for consistency
+$grey-color: #E5E7EB; // Cool Grey (unchanged)
 $white-color: #FFFFFF;
 $black-color: #000000;
 
 // White color shades
 $white-20: #ffffff;
-$white-40: #f9f9f9;
-$white-60: #f2f2f2;
-$white-80: #ebebeb;
+$white-40: #fdfdfd;
+$white-60: #fafafa;
+$white-80: #f7f7f7;
+
 // Black color shades
-$black-20: #e6e6e6;
-$black-40: #b3b3b3;
-$black-60: #808080;
-$black-80: #4d4d4d;
+$black-20: #f3f4f6;
+$black-40: #9ca3af;
+$black-60: #6b7280;
+$black-80: #374151;
 
-// Primary color shades
-$primary-10: #e6eaf0;
-$primary-20: #c0c9d6;
-$primary-30: #99a7bc;
-$primary-40: #7385a2;
-$primary-50: #2F4156; // base
-$primary-60: #263445;
-$primary-70: #1d2734;
-$primary-80: #141a23;
-$primary-90: #0a0d12;
+// Primary color shades (Deep Charcoal)
+$primary-10: #f8f9fa;
+$primary-20: #e9ecef;
+$primary-30: #ced4da;
+$primary-40: #6c757d;
+$primary-50: #1A1D29; // base
+$primary-60: #151823;
+$primary-70: #10121c;
+$primary-80: #0b0d15;
+$primary-90: #06070e;
 
-// Secondary color shades
-$secondary-10: #e6eef1;
-$secondary-20: #c1d5dd;
-$secondary-30: #9cbccc;
-$secondary-40: #77a3b8;
-$secondary-50: #557C8D; // base
-$secondary-60: #446273;
-$secondary-70: #334959;
-$secondary-80: #22303f;
-$secondary-90: #11181f;
+// Secondary color shades (Electric Indigo)
+$secondary-10: #eef2ff;
+$secondary-20: #e0e7ff;
+$secondary-30: #c7d2fe;
+$secondary-40: #a5b4fc;
+$secondary-50: #4F46E5; // base
+$secondary-60: #4338ca;
+$secondary-70: #3730a3;
+$secondary-80: #312e81;
+$secondary-90: #1e1b4b;
 
-// Accent color shades
-$accent-10: #f5fafd;
-$accent-20: #e2f0fa;
-$accent-30: #cfe6f6;
-$accent-40: #bcdcf3;
-$accent-50: #C8D9E6; // base
-$accent-60: #a0b0ba;
-$accent-70: #78888b;
-$accent-80: #50505d;
-$accent-90: #28282e;
+// Accent color shades (Cyan)
+$accent-10: #ecfeff;
+$accent-20: #cffafe;
+$accent-30: #a5f3fc;
+$accent-40: #67e8f9;
+$accent-50: #06B6D4; // base
+$accent-60: #0891b2;
+$accent-70: #0e7490;
+$accent-80: #155e75;
+$accent-90: #164e63;
 
-// Grey color shades
-$grey-10: #f8f8f8;
-$grey-20: #eeeeee;
-$grey-30: #e4e4e4;
-$grey-40: #dadada;
-$grey-50: #D6D6D6; // base
-$grey-60: #b0b0b0;
-$grey-70: #8a8a8a;
-$grey-80: #646464;
-$grey-90: #3e3e3e;
+// Grey color shades (Cool Grey)
+$grey-10: #f9fafb;
+$grey-20: #f3f4f6;
+$grey-30: #e5e7eb;
+$grey-40: #d1d5db;
+$grey-50: #E5E7EB; // base
+$grey-60: #9ca3af;
+$grey-70: #6b7280;
+$grey-80: #4b5563;
+$grey-90: #374151;
 
 // Semantic Colors
-$success-color: #4CAF50; // Green
-$warning-color: #FFC107; // Amber
-$error-color: #F44336; // Red
-$info-color: #2196F3; // Blue
+$success-color: #10B981; // Emerald
+$warning-color: #F59E0B; // Amber
+$error-color: #EF4444; // Red
+$info-color: #3B82F6; // Blue
 
 // Shades
-$grey-light: #F5F5F5;
-$grey-dark: #A0A0A0;
-$primary-light: lighten($primary-color, 15%);
-$primary-dark: darken($primary-color, 10%);
-$secondary-light: lighten($secondary-color, 15%);
-$secondary-dark: darken($secondary-color, 10%);
-
+$grey-light: #F8FAFC;
+$grey-dark: #64748B;
+$primary-light: lighten($primary-color, 25%);
+$primary-dark: darken($primary-color, 15%);
+$secondary-light: lighten($secondary-color, 20%);
+$secondary-dark: darken($secondary-color, 15%);
 // =========================
 // TYPOGRAPHY
 // =========================
-$font-family-base: 'Roboto', Arial, sans-serif;
-$font-family-heading: 'Montserrat', Arial, sans-serif;
+$font-family-base: 'Poppins', Arial, sans-serif;
+$font-family-heading: 'Impact', 'Amsterdam', 'Poppins', Arial, sans-serif;
 
 $font-size-base: 16px;
 $font-size-lg: 1.25rem; // 20px
