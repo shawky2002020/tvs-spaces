@@ -1,4 +1,5 @@
 /* Global Styles */
+
 * {
   margin: 0;
   padding: 0;
@@ -14,8 +15,14 @@ body {
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
   color: var(--primary-color);
-  background-color: var(--white-color);
+  background-color: var(--white-color-);
+  min-height: 100vh;
 }
+main{
+  position: relative;
+  
+}
+
 
 .container {
   width: 80%;
@@ -24,41 +31,7 @@ body {
   padding: 0 var(--spacing-md);
 }
 
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-family-heading);
-  line-height: var(--line-height-heading);
-  font-weight: var(--font-weight-bold);
-  margin-bottom: var(--spacing-md);
+.error{
+	padding: 4px 12px;
+	color: $error-color;
 }
-
-h1 {
-  font-size: 3rem;
-  font-weight: var(--font-weight-bold);
-}
-
-h2 {
-  font-size: 2.5rem;
-  font-weight: var(--font-weight-bold);
-}
-
-h3 {
-  font-size: 2rem;
-  font-weight: var(--font-weight-medium);
-}
-
-h4 {
-  font-size: 1.5rem;
-  font-weight: var(--font-weight-medium);
-}
-
-p {
-  margin-bottom: var(--spacing-md);
-  color: var(--black-60);
-}
-

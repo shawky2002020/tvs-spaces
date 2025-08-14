@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],
-  imports: [HeaderComponent, AppRoutingModule, FooterComponent, CommonModule]
+  imports: []
 })
 export class MainLayoutComponent {
   

@@ -11,29 +11,31 @@
   font-weight: $font-weight-medium;
   text-decoration: none;
   cursor: pointer;
-  transition: all $transition-base;
+  transition: all .3s ease-in-out;
   min-height: 48px;
   gap: $spacing-sm;
 }
 
 .btn-primary {
-  background-color: $secondary-color;
-  color: $white-color;
-  border-color: $secondary-color;
-}
-
-.btn-primary:hover {
   background-color: $primary-color;
   color: $white-color;
   border-color: $primary-color;
+    box-shadow: $shadow-lg;
+
+}
+
+.btn-primary:hover {
+  background-color: $secondary-color;
+  color: $white-color;
+  border-color: $primary-color;
   transform: translateY(-2px);
-  box-shadow: $shadow-lg;
 }
 
 .btn-outline {
 
   color: $primary-color;
   border-color: $primary-color;
+  
 }
 
 .btn-outline:hover {

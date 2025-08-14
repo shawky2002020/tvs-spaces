@@ -27,6 +27,8 @@
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.6",
     "@fortawesome/fontawesome-free": "^7.0.0",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "vercel": "^44.7.3",

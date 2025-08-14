@@ -2,3 +2,42 @@ body {
   font-family: $font-family-base;
   color: $secondary-color;
 }
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-heading);
+  line-height: var(--line-height-heading);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+}
+
+h1 {
+  font-weight: var(--font-weight-bold);
+  font-size: $font-size-xxl;
+}
+
+h2 {
+  font-weight: var(--font-weight-bold);
+  font-size: $font-size-xl;
+}
+
+h3 {
+  font-weight: var(--font-weight-medium);
+  font-size: $font-size-lg;
+}
+
+h4 {
+  font-weight: var(--font-weight-medium);
+  font-size: $font-size-md;
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+  color: var(--black-60);
+  font-size: $font-size-base;
+}
+

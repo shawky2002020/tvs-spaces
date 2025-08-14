@@ -1,0 +1,104 @@
+<div class="register-wrapper">
+  <div class="register-motivation">
+    <h1 class="motivation-title">Join TVS Spaces!</h1>
+    <p class="motivation-words">
+      <span class="highlight">Start Fresh.</span> <br />
+      <span class="highlight">Grow Fast.</span> <br />
+      <span class="highlight">Belong Here.</span>
+    </p>
+    <p class="motivation-sub">
+      Create your account and unlock a world of productivity and community.
+    </p>
+  </div>
+  <div class="register-card">
+    <div class="register-title">Create Your Account</div>
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+      class="register-form"
+      novalidate
+    >
+      <div class="form-group">
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Full Name"
+          [class.invalid]="submitted && f['name'].invalid"
+        />
+        <div class="error" *ngIf="submitted && f['name'].errors">
+          <span *ngIf="f['name'].errors['required']">Name is required.</span>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Email Address"
+          [class.invalid]="submitted && f['email'].invalid"
+        />
+        <div class="error" *ngIf="submitted && f['email'].errors">
+          <span *ngIf="f['email'].errors['required']">Email is required.</span>
+          <span *ngIf="f['email'].errors['email']">Enter a valid email.</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          [class.invalid]="submitted && f['password'].invalid"
+        />
+        <div class="error" *ngIf="submitted && f['password'].errors">
+          <span *ngIf="f['password'].errors['required']"
+            >Password is required.</span
+          >
+          <span *ngIf="f['password'].errors['minlength']"
+            >Password must be at least 6 characters.</span
+          >
+        </div>
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          placeholder="Confirm Password"
+          [class.invalid]="submitted && f['confirmPassword'].invalid"
+        />
+        <div class="error" *ngIf="submitted && f['confirmPassword'].errors">
+          <span *ngIf="f['confirmPassword'].errors['required']"
+            >Confirm your password.</span
+          >
+          <span *ngIf="f['confirmPassword'].errors['mismatch']"
+            >Passwords do not match.</span
+          >
+        </div>
+      </div>
+      <div class="form-group">
+        <select
+          formControlName="userType"
+          [class.invalid]="submitted && f['userType'].invalid"
+        >
+          <option value="">Select your type</option>
+          <option value="student">Student</option>
+          <option value="freelancer">Freelancer</option>
+          <option value="entrepreneur">Entrepreneur</option>
+          <option value="remote-worker">Remote Worker</option>
+          <option value="startup">Startup</option>
+          <option value="other">Other</option>
+        </select>
+        <div class="error" *ngIf="submitted && f['userType'].errors">
+          <span *ngIf="f['userType'].errors['required']"
+            >Please select your type.</span
+          >
+        </div>
+      </div>
+      <div class="register-actions">
+        <button type="submit" class="btn btn-primary">Register</button>
+      </div>
+    </form>
+    <div class="register-links">
+      <a routerLink="/auth/login">Already have an account? Sign In</a>
+    </div>
+  </div>
+</div>
