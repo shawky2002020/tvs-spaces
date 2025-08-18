@@ -11,39 +11,28 @@
   font-weight: $font-weight-medium;
   text-decoration: none;
   cursor: pointer;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   min-height: 48px;
   gap: $spacing-sm;
 }
 
 .btn-primary {
-  background-color: $primary-color;
+  background-color: $black-color;
   color: $white-color;
   border-color: $primary-color;
-    box-shadow: $shadow-lg;
-
+  box-shadow: $shadow-lg;
 }
 
-.btn-primary:hover {
-  background-color: $secondary-color;
+.btn:hover {
+  background-color: $accent-color;
   color: $white-color;
   border-color: $primary-color;
   transform: translateY(-2px);
 }
 
 .btn-outline {
-
   color: $primary-color;
   border-color: $primary-color;
-  
-}
-
-.btn-outline:hover {
-  background-color: $primary-color;
-  color: $white-color;
-  border-color: $primary-color;
-  transform: translateY(-2px);
-  box-shadow: $shadow-lg;
 }
 
 .btn-lg {
@@ -54,4 +43,29 @@
 
 .btn-block {
   width: 100%;
+}
+section {
+  position: relative;
+}
+.back {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Add parallax effect class
+.back.parallax {
+  overflow: hidden;
+  
+  img {
+    height: 120%; /* Larger than container for parallax movement */
+    transform: translateY(0);
+    transition: transform 0.1s ease-out;
+  }
 }

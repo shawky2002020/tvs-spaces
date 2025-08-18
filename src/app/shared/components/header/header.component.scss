@@ -6,9 +6,9 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: $secondary-color;
+  background-color: $black-80;
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid $grey-30;
+  border-bottom: 1px solid $light-color;
   z-index: $z-index-fixed;
   transition: all $transition-base;
   padding: 0 24px;
@@ -37,7 +37,7 @@
 
 .nav-link {
   text-decoration: none;
-  color: $black-60;
+  color: $white-20;
   font-weight: $font-weight-medium;
   padding: $spacing-sm 0;
   position: relative;
@@ -46,7 +46,7 @@
 
 .nav-link:hover,
 .nav-link.active {
-  color: $white-40;
+  color: $white-80;
 }
 
 .nav-link.active::after {
@@ -122,7 +122,7 @@
   color: $black-60;
   font-weight: $font-weight-medium;
   padding: $spacing-md 0;
-  border-bottom: 1px solid $grey-30;
+  border-bottom: 1px solid $light-color;
 }
 
 .mobile-menu-actions {

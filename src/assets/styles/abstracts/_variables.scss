@@ -1,10 +1,16 @@
 // =========================
-// COLOR PALETTE - Modern Co-working Space
+// COLOR PALETTE - Modern Co-working Space (Generated Shades)
 // =========================
-$primary-color: #005fa3; // Brand Blue
-$secondary-color: #181e4b; // Brand Navy
-$accent-color: #005fa3; // Use blue as accent for consistency
-$grey-color: #E5E7EB; // Cool Grey (unchanged)
+// =========================
+// COLOR PALETTE - Modern Co-working Space (With 6 Main Colors)
+// =========================
+$primary-color: #3B5989; // Deep Blue
+$secondary-color: #2D839E; // Dark Teal
+$accent-color: #00DFE4; // Bright Cyan
+$grey-color: #6D6E70; // Neutral Grey
+$light-color: #DFE8EF; // Light Greyish Blue
+$info-color: #27AAC9; // Teal Blue
+
 $white-color: #FFFFFF;
 $black-color: #000000;
 
@@ -20,64 +26,11 @@ $black-40: #9ca3af;
 $black-60: #6b7280;
 $black-80: #374151;
 
-// Primary color shades (Deep Charcoal)
-$primary-10: #f8f9fa;
-$primary-20: #e9ecef;
-$primary-30: #ced4da;
-$primary-40: #6c757d;
-$primary-50: #1A1D29; // base
-$primary-60: #151823;
-$primary-70: #10121c;
-$primary-80: #0b0d15;
-$primary-90: #06070e;
-
-// Secondary color shades (Electric Indigo)
-$secondary-10: #eef2ff;
-$secondary-20: #e0e7ff;
-$secondary-30: #c7d2fe;
-$secondary-40: #a5b4fc;
-$secondary-50: #4F46E5; // base
-$secondary-60: #4338ca;
-$secondary-70: #3730a3;
-$secondary-80: #312e81;
-$secondary-90: #1e1b4b;
-
-// Accent color shades (Cyan)
-$accent-10: #ecfeff;
-$accent-20: #cffafe;
-$accent-30: #a5f3fc;
-$accent-40: #67e8f9;
-$accent-50: #06B6D4; // base
-$accent-60: #0891b2;
-$accent-70: #0e7490;
-$accent-80: #155e75;
-$accent-90: #164e63;
-
-// Grey color shades (Cool Grey)
-$grey-10: #f9fafb;
-$grey-20: #f3f4f6;
-$grey-30: #e5e7eb;
-$grey-40: #d1d5db;
-$grey-50: #E5E7EB; // base
-$grey-60: #9ca3af;
-$grey-70: #6b7280;
-$grey-80: #4b5563;
-$grey-90: #374151;
-
 // Semantic Colors
 $success-color: #10B981; // Emerald
 $warning-color: #F59E0B; // Amber
 $error-color: #EF4444; // Red
-$info-color: #3B82F6; // Blue
 $danger-color: #DC2626; // Danger Red
-
-// Shades
-$grey-light: #F8FAFC;
-$grey-dark: #64748B;
-$primary-light: lighten($primary-color, 25%);
-$primary-dark: darken($primary-color, 15%);
-$secondary-light: lighten($secondary-color, 20%);
-$secondary-dark: darken($secondary-color, 15%);
 // =========================
 // TYPOGRAPHY
 // =========================

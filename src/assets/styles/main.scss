@@ -6,3 +6,8 @@
 @import './base/typography';
 // Add more imports as needed
 
+@font-face {
+  font-family: main;
+  src: url("/assets/fonts/Aquire-BW0ox.otf") format('opentype');
+  
+}

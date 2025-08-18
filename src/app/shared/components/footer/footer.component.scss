@@ -3,7 +3,7 @@
 /* Footer */
 .footer {
   width: 100%;
-  background-color: $secondary-color;
+  background-color: $black-color;
   color: $white-color;
   padding: $spacing-xl 0 $spacing-lg 0;
 }
@@ -29,7 +29,7 @@
 }
 
 .footer-section p {
-  color: $grey-color;
+  color: $white-40;
 }
 
 .social-links {
@@ -45,7 +45,7 @@
   width: 40px;
   height: 40px;
   background-color: $secondary-color;
-  color: $grey-color;
+  color: $white-40;
   border-radius: $border-radius-md;
   text-decoration: none;
   transition: all $transition-base;
@@ -65,7 +65,7 @@
 }
 
 .footer-links a {
-  color: $grey-color;
+  color: $white-40;
   text-decoration: none;
   transition: color $transition-base;
 }
@@ -75,12 +75,11 @@
 }
 
 .footer-bottom {
-  border-top: 1px solid $secondary-60;
+  border-top: 1px solid $secondary-color;
   padding-top: $spacing-lg;
   text-align: center;
 }
 
 .footer-bottom p {
   margin: 0;
-  color: $accent-30;
 }
