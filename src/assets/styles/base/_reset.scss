@@ -18,9 +18,14 @@ body {
   background-color: var(--white-color-);
   min-height: 100vh;
 }
+a{
+  all: unset;
+  cursor: pointer;
+}
 main {
   position: relative;
 }
+
 /* Section Headers - Minimal Style */
 .section-header {
   text-align: center;
@@ -31,6 +36,8 @@ main {
   background: rgba(245, 245, 245, 0.385);
   padding: 12px;
   backdrop-filter: blur(20px);
+    margin-bottom: 12px;
+
 }
 
 .section-title {
@@ -40,12 +47,11 @@ main {
   letter-spacing: -0.5px;
   position: relative;
   display: inline-block;
-    font-family: main;
-
+  font-family: main;
 }
 
 .section-tag {
-   position: absolute;
+  position: absolute;
   top: -15px;
   left: -30px;
   font-family: main;
@@ -86,9 +92,8 @@ main {
   max-width: var(--container-xl);
   margin: 0 auto;
   padding: 0 var(--spacing-md);
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 40px;
+  gap: 8px;
+  position: relative;
 }
 
 .error {

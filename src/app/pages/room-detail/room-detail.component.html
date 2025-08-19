@@ -1,0 +1,213 @@
+<div class="detail-page" *ngIf="space">
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs">
+    <a [routerLink]="['/']" class="breadcrumb-link">Home</a> &gt; 
+    <a href="/#spaces">Rooms</a> &gt; 
+    <span>{{ space.name }}</span>
+  </div>
+  
+  <!-- Header -->
+  <header class="detail-header">
+    <div class="container">
+      <h1 class="handwritten">{{ space.name }}</h1>
+      <p class="description">{{ space.description }}</p>
+      <div class="capacity" *ngIf="space.capacity">
+        <i class="fas fa-users"></i> Capacity: Up to {{ space.capacity }} guests
+      </div>
+      <figure class="header-image">
+        <img [src]="space.imageUrl" [alt]="space.name">
+        <!-- Amenities -->
+        <ul class="amenities-list">
+          <li *ngFor="let amenity of space.amenities">
+            <i class="fas fa-{{ amenity.icon }}"></i>
+            <span>{{ amenity.name }}</span>
+          </li>
+        </ul>
+      </figure>
+    </div>
+  </header>
+  
+  <!-- Main content -->
+  <div class="container detail-content ">
+    
+    
+    <!-- Pricing Plans -->
+    <section class="pricing-section">
+      <h2>Pricing Plans</h2>
+      <p class="pricing-intro">Choose the plan that works best for your needs. All plans include our standard amenities.</p>
+      
+      <div class="pricing-cards">
+        <!-- Hourly Plan -->
+        <div class="pricing-card">
+          <div class="pricing-card-header">
+            <h3>Hourly</h3>
+            <div class="price">
+              <span class="currency">EGP</span>
+              <span class="amount">{{ space.pricing.hourly }}</span>
+              <span class="period">/hour</span>
+            </div>
+          </div>
+          <div class="pricing-card-body">
+            <ul class="pricing-features">
+              <li>Flexible booking</li>
+              <li>All amenities included</li>
+              <li>No minimum commitment</li>
+              <li>Perfect for quick meetings</li>
+            </ul>
+          </div>
+          <div class="pricing-card-footer">
+            <button class="btn btn-outline" >Enquire Now</button>
+          </div>
+        </div>
+        
+        <!-- Half Day Plan -->
+        <div class="pricing-card">
+          <div class="pricing-card-header">
+            <h3>Half Day</h3>
+            <div class="price">
+              <span class="currency">EGP</span>
+              <span class="amount">{{ space.pricing.halfDay }}</span>
+              <span class="period">/3-5 hours</span>
+            </div>
+            
+          </div>
+          <div class="pricing-card-body">
+            <ul class="pricing-features">
+              <li>3-5 hours of usage</li>
+              <li>All amenities included</li>
+              <li>15% discount vs hourly rate</li>
+              <li>Ideal for extended meetings</li>
+            </ul>
+          </div>
+          <div class="pricing-card-footer">
+            <button class="btn btn-outline" >Enquire Now</button>
+          </div>
+        </div>
+        
+        <!-- Full Day Plan -->
+        <div class="pricing-card featured">
+          <div class="pricing-badge">Most Popular</div>
+          <div class="pricing-card-header">
+            <h3>Full Day</h3>
+            <div class="price">
+              <span class="currency">EGP</span>
+              <span class="amount">{{ space.pricing.day }}</span>
+              <span class="period">/6-8 hours</span>
+            </div>
+          </div>
+          <div class="pricing-card-body">
+            <ul class="pricing-features">
+              <li>6-8 hours of usage</li>
+              <li>All amenities included</li>
+              <li>25% discount vs hourly rate</li>
+              <li>Complimentary refreshments</li>
+              <li>Priority booking</li>
+            </ul>
+          </div>
+          <div class="pricing-card-footer">
+            <button class="btn btn-primary" >Enquire Now</button>
+          </div>
+        </div>
+        
+        <!-- Monthly Plan -->
+        <div class="pricing-card" *ngIf="space.pricing.pro">
+          <div class="pricing-card-header">
+            <h3>Monthly Pro</h3>
+            <div class="price">
+              <span class="currency">EGP</span>
+              <span class="amount">{{ space.pricing.pro }}</span>
+              <span class="period">/month</span>
+            </div>
+          </div>
+          <div class="pricing-card-body">
+            <ul class="pricing-features">
+              <li>Unlimited access (business hours)</li>
+              <li>Dedicated space</li>
+              <li>Premium amenities</li>
+              <li>Meeting room credits</li>
+              <li>Business address service</li>
+            </ul>
+          </div>
+          <div class="pricing-card-footer">
+            <button class="btn btn-outline" >Enquire Now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Additional Images -->
+    <section class="images-section " *ngIf="space.additionalImages && space.additionalImages.length">
+      <h2>More Images</h2>
+      <div class="polaroid-gallery ">
+        <div class="polaroid" *ngFor="let img of space.additionalImages">
+          <img [src]="img" [alt]="space.name">
+        </div>
+      </div>
+    </section>
+    
+    <!-- Policy -->
+    <section class="policy-section">
+      <h2>Usage Policy</h2>
+      <div class="policy-box">
+        <p><strong>Advanced booking is required for any use before 8 AM or after 11 PM</strong></p>
+        <p>Rooms: Full Day = 6-8 hours, Half Day = 3-5 hours</p>
+        <p>Cancellations must be made at least 24 hours in advance for a full refund.</p>
+        <p>Please respect our shared space guidelines and leave the room as you found it.</p>
+      </div>
+    </section>
+    
+    <!-- Enquiry Form -->
+    <section class="enquiry-section">
+      <h2>Interested in this space?</h2>
+      <div class="enquiry-form">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="Enter your phone number">
+        </div>
+        <div class="form-group">
+          <label for="plan">Preferred Plan</label>
+          <select id="plan">
+            <option value="hourly">Hourly ({{ space.pricing.hourly }} EGP)</option>
+            <option value="halfDay">Half Day ({{ space.pricing.halfDay }} EGP)</option>
+            <option value="day">Full Day ({{ space.pricing.day }} EGP)</option>
+            <option value="pro" *ngIf="space.pricing.pro">Monthly Pro ({{ space.pricing.pro }} EGP)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date">Preferred Date</label>
+          <input type="date" id="date">
+        </div>
+        <div class="form-group full-width">
+          <label for="message">Additional Requirements</label>
+          <textarea id="message" rows="4" placeholder="Tell us about any specific requirements"></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary btn-lg">Submit Enquiry</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Enquiry Success Modal (Hidden by default) -->
+<div class="modal" id="enquiryModal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <div class="modal-body">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3>Thank You!</h3>
+      <p>Your enquiry has been submitted successfully. Our team will contact you within 24 hours.</p>
+      <button class="btn btn-primary">Close</button>
+    </div>
+  </div>
+</div>

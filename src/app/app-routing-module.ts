@@ -6,16 +6,25 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 const routes: Routes = [
   {
     path: '',
-    component:MainLayoutComponent
+    component: MainLayoutComponent
+  },
+   {
+    path: 'rooms/:type',
+    loadComponent: () =>
+      import('./pages/room-detail/room-detail.component').then(m => m.RoomDetailComponent)
+  },
+  {
+    path: 'desks/:type',
+    loadComponent: () =>
+      import('./pages/desk-detail/desk-detail.component').then(m => m.DeskDetailComponent)
   },
   {
     path: 'auth',
     loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
   },
-  
   {
     path: '**',
-    component:NotFoundComponent
+    component: NotFoundComponent
   }
 ];
 

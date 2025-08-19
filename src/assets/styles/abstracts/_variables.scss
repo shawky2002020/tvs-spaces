@@ -37,6 +37,7 @@ $danger-color: #DC2626; // Danger Red
 $font-family-base: 'Poppins', Arial, sans-serif;
 $font-family-heading: 'Poppins', Arial, sans-serif;
 
+$font-size-xxxl:56px;
 $font-size-xxl: 48px;
 $font-size-xl: 36px;
 $font-size-lg: 24px;
@@ -108,3 +109,33 @@ $container-sm: 540px;
 $container-md: 720px;
 $container-lg: 960px;
 $container-xl: 1140px;
+
+
+$primary-grad:linear-gradient(
+    135deg,
+    rgba($primary-color, 0.1) 0%,
+    rgba($secondary-color, 0.18) 25%,
+    rgba($accent-color, 0.25) 50%,
+    rgba($info-color, 0.58) 75%,
+    rgba($light-color, 0.32) 100%
+  );
+
+  $secondary-grad:radial-gradient(
+      ellipse 800px 300px at 50% 100%,
+      rgba($accent-color, 0.38) 0%,
+      transparent 70%
+    ),
+    linear-gradient(
+      110deg,
+      rgba($primary-color, 0.26) 0%,
+      rgba($secondary-color, 0.34) 40%,
+      rgba($light-color, 0.28) 100%
+    );
+$light-grad:linear-gradient(
+    120deg,
+    rgba($primary-color, 0.2) 0%,
+    rgba($secondary-color, 0.2) 20%,
+    rgba($light-color, 0.1) 40%,
+    rgba($info-color, 0.1) 60%,
+    rgba($accent-color, 0.1) 100%
+  );

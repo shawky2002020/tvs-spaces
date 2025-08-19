@@ -9,6 +9,10 @@ import { FooterComponent } from "./shared/components/footer/footer.component";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'; // ✅ Correct import
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { SpaceCardComponent } from './shared/components/space-card/space-card.component';
+import { DeskDetailComponent } from './pages/desk-detail/desk-detail.component';
+import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
+import { CommonModule } from '@angular/common';
 
 
 // Required factory function for AoT
@@ -17,16 +21,21 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 @NgModule({
   declarations: [
-    App
+    App,
+    MainLayoutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
     RouterModule,
-    MainLayoutComponent,
     HeaderComponent,
     HttpClientModule,
     FooterComponent,
+    SpaceCardComponent,
+    DeskDetailComponent,
+    RoomDetailComponent,
+    
     TranslateModule.forRoot({
       defaultLanguage: 'ar',
       loader: {

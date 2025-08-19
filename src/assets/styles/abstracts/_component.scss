@@ -4,8 +4,8 @@
   align-items: center;
   justify-content: center;
   padding: $spacing-sm $spacing-lg;
-  border: 2px solid transparent;
   border-radius: $border-radius-md;
+  border: none;
   font-family: $font-family-heading;
   font-size: $font-size-md;
   font-weight: $font-weight-medium;
@@ -17,16 +17,14 @@
 }
 
 .btn-primary {
-  background-color: $black-color;
+  background-color: $black-80;
   color: $white-color;
-  border-color: $primary-color;
-  box-shadow: $shadow-lg;
+  font-weight: $font-weight-bold;
 }
 
 .btn:hover {
-  background-color: $accent-color;
-  color: $white-color;
-  border-color: $primary-color;
+  background:linear-gradient(135deg,rgba($light-color,.6) 50%,rgba($info-color,.2));
+  color: $black-80;
   transform: translateY(-2px);
 }
 
@@ -67,5 +65,53 @@ section {
     height: 120%; /* Larger than container for parallax movement */
     transform: translateY(0);
     transition: transform 0.1s ease-out;
+  }
+}
+
+.breadcrumbs {
+  padding: $spacing-md 0;
+  margin: $spacing-md;
+  font-size: $font-size-sm;
+  color: $black-60;
+  padding: 24px 50px;
+  
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    transition: color $transition-base;
+    
+    &:hover {
+      color: $secondary-color;
+    }
+  }
+  
+  span {
+    color: $black-80;
+    font-weight: $font-weight-medium;
+  }
+}
+// Animated version (optional)
+.animated-bg {
+  position: relative;
+  background: linear-gradient(
+    -45deg,
+    rgba($primary-color, 0.48),
+    rgba($secondary-color, 0.36),
+    rgba($accent-color, 0.24),
+    rgba($info-color, 0.66)
+  ) !important;
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }

@@ -1,4 +1,38 @@
-<div class="space-card">
-  <h2>{{ title }}</h2>
-  <p>{{ description }}</p>
-</div>
+<!-- <div class="space-card" [class.featured]="space.featured">
+  <div *ngIf="space.featured" class="space-badge">Popular</div>
+  <div class="space-content">
+    <h3 class="handwritten">{{ space.name }}</h3>
+    <p>{{ space.description }}</p>
+    <ul class="space-features">
+      <li *ngFor="let amenity of space.amenities">
+        <i class="fas fa-{{ amenity.icon }}"></i>
+        {{ amenity.name }}
+      </li>
+    </ul>
+    
+    <div class="pricing-boxes">
+      <div class="price-box">
+        <span class="price-label">Hourly</span>
+        <span class="price">{{ space.pricing.hourly }} EGP</span>
+      </div>
+      <div class="price-box">
+        <span class="price-label">Half Day</span>
+        <span class="price">{{ space.pricing.halfDay }} EGP</span>
+      </div>
+      <div class="price-box">
+        <span class="price-label">Day</span>
+        <span class="price">{{ space.pricing.day }} EGP</span>
+      </div>
+      <div class="price-box">
+        <span class="price-label">Monthly</span>
+        <span class="price">From {{ space.pricing.lite }} EGP</span>
+      </div>
+    </div>
+    
+    <button class="btn btn-primary" (click)="navigateToDetail()">Learn More</button>
+  </div>
+  
+  <div class="space-image polaroid">
+    <img [src]="space.imageUrl" [alt]="space.name">
+  </div>
+</div> -->

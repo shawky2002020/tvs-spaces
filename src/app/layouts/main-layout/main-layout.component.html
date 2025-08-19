@@ -145,8 +145,6 @@
         </div>
       </section>
 
-     
-
       <!-- Amenities Section - Modern icon-based layout -->
       <section id="amenities" class="amenities">
         <div class="container">
@@ -206,260 +204,125 @@
           </div>
         </div>
       </section>
-<div class="sticky">
-  
-</div>
-       <!-- Spaces Section - Modern card design -->
-      <section id="spaces" class="spaces">
+      <!-- Spaces Section - Modern card design -->
+      <section id="spaces" class="spaces desk-spaces">
         <div class="back parallax">
-          <img src="assets/imgs/3.jpg" alt="" />
+          <img src="assets/imgs/1.jpg" alt="" />
         </div>
         <div class="container">
           <div class="section-header">
-            <span class="section-tag">Spaces</span>
-            <h2 class="section-title">Workspace Options</h2>
+            <span class="section-tag">Desks</span>
+            <h2 class="section-title">Desk Options</h2>
             <!-- <p class="section-subtitle">
               Choose the perfect space that fits your work style and needs
             </p> -->
           </div>
-          <div class="spaces-grid">
+          <div class="spaces-grid desk-grid">
             <div class="space-card">
-              <!-- <div class="space-image">
-                <i class="fas fa-chair"></i>
-              </div> -->
               <div class="space-content">
-                <h3>Hot Desks</h3>
-                <p>Flexible seating in our open workspace areas.</p>
+                <h3>Shared Desk</h3>
                 <ul class="space-features">
-                  <li>Shared workspace</li>
-                  <li>High-speed Wi-Fi</li>
-                  <li>Power outlets</li>
-                  <li>Storage lockers</li>
+                  <li>24/7 Access</li>
+                  <li>Fast Wi-Fi</li>
+                  <li>Air Conditioned</li>
+                  <li>Fully Equipped Kitchen</li>
+                  <li>Free Coffee or Tea</li>
+                  <li>Open Views</li>
+                  <li>60" Smart Screen</li>
                 </ul>
-                <div class="space-view">View More</div>
+                <a class="view-btn" [routerLink]="['/rooms/', spaces[0].slug]">View Details</a>
+              </div>
+            </div>
+            <div class="space-card">
+              <div class="space-content">
+                <h3>Solo Desk</h3>
+                <ul class="space-features">
+                  <li>24/7 Access</li>
+                  <li>Fast Wi-Fi</li>
+                  <li>Air Conditioned</li>
+                  <li>Fully Equipped Kitchen</li>
+                  <li>Free Coffee or Tea</li>
+                  <li>Open Views</li>
+                  <li>60" Smart Screen</li>
+                </ul>
+                <a class="view-btn" [routerLink]="['/rooms/', spaces[1].slug]">View Details</a>
+              </div>
+            </div>
+            <div class="space-card">
+              <div class="space-content">
+                <h3>PC Station</h3>
+                <ul class="space-features">
+                  <li>24/7 Access</li>
+                  <li>Fast Wi-Fi</li>
+                  <li>Air Conditioned</li>
+                  <li>Fully Equipped Kitchen</li>
+                  <li>Free Coffee or Tea</li>
+                  <li>Open Views</li>
+                  <li>60" Smart Screen</li>
+                </ul>
+                <a class="view-btn" [routerLink]="['/rooms/', spaces[2].slug]">View Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="gradient-divider-textured">
+<h1 class="section-title">Step inside — where ideas awaken and energy becomes action.</h1>
+      </div>
+      <section id="spaces" class="spaces room-spaces">
+        <div class="section-header">
+            <span class="section-tag">Rooms</span>
+            <h2 class="section-title">Room Options</h2>
+            <!-- <p class="section-subtitle">
+              Choose the perfect space that fits your work style and needs
+            </p> -->
+          </div>
+        <div class="back parallax">
+          <img src="assets/imgs/3.jpg" alt="" />
+        </div>
+        <div class="container">
+          <div class="spaces-grid room-grid">
+            <div class="space-card">
+              <div class="space-content">
+                <h3>Team Room</h3>
+                <ul class="space-features">
+                  <li>Up to 4 Guests</li>
+                  <li>Fast Wi-Fi</li>
+                  <li>Reception Area</li>
+                  <li>Air Conditioned</li>
+                  <li>43" HDMI Screen</li>
+                  <li>Equipped Kitchen</li>
+                  <li>Free Drink per Guest</li>
+                  <li>Photography Gear (extra charge)</li>
+                </ul>
+                <a class="view-btn" [routerLink]="['/rooms/', spaces[3].slug]">View Details</a>
               </div>
             </div>
             <div class="space-card featured">
               <div class="space-badge">Popular</div>
-              <!-- <div class="space-image">
-                <i class="fas fa-desk"></i>
-              </div> -->
               <div class="space-content">
-                <h3>Dedicated Desks</h3>
-                <p>Your own desk in a shared office environment.</p>
+                <h3>Big Meeting Room</h3>
                 <ul class="space-features">
-                  <li>Personal workspace</li>
-                  <li>Under-desk storage</li>
-                  <li>Monitor support</li>
-                  <li>Member perks</li>
+                  <li>Up to 14 Guests (16 sqm room)</li>
+                  <li>Fast Wi-Fi</li>
+                  <li>Reception Area</li>
+                  <li>Air Conditioned</li>
+                  <li>Glassboard for Brainstorming</li>
+                  <li>Soundproofed Walls</li>
+                  <li>50" Smart Screen</li>
+                  <li>Equipped Kitchen</li>
+                  <li>Free Drink per Guest</li>
+                  <li>Photography Gear (extra charge)</li>
                 </ul>
-                <div class="space-view">View More</div>
-              </div>
-            </div>
-            <div class="space-card">
-              <!-- <div class="space-image">
-                <i class="fas fa-door-closed"></i>
-              </div> -->
-              <div class="space-content">
-                <h3>Private Offices</h3>
-                <p>Fully private offices for teams and businesses.</p>
-                <ul class="space-features">
-                  <li>1-10 person capacity</li>
-                  <li>Lockable space</li>
-                  <li>Meeting room access</li>
-                  <li>Custom branding</li>
-                </ul>
-                <div class="space-view">View More</div>
+                <a class="view-btn" [routerLink]="['/rooms/', spaces[4].slug]">View Details</a>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Pricing Section - Clean, modern pricing cards -->
-      <!-- <section id="pricing" class="pricing">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-tag">Pricing</span>
-            <h2 class="section-title">Simple, Transparent Pricing</h2>
-            <p class="section-subtitle">
-              Choose the plan that works best for your work style and budget
-            </p>
-          </div>
-          <div class="pricing-toggle">
-            <span class="toggle-label active" data-period="monthly"
-              >Monthly</span
-            >
-            <div class="toggle-switch">
-              <div class="toggle-slider"></div>
-            </div>
-            <span class="toggle-label" data-period="yearly"
-              >Yearly <span class="discount-badge">Save 20%</span></span
-            >
-          </div>
-          <div class="pricing-grid">
-            <div class="pricing-card">
-              <div class="pricing-header">
-                <h3>Day Pass</h3>
-                <div class="price">
-                  <span class="currency">$</span>
-                  <span class="amount" data-monthly="25" data-yearly="20"
-                    >25</span
-                  >
-                  <span class="period">/day</span>
-                </div>
-              </div>
-              <ul class="pricing-features">
-                <li>Hot desk access</li>
-                <li>High-speed Wi-Fi</li>
-                <li>Coffee & tea</li>
-                <li>Basic amenities</li>
-                <li>Community events</li>
-              </ul>
-              <button class="btn btn-outline btn-block">Choose Plan</button>
-            </div>
-            <div class="pricing-card featured">
-              <div class="pricing-badge">Most Popular</div>
-              <div class="pricing-header">
-                <h3>Monthly</h3>
-                <div class="price">
-                  <span class="currency">$</span>
-                  <span class="amount" data-monthly="200" data-yearly="160"
-                    >200</span
-                  >
-                  <span class="period">/month</span>
-                </div>
-              </div>
-              <ul class="pricing-features">
-                <li>Dedicated desk</li>
-                <li>24/7 access</li>
-                <li>Meeting room credits</li>
-                <li>Storage locker</li>
-                <li>All amenities</li>
-                <li>Priority support</li>
-              </ul>
-              <button class="btn btn-primary btn-block">Choose Plan</button>
-            </div>
-            <div class="pricing-card">
-              <div class="pricing-header">
-                <h3>Private Office</h3>
-                <div class="price">
-                  <span class="currency">$</span>
-                  <span class="amount" data-monthly="500" data-yearly="400"
-                    >500</span
-                  >
-                  <span class="period">/month</span>
-                </div>
-              </div>
-              <ul class="pricing-features">
-                <li>Private lockable office</li>
-                <li>1-4 person capacity</li>
-                <li>Unlimited meeting rooms</li>
-                <li>Custom branding</li>
-                <li>Dedicated support</li>
-                <li>All premium amenities</li>
-              </ul>
-              <button class="btn btn-outline btn-block">Choose Plan</button>
-            </div>
-          </div>
-        </div>
-      </section> -->
-
-      <!-- Testimonials Section - Modern slider-style testimonials -->
-      <!-- <section id="testimonials" class="testimonials">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-tag">Testimonials</span>
-            <h2 class="section-title">What Our Members Say</h2>
-          </div>
-          <div class="testimonials-slider">
-            <div class="testimonial-card">
-              <div class="testimonial-content">
-                <div class="stars">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p>
-                  "TVS Spaces has transformed the way I work. The community is
-                  amazing and the facilities are top-notch."
-                </p>
-              </div>
-              <div class="testimonial-author">
-                <div class="author-avatar">
-                  <i class="fas fa-user"></i>
-                </div>
-                <div class="author-info">
-                  <h4>Sarah Johnson</h4>
-                  <p>Freelance Designer</p>
-                </div>
-              </div>
-            </div>
-            <div class="testimonial-card">
-              <div class="testimonial-content">
-                <div class="stars">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p>
-                  "Perfect for our growing startup. The flexibility and
-                  networking opportunities are incredible."
-                </p>
-              </div>
-              <div class="testimonial-author">
-                <div class="author-avatar">
-                  <i class="fas fa-user"></i>
-                </div>
-                <div class="author-info">
-                  <h4>Mike Chen</h4>
-                  <p>Tech Entrepreneur</p>
-                </div>
-              </div>
-            </div>
-            <div class="testimonial-card">
-              <div class="testimonial-content">
-                <div class="stars">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p>
-                  "The best co-working space in the city. Professional
-                  environment with a welcoming community."
-                </p>
-              </div>
-              <div class="testimonial-author">
-                <div class="author-avatar">
-                  <i class="fas fa-user"></i>
-                </div>
-                <div class="author-info">
-                  <h4>Emily Rodriguez</h4>
-                  <p>Marketing Consultant</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="slider-controls">
-            <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
-            <div class="slider-dots">
-              <span class="dot active"></span>
-              <span class="dot"></span>
-              <span class="dot"></span>
-            </div>
-            <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
-          </div>
-        </div>
-      </section> -->
-
       <!-- CTA Section - Clean, focused call to action -->
-      <section class="cta">
+      <section class="cta ">
         <div class="container">
           <div class="cta-content">
             <span class="section-tag">Join Us</span>
@@ -500,7 +363,9 @@
                   </div>
                   <div class="contact-text">
                     <h4>Phone</h4>
-                    <p>+20 114 001 7622<br />+1 609 604 4068</p>
+                    <a call="+201055066838">
+                      +201 055 066 838
+                    </a>
                   </div>
                 </div>
                 <div class="contact-detail">
@@ -509,9 +374,9 @@
                   </div>
                   <div class="contact-text">
                     <h4>Email</h4>
-                    <p>
-                      hello&#64;televirgins.com<br />Business&#64;televirgins.com
-                    </p>
+                    <a mailto="support@tvsspaces.com">
+                      support&#64;tvsspaces.com
+                    </a>
                   </div>
                 </div>
               </div>

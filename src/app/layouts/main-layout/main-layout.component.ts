@@ -4,14 +4,19 @@ import { AppRoutingModule } from '../../app-routing-module';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { CommonModule } from '@angular/common';
+import { Space, SPACES } from '../../shared/models/space.model';
+import { SpaceCardComponent } from "../../shared/components/space-card/space-card.component";
+import { DeskDetailComponent } from "../../pages/desk-detail/desk-detail.component";
 
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
+  standalone:false,
   styleUrls: ['./main-layout.component.scss'],
-  imports: [],
 })
 export class MainLayoutComponent {
+  spaces: Space[] = SPACES;
+  
   ngAfterViewInit() {
     // Add parallax effect to background images
     this.initParallaxEffect();
