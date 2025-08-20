@@ -8,7 +8,7 @@
 /* Modern Hero Section */
 .hero {
   padding: calc(50px + $spacing-xl) 0 $spacing-xl 0;
-  background: linear-gradient(135deg, $black-80 0%, $info-color 100%);
+  background: $hero-grad;
   min-height: 100vh; /* Reduced from 100vh for more modern feel */
   display: flex;
   align-items: center;

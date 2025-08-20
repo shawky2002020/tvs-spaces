@@ -1,5 +1,5 @@
-<div class="register-wrapper">
-  <div class="register-motivation">
+<div class="auth-wrapper">
+  <div class="auth-motivation fade-in">
     <h1 class="motivation-title">Join TVS Spaces!</h1>
     <p class="motivation-words">
       <span class="highlight">Start Fresh.</span> <br />
@@ -10,12 +10,12 @@
       Create your account and unlock a world of productivity and community.
     </p>
   </div>
-  <div class="register-card">
-    <div class="register-title">Create Your Account</div>
+  <div class="auth-card">
+    <div class="auth-title">Sign Up</div>
     <form
       [formGroup]="registerForm"
       (ngSubmit)="onSubmit()"
-      class="register-form"
+      class="auth-form"
       novalidate
     >
       <div class="form-group">
@@ -29,7 +29,7 @@
           <span *ngIf="f['name'].errors['required']">Name is required.</span>
         </div>
       </div>
-      
+
       <div class="form-group">
         <input
           type="email"
@@ -50,12 +50,21 @@
           [class.invalid]="submitted && f['password'].invalid"
         />
         <div class="error" *ngIf="submitted && f['password'].errors">
-          <span *ngIf="f['password'].errors['required']"
-            >Password is required.</span
-          >
-          <span *ngIf="f['password'].errors['minlength']"
-            >Password must be at least 6 characters.</span
-          >
+          <div *ngIf="registerForm.get('password')?.errors as errs">
+            <div *ngIf="errs['minlength']">
+              Password must be at least 8 characters.
+            </div>
+            <div *ngIf="errs['uppercase']">
+              Password must contain an uppercase letter.
+            </div>
+            <div *ngIf="errs['number']">Password must contain a number.</div>
+            <div *ngIf="errs['lowercase']">
+              Password must contain a lowercase letter.
+            </div>
+            <div *ngIf="errs['specialChar']">
+              Password must contain a special character.
+            </div>
+          </div>
         </div>
       </div>
       <div class="form-group">
@@ -66,11 +75,11 @@
           [class.invalid]="submitted && f['confirmPassword'].invalid"
         />
         <div class="error" *ngIf="submitted && f['confirmPassword'].errors">
-          <span *ngIf="f['confirmPassword'].errors['required']"
-            >Confirm your password.</span
+          <div *ngIf="f['confirmPassword'].errors['required']"
+            >Confirm your password.</div
           >
-          <span *ngIf="f['confirmPassword'].errors['mismatch']"
-            >Passwords do not match.</span
+          <div *ngIf="f['confirmPassword'].errors['mismatch']"
+            >Passwords do not match.</div
           >
         </div>
       </div>
@@ -93,12 +102,13 @@
           >
         </div>
       </div>
-      <div class="register-actions">
+      <div class="auth-actions">
         <button type="submit" class="btn btn-primary">Register</button>
       </div>
     </form>
-    <div class="register-links">
-      <a routerLink="/auth/login">Already have an account? Sign In</a>
+    <div class="auth-links">
+      Already have an account? 
+      <a routerLink="/auth/login">Sign In</a>
     </div>
   </div>
 </div>

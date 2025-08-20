@@ -139,3 +139,5 @@ $light-grad:linear-gradient(
     rgba($info-color, 0.1) 60%,
     rgba($accent-color, 0.1) 100%
   );
+
+  $hero-grad:linear-gradient(135deg, $black-80 0%, $info-color 100%);

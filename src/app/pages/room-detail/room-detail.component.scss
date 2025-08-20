@@ -51,7 +51,7 @@
 
 .header-image {
   position: relative;
-  height: 400px;
+  height: 700px;
   width: 100%;
   overflow: hidden;
   border-radius: $border-radius-lg;
@@ -80,9 +80,10 @@
 
 // Section Styling
 section {
-
+  margin: 40px 0;
   h2 {
     padding-bottom: $spacing-xs;
+    color: $black-80;
   }
 }
 
@@ -144,7 +145,7 @@ section {
 
 .pricing-card {
   border-radius: $border-radius-md;
-  border: 1px solid $white-80;
+  border: 1px solid $black-80;
   overflow: hidden;
   transition: all $transition-base;
   position: relative;
@@ -152,8 +153,6 @@ section {
   height: fit-content;
   flex-direction: column;
   height: 100%;
-    background: $light-grad;
-
   &:hover {
     transform: translateY(-5px);
     box-shadow: $shadow-md;
@@ -161,10 +160,12 @@ section {
   }
 
   &.featured {
-    border: 2px solid $primary-color;
-    box-shadow: $shadow-md;
+    box-shadow: 0px 2px 20px rgba($info-color, 0.5),
+    2px 1px 10px rgba($black-color, 0.5);
+    border: none;
     transform: scale(1.02);
     z-index: 1;
+        background: $light-grad;
 
     &:hover {
       transform: scale(1.03) translateY(-5px);
@@ -192,7 +193,6 @@ section {
   .pricing-card-header {
     text-align: center;
     border-bottom: 1px solid $white-80;
-    background-color: rgba($light-color, 0.3);
     padding: 70px 0 50px 0;
   }
 
@@ -265,7 +265,13 @@ section {
     padding: $spacing-md;
     text-align: center;
     border-top: 1px solid $white-80;
-    background:$primary-grad;
+    background: linear-gradient(135deg,$primary-color,$black-80,$secondary-color);
+    button{
+      font-weight: $font-weight-bold;
+      &:hover{
+        color: $white-color;
+      }
+    }
   }
 }
 ::-webkit-scrollbar {
@@ -320,9 +326,11 @@ section {
 
 // Enquiry Form
 .enquiry-section {
-  background-color: $white-color;
   border-radius: $border-radius-md;
   padding: $spacing-lg;
+  background: radial-gradient(ellipse  at 0% 100%,rgba($secondary-color, 0.3) 20% ,transparent 50%),
+  radial-gradient(ellipse at 100% 100% ,rgba($info-color, 0.2),transparent ),
+  radial-gradient(ellipse   at 0% 0% ,rgba($accent-color, .1) ,transparent);
 }
 
 .enquiry-form {

@@ -2,7 +2,7 @@
   <!-- Breadcrumbs -->
   <div class="breadcrumbs">
     <a [routerLink]="['/']" class="breadcrumb-link">Home</a> &gt; 
-    <a [routerLink]="['/rooms']" class="breadcrumb-link">Desks</a> &gt; 
+    <a href="/#spaces">Rooms</a> &gt; 
     <span>{{ space.name }}</span>
   </div>
   
@@ -14,24 +14,22 @@
       <div class="capacity" *ngIf="space.capacity">
         <i class="fas fa-users"></i> Capacity: Up to {{ space.capacity }} guests
       </div>
-      <div class="header-image">
+      <figure class="header-image">
         <img [src]="space.imageUrl" [alt]="space.name">
-      </div>
+        <!-- Amenities -->
+        <ul class="amenities-list">
+          <li *ngFor="let amenity of space.amenities">
+            <i class="fas fa-{{ amenity.icon }}"></i>
+            <span>{{ amenity.name }}</span>
+          </li>
+        </ul>
+      </figure>
     </div>
   </header>
   
   <!-- Main content -->
-  <div class="container detail-content">
-    <!-- Amenities -->
-    <section class="amenities-section">
-      <h2>Amenities</h2>
-      <ul class="amenities-list">
-        <li *ngFor="let amenity of space.amenities">
-          <i class="fas fa-{{ amenity.icon }}"></i>
-          <span>{{ amenity.name }}</span>
-        </li>
-      </ul>
-    </section>
+  <div class="container detail-content ">
+    
     
     <!-- Pricing Plans -->
     <section class="pricing-section">
@@ -58,7 +56,7 @@
             </ul>
           </div>
           <div class="pricing-card-footer">
-            <!-- <button class="btn btn-outline" (click)="openEnquiryForm('hourly')">Enquire Now</button> -->
+            <button class="btn btn-outline" >Enquire Now</button>
           </div>
         </div>
         
@@ -71,6 +69,7 @@
               <span class="amount">{{ space.pricing.halfDay }}</span>
               <span class="period">/3-5 hours</span>
             </div>
+            
           </div>
           <div class="pricing-card-body">
             <ul class="pricing-features">
@@ -81,7 +80,7 @@
             </ul>
           </div>
           <div class="pricing-card-footer">
-            <!-- <button class="btn btn-outline" (click)="openEnquiryForm('halfDay')">Enquire Now</button> -->
+            <button class="btn btn-outline" >Enquire Now</button>
           </div>
         </div>
         
@@ -106,7 +105,7 @@
             </ul>
           </div>
           <div class="pricing-card-footer">
-            <!-- <button class="btn btn-primary" (click)="openEnquiryForm('day')">Enquire Now</button> -->
+            <button class="btn btn-primary" >Enquire Now</button>
           </div>
         </div>
         
@@ -130,16 +129,16 @@
             </ul>
           </div>
           <div class="pricing-card-footer">
-            <!-- <button class="btn btn-outline" (click)="openEnquiryForm('pro')">Enquire Now</button> -->
+            <button class="btn btn-outline" >Enquire Now</button>
           </div>
         </div>
       </div>
     </section>
     
     <!-- Additional Images -->
-    <section class="images-section" *ngIf="space.additionalImages && space.additionalImages.length">
+    <section class="images-section " *ngIf="space.additionalImages && space.additionalImages.length">
       <h2>More Images</h2>
-      <div class="polaroid-gallery">
+      <div class="polaroid-gallery ">
         <div class="polaroid" *ngFor="let img of space.additionalImages">
           <img [src]="img" [alt]="space.name">
         </div>

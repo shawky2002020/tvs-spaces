@@ -11,7 +11,7 @@ const routes: Routes = [
    {
     path: 'rooms/:type',
     loadComponent: () =>
-      import('./pages/room-detail/room-detail.component').then(m => m.RoomDetailComponent)
+      import('./pages/room-detail/room-detail.component').then(m => m.RoomDetailComponent),
   },
   {
     path: 'desks/:type',
@@ -29,7 +29,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{
+    scrollPositionRestoration: 'enabled', // 👈 always go to top
+      anchorScrolling: 'enabled'  
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

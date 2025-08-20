@@ -1,35 +1,82 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-register',
   standalone: false,
   templateUrl: './register.html',
-  styleUrls: ['./register.scss'],
+  styleUrls: ['../auth.scss'],
 })
 export class Register {
   registerForm: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder) {
-    this.registerForm = this.fb.group({
-      name: ['', [Validators.required]],
-      userType: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
-    }, { validators: this.passwordMatchValidator });
+  constructor(private fb: FormBuilder, private authService: AuthService) {
+    this.registerForm = this.fb.group(
+      {
+        name: ['', [Validators.required]],
+        userType: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Register.passwordStrengthValidator,
+          ],
+        ],
+        confirmPassword: [
+          '',
+          [Validators.required, this.passwordMatchValidator],
+        ],
+      },
+      {
+        validators: this.passwordMatchValidator,
+      }
+    );
   }
 
-  get f() { return this.registerForm.controls; }
+  static passwordStrengthValidator(
+    control: AbstractControl
+  ): ValidationErrors | null {
+    const value = control.value || '';
+
+    const errors: ValidationErrors = {};
+
+    if (value.length < 8) {
+      errors['minlength'] = true;
+    }
+    if (!/[A-Z]/.test(value)) {
+      errors['uppercase'] = true;
+    }
+    if (!/[0-9]/.test(value)) {
+      errors['number'] = true;
+    }
+
+    // Return errors if any, otherwise null
+    return Object.keys(errors).length ? errors : null;
+  }
+  get f() {
+    return this.registerForm.controls;
+  }
 
   passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
     if (password !== confirmPassword) {
-      group.get('confirmPassword')?.setErrors({ ...group.get('confirmPassword')?.errors, mismatch: true });
+      group.get('confirmPassword')?.setErrors({
+        ...group.get('confirmPassword')?.errors,
+        mismatch: true,
+      });
       return { mismatch: true };
     } else {
       if (group.get('confirmPassword')?.hasError('mismatch')) {
@@ -50,7 +97,17 @@ export class Register {
     if (this.registerForm.invalid) {
       return;
     }
-    // Handle registration logic here
-    // Example: console.log(this.registerForm.value);
+    const { name, email, password } = this.registerForm.value;
+    this.authService.signup(name, email, password).subscribe({
+      next: () => {
+        alert('registered successfully');
+      },
+      error(err) {
+        // if backend sends plain text
+
+        // if backend sends JSON { message: "..."}
+        alert(err.error);
+      },
+    });
   }
 }

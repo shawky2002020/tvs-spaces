@@ -1,0 +1,160 @@
+@import "main.scss";
+
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xl;
+  padding: $spacing-xl $spacing-md;
+  background: $primary-grad;
+    margin-top: 30px;
+
+}
+
+.auth-motivation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 600px;
+  margin-right: $spacing-xl;
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+
+.motivation-title {
+  font-family: $font-family-heading;
+  font-size: $font-size-xxl;
+  color: $black-80;
+  font-weight: $font-weight-bold;
+}
+
+.motivation-words {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-sm;
+}
+
+.motivation-words .highlight {
+  color: $white-color;
+  background: $secondary-grad;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: $font-size-xxxl;
+  font-family: $font-family-heading;
+  position: relative;
+  text-shadow: 1px 2px 5px rgba($white-color, .1);
+}
+.highlight::after {
+  background: #000000;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.motivation-sub {
+  font-size: $font-size-md;
+  color: $black-60;
+  margin-bottom: $spacing-lg;
+}
+
+.auth-card {
+  background: $hero-grad;
+  backdrop-filter: blur(10px);
+  border-radius: $border-radius-lg;
+  box-shadow:0px 3px 10px black;
+  padding: $spacing-lg $spacing-lg;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+
+.auth-title {
+  font-family: $font-family-heading;
+  font-size: $font-size-xxl;
+  color: $light-color;
+  margin-bottom: $spacing-lg;
+  font-weight: $font-weight-bold;
+  text-align: center;
+}
+
+.auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.form-group {
+  width: 100%;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text" ],
+input[type = "select" ]{
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  border: 1px solid $light-color;
+  border-radius: $border-radius-md;
+  font-size: $font-size-md;
+  font-family: $font-family-base;
+  transition: border-color $transition-base;
+}
+
+input:focus {
+  outline: none;
+  border-color: $primary-color;
+}
+
+.auth-actions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  margin-top: $spacing-md;
+}
+
+.auth-links {
+  margin-top: $spacing-lg;
+  text-align: center;
+  font-size: $font-size-md;
+  color: $white-color;
+  a{
+    background: $black-80;
+    padding: 8px;
+    border-radius: 4px;
+    transition: color $transition-base,background $transition-base;
+    margin-left: 4px;
+    &:hover{
+      color: $black-80;
+      background: $light-color;
+    }
+  }
+}
+select {
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  border: 1px solid $light-color;
+  border-radius: $border-radius-md;
+  font-size: $font-size-md;
+  font-family: $font-family-base;
+  background: $white-color;
+  color: $black-80;
+  transition: border-color $transition-base, box-shadow $transition-base;
+  appearance: none;
+  outline: none;
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.15);
+  }
+}
+

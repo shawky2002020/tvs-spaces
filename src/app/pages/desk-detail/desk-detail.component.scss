@@ -5,8 +5,8 @@
 .detail-page {
   padding-top: calc(60px + $spacing-xl);
   padding-bottom: $spacing-xl;
-  background-color: $white-60;
   min-height: 100vh;
+
 }
 
 // Breadcrumbs
@@ -15,10 +15,9 @@
 .detail-header {
   position: relative;
   margin-bottom: $spacing-xl;
- 
+
   h1 {
     color: $primary-color;
-    font-size: 2.5rem;
     margin-bottom: $spacing-sm;
     font-family: main;
   }
@@ -28,9 +27,12 @@
     font-size: $font-size-md;
     margin-bottom: $spacing-md;
     line-height: 1.6;
+    margin-left: 12px;
   }
 
   .capacity {
+    margin-left: 12px;
+
     display: inline-flex;
     align-items: center;
     gap: $spacing-xs;
@@ -48,7 +50,8 @@
 }
 
 .header-image {
-  height: 400px;
+  position: relative;
+  height: 600px;
   width: 100%;
   overflow: hidden;
   border-radius: $border-radius-lg;
@@ -59,6 +62,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 70%;
     transition: transform $transition-slow;
 
     &:hover {
@@ -69,42 +73,17 @@
 
 // Main content
 .detail-content {
-  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: $spacing-xl;
 }
 
 // Section Styling
 section {
-  background-color: $white-color;
-  border-radius: $border-radius-md;
-  padding: $spacing-lg;
-  box-shadow: $shadow-sm;
-  transition: transform $transition-base, box-shadow $transition-base;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: $shadow-md;
-  }
-
+  margin: 40px 0;
   h2 {
-    color: $primary-color;
-    font-size: $font-size-lg;
-    margin-bottom: $spacing-md;
-    position: relative;
     padding-bottom: $spacing-xs;
-
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 50px;
-      height: 3px;
-      background-color: $accent-color;
-    }
+    color: $black-80;
   }
 }
 
@@ -112,17 +91,20 @@ section {
 .amenities-list {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  display: flex;
   gap: $spacing-md;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 
   li {
     display: flex;
     align-items: center;
     gap: $spacing-sm;
     padding: $spacing-sm;
-    background-color: $white-80;
     border-radius: $border-radius-md;
     transition: all $transition-base;
+    backdrop-filter: blur(20px);
 
     &:hover {
       background-color: rgba($accent-color, 0.1);
@@ -130,7 +112,7 @@ section {
     }
 
     i {
-      color: $primary-color;
+      color: $white-color;
       font-size: $font-size-md;
       width: 24px;
       height: 24px;
@@ -140,7 +122,7 @@ section {
     }
 
     span {
-      color: $black-80;
+      color: $white-color;
       font-size: $font-size-sm;
       font-weight: $font-weight-medium;
     }
@@ -162,9 +144,8 @@ section {
 }
 
 .pricing-card {
-  background-color: $white-color;
   border-radius: $border-radius-md;
-  border: 1px solid $white-80;
+  border: 1px solid $black-80;
   overflow: hidden;
   transition: all $transition-base;
   position: relative;
@@ -172,7 +153,6 @@ section {
   height: fit-content;
   flex-direction: column;
   height: 100%;
-
   &:hover {
     transform: translateY(-5px);
     box-shadow: $shadow-md;
@@ -180,117 +160,124 @@ section {
   }
 
   &.featured {
-    border: 2px solid $primary-color;
-    box-shadow: $shadow-md;
+    box-shadow: 0px 2px 20px rgba($info-color, 0.5),
+    2px 1px 10px rgba($black-color, 0.5);
+    border: none;
     transform: scale(1.02);
     z-index: 1;
+        background: $light-grad;
 
     &:hover {
       transform: scale(1.03) translateY(-5px);
       box-shadow: $shadow-lg;
     }
   }
-}
 
-.pricing-badge {
-  position: absolute;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: $primary-color;
-  color: $white-color;
-  padding: $spacing-xs $spacing-md;
-  border-radius: $border-radius-pill;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-medium;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  z-index: 2;
-  text-align: center;
-}
+  .pricing-badge {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $primary-color;
+    color: $white-color;
+    padding: $spacing-xs $spacing-md;
+    border-radius: $border-radius-pill;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    z-index: 2;
+    text-align: center;
+  }
 
-.pricing-card-header {
-  text-align: center;
-  border-bottom: 1px solid $white-80;
-  background-color: rgba($light-color, 0.3);
-  padding: 70px 0 50px 0;
-}
+  .pricing-card-header {
+    text-align: center;
+    border-bottom: 1px solid $white-80;
+    padding: 70px 0 50px 0;
+  }
 
-.pricing-card-header h3 {
-  color: $primary-color;
-  font-size: $font-size-md;
-  margin-bottom: $spacing-sm;
-  font-weight: $font-weight-bold;
-}
+  .pricing-card-header h3 {
+    color: $primary-color;
+    font-size: $font-size-md;
+    margin-bottom: $spacing-sm;
+    font-weight: $font-weight-bold;
+  }
 
-.price {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: $spacing-xs;
-}
-
-.currency {
-  font-size: $font-size-sm;
-  color: $black-60;
-}
-
-.amount {
-  font-size: 2rem;
-  font-weight: $font-weight-bold;
-  color: $primary-color;
-}
-
-.period {
-  font-size: $font-size-xs;
-  color: $black-60;
-}
-
-.pricing-card-body {
-  padding: $spacing-md;
-  flex-grow: 1;
-}
-
-.pricing-features {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  li {
+  .price {
     display: flex;
-    align-items: center;
-    padding: $spacing-xs 0;
-    color: $black-60;
-    font-size: $font-size-sm;
+    align-items: baseline;
+    justify-content: center;
+    gap: $spacing-xs;
+  }
 
-    &::before {
-      content: "✓";
-      color: $success-color;
-      font-weight: $font-weight-bold;
-      margin-right: $spacing-sm;
-      font-size: 0.8rem;
-      background-color: rgba($success-color, 0.1);
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
+  .currency {
+    font-size: $font-size-sm;
+    color: $black-60;
+  }
+
+  .amount {
+    font-size: 2rem;
+    font-weight: $font-weight-bold;
+    color: $primary-color;
+  }
+
+  .period {
+    font-size: $font-size-xs;
+    color: $black-60;
+  }
+
+  .pricing-card-body {
+    padding: $spacing-md;
+    flex-grow: 1;
+  }
+
+  .pricing-features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      padding: $spacing-xs 0;
+      color: $black-60;
+      font-size: $font-size-sm;
+
+      &::before {
+        content: "✓";
+        color: $success-color;
+        font-weight: $font-weight-bold;
+        margin-right: $spacing-sm;
+        font-size: 0.8rem;
+        background-color: rgba($success-color, 0.1);
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  .pricing-card-footer {
+    padding: $spacing-md;
+    text-align: center;
+    border-top: 1px solid $white-80;
+    background: linear-gradient(135deg,$primary-color,$black-80,$secondary-color);
+    button{
+      font-weight: $font-weight-bold;
+      &:hover{
+        color: $white-color;
+      }
     }
   }
 }
-
-.pricing-card-footer {
-  padding: $spacing-md;
-  text-align: center;
-  border-top: 1px solid $white-80;
-  background-color: $white-color;
+::-webkit-scrollbar {
+  width: 0;
+  display: none;
 }
-::-webkit-scrollbar{
-    width: 0;
-    display: none;
-  }
 // Images Section
 .polaroid-gallery {
   display: flex;
@@ -301,13 +288,10 @@ section {
     background-color: $white-color;
     padding: $spacing-sm;
     box-shadow: $shadow-md;
-    // transform: rotate(random(4) - 2 + deg);
-    // transition: all $transition-base;
     min-width: 400px; // or 400px as you have
     height: 400px;
 
     img {
-      
       width: 400px;
       height: 400px;
       object-fit: cover;
@@ -342,9 +326,11 @@ section {
 
 // Enquiry Form
 .enquiry-section {
-  background-color: $white-color;
   border-radius: $border-radius-md;
   padding: $spacing-lg;
+  background: radial-gradient(ellipse  at 0% 100%,rgba($secondary-color, 0.3) 20% ,transparent 50%),
+  radial-gradient(ellipse at 100% 100% ,rgba($info-color, 0.2),transparent ),
+  radial-gradient(ellipse   at 0% 0% ,rgba($accent-color, .1) ,transparent);
 }
 
 .enquiry-form {

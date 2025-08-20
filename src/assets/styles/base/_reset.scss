@@ -99,4 +99,8 @@ main {
 .error {
   padding: 4px 12px;
   color: $error-color;
+  background: #000000c1;
+  border-radius: 4px;
+  margin: 2px 0;
+  font-weight: 500;
 }

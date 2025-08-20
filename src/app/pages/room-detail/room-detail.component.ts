@@ -13,7 +13,9 @@ import { CommonModule } from '@angular/common';
 export class RoomDetailComponent implements OnInit {
   space: Space | undefined;
   
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router) {
+    window.screenY = 0;
+  }
   
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('type');
