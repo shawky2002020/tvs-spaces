@@ -12,17 +12,27 @@ import { CommonModule } from '@angular/common';
 })
 export class RoomDetailComponent implements OnInit {
   space: Space | undefined;
-  
+  selectedPlan: string = '';
+
   constructor(private route: ActivatedRoute, private router: Router) {
-    window.screenY = 0;
   }
-  
+
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('type');
     this.space = SPACES.find(s => s.type === 'room' && s.slug === slug);
-    
+
     if (!this.space) {
       this.router.navigate(['/not-found']);
     }
+  }
+
+  selectPlan(plan: string, price: number) {
+    this.selectedPlan = plan;
+    setTimeout(() => {
+      const el = document.getElementById('enquiry-section');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 0);
   }
 }

@@ -2,7 +2,7 @@
   <!-- Breadcrumbs -->
   <div class="breadcrumbs">
     <a [routerLink]="['/']" class="breadcrumb-link">Home</a> &gt; 
-    <a href="/#spaces">Rooms</a> &gt; 
+    <a href="/#desks">Desks</a> &gt; 
     <span>{{ space.name }}</span>
   </div>
   
@@ -56,7 +56,9 @@
             </ul>
           </div>
           <div class="pricing-card-footer">
-            <button class="btn btn-outline" >Enquire Now</button>
+            <a  (click)="selectPlan('hourly', space.pricing.hourly)">
+              <button class="btn btn-outline" type="button">Enquire Now</button>
+            </a>
           </div>
         </div>
         
@@ -80,7 +82,9 @@
             </ul>
           </div>
           <div class="pricing-card-footer">
-            <button class="btn btn-outline" >Enquire Now</button>
+            <a  (click)="selectPlan('halfDay', space.pricing.halfDay)">
+              <button class="btn btn-outline" type="button">Enquire Now</button>
+            </a>
           </div>
         </div>
         
@@ -105,7 +109,9 @@
             </ul>
           </div>
           <div class="pricing-card-footer">
-            <button class="btn btn-primary" >Enquire Now</button>
+            <a  (click)="selectPlan('day', space.pricing.day)">
+              <button class="btn btn-primary" type="button">Enquire Now</button>
+            </a>
           </div>
         </div>
         
@@ -129,7 +135,9 @@
             </ul>
           </div>
           <div class="pricing-card-footer">
-            <button class="btn btn-outline" >Enquire Now</button>
+            <a  (click)="selectPlan('pro', space.pricing.pro)">
+              <button class="btn btn-outline" type="button">Enquire Now</button>
+            </a>
           </div>
         </div>
       </div>
@@ -150,14 +158,14 @@
       <h2>Usage Policy</h2>
       <div class="policy-box">
         <p><strong>Advanced booking is required for any use before 8 AM or after 11 PM</strong></p>
-        <p>Rooms: Full Day = 6-8 hours, Half Day = 3-5 hours</p>
+        <p>Rooms: Full Day = 6-12 hours, Half Day = 4-6 hours</p>
         <p>Cancellations must be made at least 24 hours in advance for a full refund.</p>
         <p>Please respect our shared space guidelines and leave the room as you found it.</p>
       </div>
     </section>
     
     <!-- Enquiry Form -->
-    <section class="enquiry-section">
+    <section id="enquiry-section" class="enquiry-section">
       <h2>Interested in this space?</h2>
       <div class="enquiry-form">
         <div class="form-group">
@@ -175,10 +183,10 @@
         <div class="form-group">
           <label for="plan">Preferred Plan</label>
           <select id="plan">
-            <option value="hourly">Hourly ({{ space.pricing.hourly }} EGP)</option>
-            <option value="halfDay">Half Day ({{ space.pricing.halfDay }} EGP)</option>
-            <option value="day">Full Day ({{ space.pricing.day }} EGP)</option>
-            <option value="pro" *ngIf="space.pricing.pro">Monthly Pro ({{ space.pricing.pro }} EGP)</option>
+            <option value="hourly" [selected]="selectedPlan === 'hourly'">Hourly ({{ space.pricing.hourly }} EGP)</option>
+            <option value="halfDay" [selected]="selectedPlan === 'halfDay'">Half Day ({{ space.pricing.halfDay }} EGP)</option>
+            <option value="day" [selected]="selectedPlan === 'day'">Full Day ({{ space.pricing.day }} EGP)</option>
+            <option value="pro" *ngIf="space.pricing.pro" [selected]="selectedPlan === 'pro'">Monthly Pro ({{ space.pricing.pro }} EGP)</option>
           </select>
         </div>
         <div class="form-group">

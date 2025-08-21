@@ -1,26 +1,58 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { AUTH_URLS } from '../../shared/models/urls/url';
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private router: Router, private http: HttpClient) {}
+  private accessToken: string | null = null;
+
+  constructor(private http: HttpClient, private router: Router) {}
+
   login(email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_URLS.LOGIN, { email, password });
+    return this.http
+      .post<any>(
+        AUTH_URLS.LOGIN,
+        { email, password },
+        { withCredentials: true }
+      )
+      .pipe(
+        tap((res) => {
+          this.accessToken = res.accessToken; // store in memory
+        })
+      );
+  }
+  signup(username: string, email: string, password: string): Observable<any> {
+    return this.http
+      .post<any>(
+        AUTH_URLS.REGISTER,
+        { username,email, password },
+        { withCredentials: true }
+      )
+      .pipe(
+        tap((res) => {
+          this.accessToken = res.accessToken; // store in memory
+        })
+      );
   }
 
-  signup(username: string, email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_URLS.REGISTER, { username, email, password });
+  getToken(): string | null {
+    return this.accessToken;
   }
 
   logout(): void {
-    localStorage.removeItem('access_token');
+    this.accessToken = null;
     this.router.navigate(['/auth/login']);
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('access_token');
+    return !!this.accessToken;
   }
+
+  refreshToken(): Observable<any> {
+  return this.http.post<any>('/api/auth/refresh', {}, { withCredentials: true })
+    .pipe(tap(res => {
+      this.accessToken = res.accessToken;
+    }));
+}
 }
