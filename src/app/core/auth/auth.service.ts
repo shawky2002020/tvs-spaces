@@ -53,16 +53,15 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    console.log(this.accessToken);
 
     return !!this.accessToken;
   }
 
   refreshToken(): Observable<any> {
     return this.http
-      .post<any>('/api/auth/refresh', {}, { withCredentials: true })
+      .post<any>(AUTH_URLS.REFRESH, {}, { withCredentials: true })
       .pipe(
-        tap((res) => {
+        tap((res) => {          
           this.accessToken = res.accessToken;
         })
       );

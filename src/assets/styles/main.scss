@@ -9,6 +9,16 @@
 
 @font-face {
   font-family: main;
-  src: url("/assets/fonts/Aquire-BW0ox.otf") format('opentype');
-  
+  src: url("/assets/fonts/honfleur-regular.otf") format('opentype');
+  font-display: swap;
+}
+@font-face {
+  font-family: sec1;
+  src: url("/assets/fonts/Dhan Studio - Arsilon.otf") format('opentype');
+  font-display: swap;
+}
+@font-face {
+  font-family: sec2;
+  src: url("/assets/fonts/AleynaPersonalUse-Regular.otf") format('opentype');
+  font-display: swap;
 }

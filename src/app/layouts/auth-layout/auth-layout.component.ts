@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppRoutingModule } from "../../app-routing-module";
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-auth-layout',
@@ -7,4 +8,9 @@ import { AppRoutingModule } from "../../app-routing-module";
   styleUrls: ['./auth-layout.component.scss'],
   standalone:false
 })
-export class AuthLayoutComponent {}
+export class AuthLayoutComponent {
+  constructor(private authService:AuthService){
+
+  }
+  
+}

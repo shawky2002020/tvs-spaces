@@ -6,5 +6,6 @@ const API_URL = `${BASE_URL}/api/`;
 export const AUTH_URLS = {
   LOGIN: `${API_URL}auth/login`,
   REGISTER: `${API_URL}auth/signup`,
-  LOGOUT: `${API_URL}auth/logout`
+  LOGOUT: `${API_URL}auth/logout`,
+  REFRESH:`${API_URL}auth/refresh`
 };

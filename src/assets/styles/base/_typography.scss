@@ -10,35 +10,40 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-family-heading);
-  line-height: var(--line-height-heading);
-  font-weight: var(--font-weight-bold);
-  margin-bottom: var(--spacing-md);
+  line-height: $line-height-heading;
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-md;
 }
 
 h1 {
-  font-weight: var(--font-weight-bold);
+  font-family: $font-family-heading;
+
+  font-weight: $font-weight-bold;
   font-size: $font-size-xxxl;
 }
 
 h2 {
-  font-weight: var(--font-weight-bold);
+  font-family: $font-family-secondary;
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
   font-size: $font-size-xxl;
 }
 
 h3 {
-  font-weight: var(--font-weight-medium);
+  font-family: $font-family-accent;
+  font-size: $font-size-xl;
+
+  font-weight: $font-weight-medium;
   font-size: $font-size-xl;
 }
 
 h4 {
-  font-weight: var(--font-weight-medium);
+  font-weight: $font-weight-medium;
   font-size: $font-size-lg;
 }
 
 p {
-  margin-bottom: var(--spacing-md);
-  color: var(--black-60);
+  margin-bottom: $spacing-md;
+  color: $black-60;
   font-size: $font-size-base;
 }
-

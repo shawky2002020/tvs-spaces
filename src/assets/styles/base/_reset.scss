@@ -34,9 +34,9 @@ main {
   width: fit-content;
   margin: auto;
   background: rgba(245, 245, 245, 0.385);
-  padding: 12px;
+  padding: 12px 12px 4px 12px;
   backdrop-filter: blur(20px);
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 
 }
 
@@ -47,20 +47,20 @@ main {
   letter-spacing: -0.5px;
   position: relative;
   display: inline-block;
-  font-family: main;
+  font-family: $font-family-heading;
 }
 
 .section-tag {
   position: absolute;
   top: -15px;
   left: -30px;
-  font-family: main;
+  font-family: $font-family-accent;
   display: inline-block;
   background-color: rgba($primary-color, 0.1);
   color: $primary-color;
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-pill;
-  font-size: $font-size-xs;
+  font-size: $font-size-md;
   font-weight: $font-weight-medium;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -80,10 +80,12 @@ main {
 }
 
 .section-subtitle {
-  font-size: $font-size-md; /* Reduced size */
+  // font-size: $font-size-md; /* Reduced size */
+    font-family: $font-family-heading;
+
   color: $black-60;
   max-width: 600px;
-  margin: $spacing-lg auto 0;
+  margin: $spacing-md auto 0;
   line-height: 1.6;
 }
 

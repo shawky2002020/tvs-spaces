@@ -16,10 +16,9 @@
   position: relative;
   margin-bottom: $spacing-xl;
 
-  h1 {
+  .handwritten {
     color: $primary-color;
     margin-bottom: $spacing-sm;
-    font-family: main;
   }
 
   .description {
@@ -51,7 +50,7 @@
 
 .header-image {
   position: relative;
-  height: 700px;
+  height: 600px;
   width: 100%;
   overflow: hidden;
   border-radius: $border-radius-lg;
@@ -84,6 +83,8 @@ section {
   h2 {
     padding-bottom: $spacing-xs;
     color: $black-80;
+    font-family: $font-family-heading;
+    font-size: $font-size-xl;
   }
 }
 

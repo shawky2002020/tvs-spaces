@@ -37,6 +37,8 @@ export class Login {
         alert('logged in successfully');
       },
       error(err) {
+        console.log(err.error.message);
+        
         alert(err.error.message);
       },
     });

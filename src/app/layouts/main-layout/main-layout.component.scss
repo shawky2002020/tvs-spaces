@@ -25,33 +25,36 @@
     opacity: 0.3;
     z-index: 1;
   }
-  
+
   .hero-content {
     display: flex;
     flex-flow: row nowrap;
-    gap: $spacing-xl;
+    // gap: $spacing-md;
     align-items: center;
     position: relative;
     z-index: 2;
   }
-  
+  .hero-text {
+    width: 100%;
+  }
+
   .hero-title {
-    font-size: 3.5rem; /* Slightly reduced for modern look */
+    font-size: 3rem; /* Slightly reduced for modern look */
     margin-bottom: $spacing-lg;
     color: $white-color;
     font-weight: $font-weight-bold;
     line-height: 1.1; /* Tighter line height for modern typography */
     letter-spacing: -0.5px; /* Negative letter spacing for modern look */
   }
-  
+
   .hero-title .text-accent {
     color: $light-color;
     position: relative;
     display: inline-block;
     margin: 0 20px 0 0;
-    font-family: main;
+    font-family: $font-family-heading;
   }
-  
+
   .hero-title .text-accent::after {
     content: "";
     position: absolute;
@@ -62,7 +65,7 @@
     background-color: $accent-color;
     opacity: 0.4;
   }
-  
+
   .hero-description {
     font-size: $font-size-lg;
     margin-bottom: $spacing-xl;
@@ -70,13 +73,13 @@
     max-width: 500px; /* Control line length for better readability */
     line-height: 1.6;
   }
-  
+
   .hero-actions {
     display: flex;
     gap: $spacing-md; /* Reduced from lg for tighter spacing */
     margin-bottom: $spacing-xl;
   }
-  
+
   .hero-actions .btn {
     padding: $spacing-sm $spacing-lg;
     border-radius: $border-radius-md;
@@ -85,14 +88,15 @@
     border: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
+
   .hero-actions .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
-  
+
   .hero-img {
     width: 100%;
+    height: 100%;
     overflow: hidden;
     border-radius: 12px;
     position: relative;
@@ -108,7 +112,7 @@
       left: 0;
       font-size: $font-size-xl;
       font-family: main;
-  
+
       font-weight: 600;
       z-index: 1;
       padding: 24px;
@@ -126,8 +130,7 @@
       transparent 90%
     );
   }
-
-}    
+}
 
 /* Features Section - Modern Cards */
 .features {
@@ -137,7 +140,7 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: $spacing-lg;
   }
-  
+
   .feature-card {
     background-color: rgba(245, 245, 245, 0.595);
     backdrop-filter: blur(20px);
@@ -148,13 +151,13 @@
     transition: all $transition-base;
     border: 1px solid rgba(0, 0, 0, 0.03); /* Subtle border */
   }
-  
+
   .feature-card:hover {
     transform: translateY(-5px); /* Reduced movement */
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     border-color: rgba(0, 0, 0, 0);
   }
-  
+
   .feature-icon {
     width: 70px; /* Slightly smaller */
     height: 70px;
@@ -167,21 +170,18 @@
     color: $primary-color;
     font-size: 1.75rem;
   }
-  
+
   .feature-card h3 {
     margin-bottom: $spacing-sm; /* Reduced spacing */
     color: $primary-color;
-    font-size: $font-size-md; /* Smaller heading */
     font-weight: $font-weight-bold;
   }
-  
+
   .feature-card p {
     color: $white-20;
-    font-size: $font-size-sm;
     line-height: 1.6;
   }
 }
-
 
 /* About Section - Storytelling Layout */
 .about {
@@ -200,18 +200,18 @@
     transform: translate(100px, -150px);
     z-index: -1;
   }
-  
+
   .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: $spacing-xl;
     align-items: center;
   }
-  
+
   .about-text {
     position: relative;
   }
-  
+
   .about-text h2 {
     color: $primary-color;
     margin-bottom: $spacing-md;
@@ -221,9 +221,6 @@
     line-height: 1.2;
   }
 }
-
-
-
 
 /* Timeline Storytelling */
 .story-timeline {
@@ -395,7 +392,6 @@
   color: $accent-color;
 }
 
-
 /* Responsive adjustments */
 @media (max-width: 1024px) {
   .about-content {
@@ -469,7 +465,7 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: $spacing-lg;
   }
-  
+
   .space-card {
     // background-color: $white-color;
     backdrop-filter: blur(20px);
@@ -482,18 +478,18 @@
     border: 1px solid rgba(0, 0, 0, 0.03); /* Subtle border */
     height: 100%;
   }
-  
+
   .space-card:hover {
     transform: translateY(-5px); /* Reduced movement */
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     border-color: rgba(0, 0, 0, 0);
   }
-  
+
   .space-card.featured {
     border: 2px solid $primary-color;
     transform: scale(1.02); /* Reduced scale for subtlety */
   }
-  
+
   .space-badge {
     position: absolute;
     top: $spacing-md;
@@ -508,24 +504,24 @@
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
-  
+
   .space-content {
     padding: $spacing-lg;
     border-top: 1px solid $white-80; /* Subtle separator */
   }
-  
+
   .space-content h3 {
     color: $primary-color;
     margin-bottom: $spacing-sm; /* Reduced spacing */
     font-size: $font-size-xl;
     font-weight: $font-weight-bold;
   }
-  
+
   .space-features {
     list-style: none;
     margin: $spacing-lg 0; /* Reduced spacing */
   }
-  
+
   .space-features li {
     display: flex;
     align-items: center;
@@ -535,7 +531,7 @@
     font-size: $font-size-sm;
     font-weight: 600;
   }
-  
+
   .space-features li::before {
     content: "✓";
     color: $success-color;
@@ -549,10 +545,13 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   .view-btn {
     width: fit-content;
-    background: linear-gradient(rgba($light-color, 0.32),rgba($accent-color, 0.15));
+    background: linear-gradient(
+      rgba($light-color, 0.32),
+      rgba($accent-color, 0.15)
+    );
     box-shadow: 0px 1px 10px $white-color;
     border-radius: 8px;
     @include flex-center;
@@ -560,14 +559,13 @@
     font-weight: 700;
     font-size: $font-size-lg;
     cursor: pointer;
-    transition: color .3s ease-in-out,background .3s ease-in-out;
+    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
   }
-  .view-btn:hover{
+  .view-btn:hover {
     color: $black-80;
     background: #fff;
   }
 }
-
 
 /* Amenities Section - Clean Layout */
 .amenities {
@@ -577,7 +575,7 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: $spacing-lg;
   }
-  
+
   .amenity-item {
     display: flex;
     align-items: flex-start;
@@ -588,13 +586,13 @@
     transition: all $transition-base;
     border: 1px solid rgba(0, 0, 0, 0.03); /* Subtle border */
   }
-  
+
   .amenity-item:hover {
     background-color: $white-color;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Softer shadow */
     transform: translateY(-3px);
   }
-  
+
   .amenity-icon {
     width: 50px; /* Smaller icon */
     height: 50px;
@@ -607,14 +605,14 @@
     font-size: 1.25rem; /* Smaller icon */
     flex-shrink: 0;
   }
-  
+
   .amenity-content h4 {
     color: $primary-color;
     margin-bottom: $spacing-xs; /* Reduced spacing */
     font-size: $font-size-md;
     font-weight: $font-weight-medium;
   }
-  
+
   .amenity-content p {
     color: $black-60;
     font-size: $font-size-sm;
@@ -622,8 +620,6 @@
     margin: 0;
   }
 }
-
-
 
 /* Testimonials Section - Modern Cards */
 /* CTA Section - Clean & Minimal */
@@ -636,8 +632,8 @@
   position: relative;
   overflow: hidden;
   @include flex-center;
-  min-height:500px;
-  
+  min-height: 500px;
+
   // .cta::before {
   //   content: "";
   //   position: absolute;
@@ -648,38 +644,40 @@
   //   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="none" width="100" height="100"/><rect fill="rgba(255,255,255,0.05)" width="50" height="50"/><rect fill="rgba(255,255,255,0.05)" x="50" y="50" width="50" height="50"/></svg>');
   //   opacity: 0.4;
   // }
-  
+
   .cta-content {
     position: relative;
     z-index: 1;
     width: fit-content;
     margin: auto;
+    font-family: $font-family-accent;
   }
-  
+
   .cta-content h2 {
     color: $black-80;
     margin-bottom: $spacing-md;
-    font-size: $font-size-xxxl;
+    font-size: 74px;
     font-weight: $font-weight-bold;
     letter-spacing: -0.5px;
   }
-  
+
   .cta-content p {
-    font-size: $font-size-md; /* Reduced size */
+    font-size: $font-size-lg; /* Reduced size */
     margin-bottom: $spacing-lg; /* Reduced spacing */
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
     line-height: 1.6;
     color: $black-80;
+    font-weight: $font-weight-bold;
   }
-  
+
   .cta-actions {
     display: flex;
     gap: $spacing-md; /* Reduced spacing */
     justify-content: center;
   }
-  
+
   .cta-actions .btn {
     padding: $spacing-sm $spacing-lg;
     border-radius: $border-radius-md;
@@ -699,25 +697,24 @@
     grid-template-columns: 1fr 1fr;
     gap: $spacing-xl;
   }
-  
-  .contact-info h2 {
+
+  .contact-info h1 {
     color: $primary-color;
     margin-bottom: $spacing-md;
-    font-size: 2rem;
     font-weight: $font-weight-bold;
     letter-spacing: -0.5px;
   }
-  
+
   .contact-info p {
     color: $black-60;
     line-height: 1.6;
     margin-bottom: $spacing-lg;
   }
-  
+
   .contact-details {
     margin-top: $spacing-lg; /* Reduced spacing */
   }
-  
+
   .contact-detail {
     display: flex;
     align-items: flex-start;
@@ -728,12 +725,12 @@
     border-radius: $border-radius-md;
     transition: all $transition-base;
   }
-  
+
   .contact-detail:hover {
     background-color: $white-color;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   }
-  
+
   .contact-icon {
     width: 40px; /* Smaller icon */
     height: 40px;
@@ -745,20 +742,20 @@
     color: $primary-color;
     flex-shrink: 0;
   }
-  
+
   .contact-text h4 {
     color: $primary-color;
     margin-bottom: $spacing-xs;
     font-size: $font-size-md;
     font-weight: $font-weight-medium;
   }
-  
+
   .contact-text p {
     margin: 0;
     color: $black-60;
     font-size: $font-size-sm;
   }
-  
+
   .contact-form {
     background-color: $white-color;
     padding: $spacing-lg; /* Reduced padding */
@@ -766,11 +763,11 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Softer shadow */
     border: 1px solid rgba(0, 0, 0, 0.03); /* Subtle border */
   }
-  
+
   .form-group {
     margin-bottom: $spacing-md; /* Reduced spacing */
   }
-  
+
   .form-group label {
     display: block;
     margin-bottom: $spacing-xs;
@@ -778,7 +775,7 @@
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
   }
-  
+
   .form-group input,
   .form-group select,
   .form-group textarea {
@@ -791,7 +788,7 @@
     transition: all $transition-base;
     background-color: $white-40;
   }
-  
+
   .form-group input:focus,
   .form-group select:focus,
   .form-group textarea:focus {
@@ -800,12 +797,12 @@
     box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
     background-color: $white-color;
   }
-  
+
   .form-group textarea {
     resize: vertical;
     min-height: 120px;
   }
-  
+
   .form-submit {
     background-color: $primary-color;
     color: $white-color;
@@ -817,14 +814,13 @@
     transition: all $transition-base;
     width: 100%;
   }
-  
+
   .form-submit:hover {
     background-color: darken($primary-color, 5%);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba($primary-color, 0.3);
   }
 }
-
 
 /* Responsive Design - Modernized */
 @media (max-width: 1024px) {
@@ -973,5 +969,3 @@
     padding: 24px 64px;
   }
 }
-
-
