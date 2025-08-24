@@ -1,0 +1,118 @@
+@import "main.scss";
+.auth-sidebar {
+  width: 260px;
+  background: $primary-color;
+  color: $white-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: $shadow-lg;
+  padding: $spacing-lg $spacing-md;
+  min-height: 100vh;
+}
+
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+}
+
+.sidebar-logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: $spacing-sm;
+}
+
+.sidebar-title {
+  font-family: $font-family-heading;
+  font-size: $font-size-lg;
+  color: $accent-color;
+  font-weight: $font-weight-bold;
+  letter-spacing: 1px;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: $spacing-md;
+}
+
+.sidebar-nav a {
+  color: $white-color;
+  text-decoration: none;
+  font-size: $font-size-base;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-xs;
+  border-radius: $border-radius-md;
+  transition: background $transition-base, color $transition-base;
+}
+
+.sidebar-nav a.active,
+.sidebar-nav a:hover {
+  background: $accent-color;
+  color: $primary-color;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  text-align: center;
+}
+
+.logout-btn {
+  width: 100%;
+  color: $accent-color;
+  border: 1px solid $accent-color;
+  background: transparent;
+  font-size: $font-size-base;
+  border-radius: $border-radius-md;
+  padding: $spacing-sm 0;
+  margin-top: $spacing-lg;
+  transition: background $transition-base, color $transition-base;
+}
+.logout-btn:hover {
+  background: $accent-color;
+  color: $primary-color;
+}
+
+.auth-main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: $white-80;
+  min-height: 100vh;
+}
+
+@media (max-width: 900px) {
+  
+  .auth-sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    padding: $spacing-md;
+    justify-content: space-between;
+  }
+  .sidebar-header {
+    flex-direction: row;
+    gap: $spacing-md;
+    margin-bottom: 0;
+  }
+  .sidebar-title {
+    font-size: $font-size-md;
+  }
+  .sidebar-nav ul {
+    display: flex;
+    gap: $spacing-md;
+  }
+  .sidebar-nav li {
+    margin-bottom: 0;
+  }
+ 
+}
+

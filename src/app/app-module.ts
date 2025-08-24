@@ -15,6 +15,8 @@ import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
 import { CommonModule } from '@angular/common';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { SideBar } from './shared/components/side-bar/side-bar';
+import { SharedModule } from './shared/shared.module';
 
 
 // Required factory function for AoT
@@ -25,11 +27,13 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     App,
     MainLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SharedModule,
     CommonModule,
     RouterModule,
     HeaderComponent,

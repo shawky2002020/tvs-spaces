@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { SideBar } from './components/side-bar/side-bar';
 // Import shared components, directives, pipes here
 
 @NgModule({
@@ -17,8 +18,12 @@ import { LoaderComponent } from './components/loader/loader.component';
     CommonModule,
     HeaderComponent,
     FooterComponent,
-    LoaderComponent
+    LoaderComponent,
+    SideBar
     // Shared standalone components, directives, pipes
+  ],
+  declarations: [
+    SideBar
   ]
 })
 export class SharedModule {}

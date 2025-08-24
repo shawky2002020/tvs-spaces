@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <div class="main-layout">
   <div class="main-content-wrapper">
     <main class="main-content">
@@ -7,7 +9,8 @@
           <div class="hero-content">
             <div class="hero-text">
               <h1 class="hero-title">
-                Your Perfect <h1 class="text-accent">Workspace</h1>
+                Your Perfect
+                <h1 class="text-accent">Workspace</h1>
                 <span class="hero-subtitle">Designed for productivity</span>
               </h1>
               <p class="hero-description">
@@ -230,7 +233,9 @@
                   <li>Open Views</li>
                   <li>60" Smart Screen</li>
                 </ul>
-                <a class="view-btn" [routerLink]="['/desks/', spaces[0].slug]">View Details</a>
+                <a class="view-btn" [routerLink]="['/desks/', spaces[0].slug]">
+                  <button class="btn btn-primary">View Details</button>
+                </a>
               </div>
             </div>
             <div class="space-card">
@@ -245,7 +250,9 @@
                   <li>Open Views</li>
                   <li>60" Smart Screen</li>
                 </ul>
-                <a class="view-btn" [routerLink]="['/desks/', spaces[1].slug]">View Details</a>
+                <a class="view-btn" [routerLink]="['/desks/', spaces[1].slug]">
+                  <button class="btn btn-primary">View Details</button>
+                </a>
               </div>
             </div>
             <div class="space-card">
@@ -260,23 +267,27 @@
                   <li>Open Views</li>
                   <li>60" Smart Screen</li>
                 </ul>
-                <a class="view-btn" [routerLink]="['/desks/', spaces[2].slug]">View Details</a>
+                <a class="view-btn" [routerLink]="['/desks/', spaces[2].slug]">
+                  <button class="btn btn-primary">View Details</button>
+                </a>
               </div>
             </div>
           </div>
         </div>
       </section>
       <div class="gradient-divider-textured">
-<h1 class="section-title">Step inside — where ideas awaken and energy becomes action.</h1>
+        <h1 class="section-title">
+          Step inside — where ideas awaken and energy becomes action.
+        </h1>
       </div>
       <section id="rooms" class="spaces room-spaces">
         <div class="section-header">
-            <span class="section-tag">Rooms</span>
-            <h2 class="section-title">Room Options</h2>
-            <!-- <p class="section-subtitle">
+          <span class="section-tag">Rooms</span>
+          <h2 class="section-title">Room Options</h2>
+          <!-- <p class="section-subtitle">
               Choose the perfect space that fits your work style and needs
             </p> -->
-          </div>
+        </div>
         <div class="back parallax">
           <img src="assets/imgs/3.jpg" alt="" />
         </div>
@@ -295,7 +306,9 @@
                   <li>Free Drink per Guest</li>
                   <li>Photography Gear (extra charge)</li>
                 </ul>
-                <a class="view-btn" [routerLink]="['/rooms/', spaces[3].slug]">View Details</a>
+                <a class="view-btn" [routerLink]="['/rooms/', spaces[3].slug]">
+                  <button class="btn btn-primary">View Details</button>
+                </a>
               </div>
             </div>
             <div class="space-card featured">
@@ -314,7 +327,9 @@
                   <li>Free Drink per Guest</li>
                   <li>Photography Gear (extra charge)</li>
                 </ul>
-                <a class="view-btn" [routerLink]="['/rooms/', spaces[4].slug]">View Details</a>
+                <a class="view-btn" [routerLink]="['/rooms/', spaces[4].slug]">
+                  <button class="btn btn-primary">View Details</button>
+                </a>
               </div>
             </div>
           </div>
@@ -322,7 +337,7 @@
       </section>
 
       <!-- CTA Section - Clean, focused call to action -->
-      <section class="cta ">
+      <section class="cta">
         <div class="container">
           <div class="cta-content">
             <span class="section-tag">Join Us</span>
@@ -343,7 +358,7 @@
             <div class="contact-info">
               <span class="section-tag">Contact</span>
               <h1>Get in Touch</h1>
-              <p class="section-subtitle ">
+              <p class="section-subtitle">
                 Have questions? Send us a message and we'll respond as soon as
                 possible.
               </p>
@@ -363,9 +378,7 @@
                   </div>
                   <div class="contact-text">
                     <h4>Phone</h4>
-                    <a call="+201055066838">
-                      +201 055 066 838
-                    </a>
+                    <a call="+201055066838"> +201 055 066 838 </a>
                   </div>
                 </div>
                 <div class="contact-detail">

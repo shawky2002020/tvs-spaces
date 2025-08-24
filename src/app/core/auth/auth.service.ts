@@ -23,7 +23,8 @@ export class AuthService {
 
           this.accessToken = res.token; // store in memory
           this.router.navigate(['/dashboard']);
-        })
+        },
+      )
       );
   }
   signup(username: string, email: string, password: string): Observable<UserResponse> {
