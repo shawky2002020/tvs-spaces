@@ -5,6 +5,6 @@ import { AppRoutingModule } from "../../app-routing-module";
   selector: 'app-auth-layout',
   templateUrl: './auth-layout.component.html',
   styleUrls: ['./auth-layout.component.scss'],
-  imports: [AppRoutingModule]
+  standalone:false
 })
 export class AuthLayoutComponent {}

@@ -37,7 +37,7 @@ export class Login {
         alert('logged in successfully');
       },
       error(err) {
-        alert(err.body);
+        alert(err.error.message);
       },
     });
     // Handle login logic here

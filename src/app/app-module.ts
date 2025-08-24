@@ -6,13 +6,15 @@ import { RouterModule } from '@angular/router';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { HeaderComponent } from "./shared/components/header/header.component";
 import { FooterComponent } from "./shared/components/footer/footer.component";
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'; // ✅ Correct import
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SpaceCardComponent } from './shared/components/space-card/space-card.component';
 import { DeskDetailComponent } from './pages/desk-detail/desk-detail.component';
 import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
 import { CommonModule } from '@angular/common';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 
 
 // Required factory function for AoT
@@ -22,7 +24,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     App,
-    MainLayoutComponent
+    MainLayoutComponent,
+    AuthLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
 ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+
   ],
   bootstrap: [App]
 })

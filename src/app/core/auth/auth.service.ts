@@ -3,35 +3,42 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { AUTH_URLS } from '../../shared/models/urls/url';
+import { UserResponse } from '../../shared/models/user.model';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private accessToken: string | null = null;
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(email: string, password: string): Observable<any> {
+  login(email: string, password: string): Observable<UserResponse> {
     return this.http
-      .post<any>(
+      .post<UserResponse>(
         AUTH_URLS.LOGIN,
         { email, password },
         { withCredentials: true }
       )
       .pipe(
         tap((res) => {
-          this.accessToken = res.accessToken; // store in memory
+          console.log(res);
+
+          this.accessToken = res.token; // store in memory
+          this.router.navigate(['/dashboard']);
         })
       );
   }
-  signup(username: string, email: string, password: string): Observable<any> {
+  signup(username: string, email: string, password: string): Observable<UserResponse> {
     return this.http
-      .post<any>(
+      .post<UserResponse>(
         AUTH_URLS.REGISTER,
-        { username,email, password },
+        { username, email, password },
         { withCredentials: true }
       )
       .pipe(
         tap((res) => {
-          this.accessToken = res.accessToken; // store in memory
+          console.log(res);
+
+          this.accessToken = res.token; // store in memory
+          this.router.navigate(['/dashboard']);
         })
       );
   }
@@ -46,13 +53,18 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
+    console.log(this.accessToken);
+
     return !!this.accessToken;
   }
 
   refreshToken(): Observable<any> {
-  return this.http.post<any>('/api/auth/refresh', {}, { withCredentials: true })
-    .pipe(tap(res => {
-      this.accessToken = res.accessToken;
-    }));
-}
+    return this.http
+      .post<any>('/api/auth/refresh', {}, { withCredentials: true })
+      .pipe(
+        tap((res) => {
+          this.accessToken = res.accessToken;
+        })
+      );
+  }
 }

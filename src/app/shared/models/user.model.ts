@@ -8,3 +8,14 @@ export interface User {
   role?: string;
   avatarUrl?: string;
 }
+
+export interface UserResponse {
+  user: User & {
+    accountNonExpired: boolean;
+    accountNonLocked: boolean;
+    authorities: { authority: string }[];
+    credentialsNonExpired: boolean;
+    enabled: boolean;
+  };
+  token: string;
+}
