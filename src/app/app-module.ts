@@ -14,7 +14,7 @@ import { DeskDetailComponent } from './pages/desk-detail/desk-detail.component';
 import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
 import { CommonModule } from '@angular/common';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
-import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/components/auth-layout.component';
 import { SideBar } from './shared/components/side-bar/side-bar';
 import { SharedModule } from './shared/shared.module';
 

@@ -17,6 +17,7 @@ body {
   color: var(--primary-color);
   background-color: var(--white-color-);
   min-height: 100vh;
+
 }
 a{
   all: unset;
@@ -24,6 +25,8 @@ a{
 }
 main {
   position: relative;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 /* Section Headers - Minimal Style */

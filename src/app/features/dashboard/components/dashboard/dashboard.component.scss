@@ -1,0 +1,308 @@
+@import "main.scss";
+
+.dashboard-container {
+  padding: $spacing-lg;
+}
+
+// Dashboard Overview Section
+.dashboard-overview {
+  margin-bottom: $spacing-xl;
+
+}
+h2 {
+  margin-bottom: $spacing-md;
+  font-family: $font-family-heading;
+  color: $primary-color;
+  font-size: 32px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: $spacing-md;
+}
+
+.stat-card {
+  background: $white-color;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  display: flex;
+  align-items: center;
+  box-shadow: $shadow-sm;
+  transition: transform $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: $shadow-md;
+  }
+
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: $border-radius-circle;
+    background: rgba($accent-color, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: $spacing-md;
+
+    i {
+      font-size: $font-size-lg;
+      color: $accent-color;
+    }
+  }
+
+  .stat-info {
+    flex: 1;
+  }
+
+  .stat-value {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  .stat-title {
+    font-size: $font-size-sm;
+    color: $grey-color;
+    margin: 0;
+  }
+}
+
+// Recent Bookings Section
+.recent-bookings {
+  background: $white-color;
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  box-shadow: $shadow-sm;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-md;
+
+  h2 {
+    margin: 0;
+    font-family: $font-family-heading;
+    color: $primary-color;
+  }
+
+  .view-all {
+    color: $accent-color;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    transition: color $transition-base;
+
+    &:hover {
+      color: darken($accent-color, 10%);
+    }
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: $spacing-sm;
+    text-align: left;
+  }
+
+  th {
+    background-color: rgba($light-color, 0.5);
+    color: $primary-color;
+    font-weight: $font-weight-medium;
+  }
+
+  tr:nth-child(even) {
+    background-color: rgba($light-color, 0.2);
+  }
+
+  tr:hover {
+    background-color: rgba($light-color, 0.4);
+  }
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: $border-radius-pill;
+  font-size: $font-size-xxs;
+  font-weight: $font-weight-medium;
+  text-transform: uppercase;
+
+  &.status-completed {
+    background-color: rgba($success-color, 0.1);
+    color: $success-color;
+  }
+
+  &.status-active {
+    background-color: rgba($info-color, 0.1);
+    color: $info-color;
+  }
+
+  &.status-upcoming {
+    background-color: rgba($warning-color, 0.1);
+    color: $warning-color;
+  }
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  color: $secondary-color;
+  cursor: pointer;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+// Two Column Grid
+.two-column-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: $spacing-lg;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Recommended Spaces
+.recommended-spaces, .quick-actions {
+  background: $white-color;
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  box-shadow: $shadow-sm;
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: $spacing-md;
+    font-family: $font-family-heading;
+    color: $primary-color;
+  }
+}
+
+.space-cards {
+  display: grid;
+  gap: $spacing-md;
+}
+
+.space-card {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm;
+  border-radius: $border-radius-sm;
+  background: rgba($light-color, 0.3);
+  transition: background $transition-base;
+
+  &:hover {
+    background: rgba($light-color, 0.6);
+  }
+
+  .space-image {
+    width: 60px;
+    height: 60px;
+    border-radius: $border-radius-sm;
+    overflow: hidden;
+    margin-right: $spacing-md;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .space-info {
+    flex: 1;
+
+    h3 {
+      margin: 0 0 4px 0;
+      font-size: $font-size-md;
+    }
+
+    .space-rating {
+      display: flex;
+      align-items: center;
+      color: $warning-color;
+      font-size: $font-size-xs;
+
+      i {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .btn-sm {
+    padding: 4px 8px;
+    font-size: $font-size-xs;
+  }
+}
+
+// Quick Actions
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-md;
+}
+
+.action-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-md;
+  background: rgba($light-color, 0.3);
+  border: none;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  transition: background $transition-base, transform $transition-base;
+
+  &:hover {
+    background: rgba($accent-color, 0.1);
+    transform: translateY(-3px);
+  }
+
+  i {
+    font-size: $font-size-lg;
+    color: $accent-color;
+    margin-bottom: $spacing-xs;
+  }
+
+  span {
+    font-size: $font-size-xs;
+    color: $grey-color;
+    font-weight: $font-weight-medium;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: $spacing-md;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

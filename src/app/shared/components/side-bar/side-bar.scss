@@ -1,4 +1,5 @@
 @import "main.scss";
+
 .auth-sidebar {
   width: 260px;
   background: $primary-color;
@@ -9,25 +10,32 @@
   box-shadow: $shadow-lg;
   padding: $spacing-lg $spacing-md;
   min-height: 100vh;
+  transition: transform $transition-base, width $transition-base;
+  position: fixed ;
+  left: 0;
+  top: 0;
+  z-index: $z-index-fixed;
 }
 
 .sidebar-header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: $spacing-lg;
 }
 
 .sidebar-logo {
-  width: 200px;
+  width: 180px;
   height: auto;
   margin-bottom: $spacing-sm;
+  transition: width $transition-base;
 }
 
 .sidebar-title {
   font-family: $font-family-heading;
   font-size: $font-size-lg;
-  color: $accent-color;
+  color: $light-color;
   font-weight: $font-weight-bold;
   letter-spacing: 1px;
 }
@@ -52,12 +60,34 @@
   padding: $spacing-sm $spacing-xs;
   border-radius: $border-radius-md;
   transition: background $transition-base, color $transition-base;
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-nav a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: $light-color;
+  transition: width $transition-base;
+}
+
+.sidebar-nav a.active::before,
+.sidebar-nav a:hover::before {
+  width: 100%;
 }
 
 .sidebar-nav a.active,
 .sidebar-nav a:hover {
-  background: $accent-color;
-  color: $primary-color;
+  background: rgba($light-color, 0.1);
+  color: $light-color;
+}
+
+.sidebar-nav a.active {
+  font-weight: $font-weight-bold;
 }
 
 .sidebar-footer {
@@ -67,8 +97,8 @@
 
 .logout-btn {
   width: 100%;
-  color: $accent-color;
-  border: 1px solid $accent-color;
+  color: $light-color;
+  border: 1px solid $light-color;
   background: transparent;
   font-size: $font-size-base;
   border-radius: $border-radius-md;
@@ -76,11 +106,54 @@
   margin-top: $spacing-lg;
   transition: background $transition-base, color $transition-base;
 }
+
 .logout-btn:hover {
-  background: $accent-color;
+  background: $light-color;
   color: $primary-color;
 }
 
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: $white-color;
+  font-size: $font-size-lg;
+  cursor: pointer;
+}
+
+@media (max-width: 992px) {
+  // .auth-sidebar {
+  //   position: fixed;
+  //   top: 0;
+  //   left: 0;
+  //   transform: translateX(-100%);
+  //   width: 280px;
+  // }
+  
+  .auth-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+  
+  .mobile-toggle {
+    display: block;
+    position: absolute;
+    top: $spacing-md;
+    right: -50px;
+    background: $primary-color;
+    width: 40px;
+    height: 40px;
+    border-radius: 0 $border-radius-md $border-radius-md 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-logo {
+    width: 150px;
+  }
+}
 .auth-main-content {
   flex: 1;
   display: flex;

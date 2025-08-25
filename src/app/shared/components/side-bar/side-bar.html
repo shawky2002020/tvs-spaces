@@ -1,17 +1,22 @@
-  <aside class="auth-sidebar">
-        <div class="sidebar-header">
-            <img src="/logo/logowhite.png" alt="TVS Spaces Logo" class="sidebar-logo" />
-        </div>
-        <nav class="sidebar-nav">
-            <ul>
-                <li><a routerLink="/dashboard" routerLinkActive="active"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li><a routerLink="/bookings" routerLinkActive="active"><i class="fas fa-calendar-check"></i> My Bookings</a></li>
-                <li><a routerLink="/profile" routerLinkActive="active"><i class="fas fa-user"></i> Profile</a></li>
-                <li><a routerLink="/payments" routerLinkActive="active"><i class="fas fa-credit-card"></i> Payments</a></li>
-                <li><a routerLink="/support" routerLinkActive="active"><i class="fas fa-life-ring"></i> Support</a></li>
-            </ul>
-        </nav>
-        <div class="sidebar-footer">
-            <button class="btn btn-outline logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-        </div>
-    </aside>
+<aside class="auth-sidebar" [class.mobile-open]="isMobileMenuOpen">
+  <div class="sidebar-header">
+    <img src="/logo/logowhite.png" alt="TVS Spaces Logo" class="sidebar-logo" />
+    <button  class="mobile-toggle" (click)="toggleMobileMenu()">
+      <i class="fas" [ngClass]="isMobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+    </button>
+  </div>
+  <nav class="sidebar-nav">
+    <ul>
+      <li *ngFor="let item of menuItems">
+        <a [routerLink]="item.path"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <i class="fas fa-{{ item.icon }}"></i> {{ item.label }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn btn-outline logout-btn" (click)="logout()">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+  </div>
+</aside>

@@ -5,7 +5,7 @@ export interface User {
   password?: string; // Optional for security reasons
   lastLogin?: Date;
   creationDate?: Date;
-  role?: string;
+  authorities: { authority: string }[];
   avatarUrl?: string;
 }
 
@@ -13,7 +13,6 @@ export interface UserResponse {
   user: User & {
     accountNonExpired: boolean;
     accountNonLocked: boolean;
-    authorities: { authority: string }[];
     credentialsNonExpired: boolean;
     enabled: boolean;
   };

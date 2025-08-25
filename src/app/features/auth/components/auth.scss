@@ -2,13 +2,13 @@
 
 .auth-wrapper {
   min-height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: $spacing-xl;
-  padding: $spacing-xl $spacing-md;
+  padding: 120px $spacing-md;
   background: $primary-grad;
-    margin-top: 30px;
 
 }
 

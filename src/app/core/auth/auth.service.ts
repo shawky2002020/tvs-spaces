@@ -1,15 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AUTH_URLS } from '../../shared/models/urls/url';
-import { UserResponse } from '../../shared/models/user.model';
+import { User, UserResponse } from '../../shared/models/user.model';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private accessToken: string | null = null;
-
+  private UserSubject: BehaviorSubject<User> = new BehaviorSubject<User>({} as User);
+  User$ : Observable<User> = this.UserSubject.asObservable();
   constructor(private http: HttpClient, private router: Router) {}
-
+  get User(){
+    return this.UserSubject.value;
+  }
   login(email: string, password: string): Observable<UserResponse> {
     return this.http
       .post<UserResponse>(
@@ -19,8 +22,9 @@ export class AuthService {
       )
       .pipe(
         tap((res) => {
-          console.log(res);
-
+          console.log(res.user.authorities);
+          
+          this.UserSubject.next(res.user);
           this.accessToken = res.token; // store in memory
           this.router.navigate(['/dashboard']);
         },
