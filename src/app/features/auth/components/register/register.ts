@@ -9,6 +9,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/auth/auth.service';
+import { ApiError, UserUpdateRequest } from '../../../../shared/models/api.model';
 
 @Component({
   selector: 'app-register',
@@ -97,16 +98,19 @@ export class Register {
     if (this.registerForm.invalid) {
       return;
     }
-    const { name, email, password } = this.registerForm.value;
-    this.authService.signup(name, email, password).subscribe({
+    const { name, email, password , userType } = this.registerForm.value;
+    const user : UserUpdateRequest =  {
+      username : name,
+      email:email,
+      password:password,
+      type:userType
+    }
+    this.authService.signup(user).subscribe({
       next: () => {
         alert('registered successfully');
       },
-      error(err) {
-        // if backend sends plain text
-
-        // if backend sends JSON { message: "..."}
-        alert(err.error);
+      error:(err:ApiError)=> {
+        alert(err.error.message);
       },
     });
   }

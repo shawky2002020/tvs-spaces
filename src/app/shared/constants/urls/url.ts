@@ -9,3 +9,10 @@ export const AUTH_URLS = {
   LOGOUT: `${API_URL}auth/logout`,
   REFRESH:`${API_URL}auth/refresh`
 };
+
+
+export const USER_URLS = {
+  EDIT: `${API_URL}user/edit`,
+};
+
+

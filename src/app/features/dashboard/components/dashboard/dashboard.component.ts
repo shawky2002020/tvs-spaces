@@ -11,10 +11,9 @@ import { CommonModule } from '@angular/common';
 export class DashboardComponent implements OnInit {
   // Dashboard statistics
   stats = [
-    { title: 'Active Bookings', value: '3', icon: 'calendar-check' },
-    { title: 'Hours Used', value: '24', icon: 'clock' },
-    { title: 'Upcoming Events', value: '2', icon: 'calendar-day' },
-    { title: 'Saved Spaces', value: '5', icon: 'bookmark' }
+    { title: 'Total Points', value: '120', icon: 'star' },
+    { title: 'Total Visits', value: '15', icon: 'map-marker-alt' },
+    { title: 'Total Reservations', value: '8', icon: 'calendar-alt' }
   ];
   
   // Recent bookings

@@ -40,7 +40,7 @@ h2 {
     width: 50px;
     height: 50px;
     border-radius: $border-radius-circle;
-    background: rgba($accent-color, 0.1);
+    background: rgba($primary-color, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,7 +48,7 @@ h2 {
 
     i {
       font-size: $font-size-lg;
-      color: $accent-color;
+      color: $primary-color;
     }
   }
 
@@ -92,13 +92,13 @@ h2 {
   }
 
   .view-all {
-    color: $accent-color;
+    color: $primary-color;
     text-decoration: none;
     font-weight: $font-weight-medium;
     transition: color $transition-base;
 
     &:hover {
-      color: darken($accent-color, 10%);
+      color: darken($primary-color, 10%);
     }
   }
 }
@@ -269,13 +269,13 @@ h2 {
   transition: background $transition-base, transform $transition-base;
 
   &:hover {
-    background: rgba($accent-color, 0.1);
+    background: rgba($primary-color, 0.1);
     transform: translateY(-3px);
   }
 
   i {
     font-size: $font-size-lg;
-    color: $accent-color;
+    color: $primary-color;
     margin-bottom: $spacing-xs;
   }
 

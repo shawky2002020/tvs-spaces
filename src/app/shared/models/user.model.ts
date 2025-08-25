@@ -1,12 +1,12 @@
-export interface User {
-  id: string;
-  username: string;
-  email: string;
+export class User {
+  id!: string;
+  username!: string;
+  email!: string;
   password?: string; // Optional for security reasons
-  lastLogin?: Date;
-  creationDate?: Date;
-  authorities: { authority: string }[];
-  avatarUrl?: string;
+  lastLogin!: Date;
+  creationDate!: Date;
+  authorities!: { authority: string }[];
+  type!:string;
 }
 
 export interface UserResponse {

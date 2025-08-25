@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Space, SPACES } from '../../shared/models/space.model';
+import { Space, SPACES } from '../../shared/constants/space.model';
 import { CommonModule } from '@angular/common';
 
 @Component({

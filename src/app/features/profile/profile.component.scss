@@ -1,0 +1,101 @@
+@import '../../assets/styles/abstracts/variables';
+
+.profile-wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  background: $white-color;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-lg;
+  padding: $spacing-xl $spacing-lg;
+  margin-top: $spacing-xl;
+}
+
+.profile-title {
+  font-family: $font-family-heading;
+  font-size: $font-size-xl;
+  color: $primary-color;
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-lg;
+  text-align: center;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+input, select {
+  padding: $spacing-md;
+  border: 1px solid $grey-color;
+  border-radius: $border-radius-md;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  transition: border-color $transition-base;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: $primary-color;
+}
+
+.form-actions {
+  display: flex;
+  gap: $spacing-md;
+  margin-top: $spacing-md;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: $spacing-md $spacing-lg;
+  border-radius: $border-radius-md;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  font-weight: $font-weight-bold;
+  cursor: pointer;
+  border: none;
+  transition: background $transition-base, color $transition-base;
+}
+
+.btn-primary {
+  background: $primary-color;
+  color: $white-color;
+}
+.btn-primary:hover {
+  background: $secondary-color;
+}
+
+.btn-outline {
+  background: transparent;
+  color: $primary-color;
+  border: 2px solid $primary-color;
+}
+.btn-outline:hover {
+  background: $primary-color;
+  color: $white-color;
+}
+
+.profile-view {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-top: $spacing-lg;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: $font-size-base;
+  color: $grey-color;
+}
+
+.label {
+  color: $primary-color;
+  font-weight: $font-weight-medium;
+}

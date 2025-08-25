@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Space, SPACES } from '../../shared/models/space.model';
+import { Space, SPACES } from '../../shared/constants/space.model';
 
 @Component({
   selector: 'app-home',

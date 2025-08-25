@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/auth/auth.service';
+import { ApiError } from '../../../../shared/models/api.model';
 
 @Component({
   selector: 'app-login',
@@ -34,12 +35,12 @@ export class Login {
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe({
       next: () => {
-        alert('logged in successfully');
+        alert('Logged in successfully');
       },
-      error(err) {
+      error:(err:ApiError) =>{
         console.log(err.error.message);
+        alert(err.error.message)
         
-        alert(err.error.message);
       },
     });
     // Handle login logic here

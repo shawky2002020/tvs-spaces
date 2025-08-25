@@ -6,26 +6,35 @@ import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.html',
+  standalone: true,
   styleUrls: ['./side-bar.scss'],
-  imports:[RouterModule,CommonModule]
+  imports: [RouterModule, CommonModule],
 })
 export class SideBar implements OnInit {
   currentRoute: string = '';
   menuItems = [
     { path: '/dashboard', icon: 'home', label: 'Dashboard' },
-    { path: '/dashboard/bookings', icon: 'calendar-check', label: 'My Bookings' },
     { path: '/dashboard/profile', icon: 'user', label: 'Profile' },
-    { path: '/dashboard/payments', icon: 'credit-card', label: 'Payments' },
-    { path: '/dashboard/support', icon: 'life-ring', label: 'Support' }
+    {
+      path: '/dashboard/bookings',
+      icon: 'calendar-check',
+      label: 'My Bookings',
+    },
+    { path: '/rooms', label: 'Rooms', icon: 'door-open' },
+    { path: '/desks', label: 'Desks', icon: 'chair' },
+    { path: '/kitchen', label: 'Kitchen', icon: 'utensils' },
+    // { path: '/dashboard/payments', icon: 'credit-card', label: 'Payments' },
+    // { path: '/dashboard/support', icon: 'life-ring', label: 'Support' },
+    { path: '/place-info', label: 'Place Info', icon: 'info-circle' }, 
   ];
-  
+
   isMobileMenuOpen: boolean = false;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.currentRoute = event.url;
       });
@@ -37,7 +46,6 @@ export class SideBar implements OnInit {
 
   logout(): void {
     // Implement logout functionality
-    console.log('Logging out...');
     this.router.navigate(['/']);
   }
 }

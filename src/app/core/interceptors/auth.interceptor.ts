@@ -8,6 +8,10 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Do not send token for auth endpoints
+    if (req.url.includes('/auth/')) {
+      return next.handle(req);
+    }
     return next.handle(req).pipe(
       catchError(err => {
         if (err.status === 401) {

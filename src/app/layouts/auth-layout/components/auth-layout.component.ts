@@ -13,7 +13,7 @@ import { User } from '../../../shared/models/user.model';
 })
 export class AuthLayoutComponent implements OnInit {
   pageTitle: string = 'Dashboard';
-  user!: User 
+  user: User | null = {} as User;
 
   showUserDropdown: boolean = false;
 

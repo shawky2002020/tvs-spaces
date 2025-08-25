@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Space, SPACES } from '../../shared/models/space.model';
+import { Space, SPACES } from '../../shared/constants/space.model';
 import { AppRoutingModule } from '../../app-routing-module';
 import { CommonModule } from '@angular/common';
 
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './desk-detail.component.html',
   standalone: true,
   styleUrls: ['./desk-detail.component.scss'],
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule,CommonModule],
 })
 export class DeskDetailComponent implements OnInit {
   space: Space | undefined;

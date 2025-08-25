@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Space } from '../../models/space.model';
+import { Space } from '../../constants/space.model';
 
 @Component({
   selector: 'app-space-card',
