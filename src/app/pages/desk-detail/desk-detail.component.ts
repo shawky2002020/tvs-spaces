@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './desk-detail.component.html',
   standalone: true,
   styleUrls: ['./desk-detail.component.scss'],
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule,CommonModule],
 })
 export class DeskDetailComponent implements OnInit {
   space: Space | undefined;

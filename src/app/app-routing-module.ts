@@ -6,11 +6,11 @@ import { AuthGuard } from './core/guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./layouts/main-layout/main-layout-module').then(m => m.MainLayoutModule)
+    loadChildren: () => import('./layouts/main-layout/main-layout.module').then(m => m.MainLayoutModule)
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./layouts/auth-layout/auth-layout-module').then(m => m.AuthLayoutModule),
+    loadChildren: () => import('./layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule),
     canActivate: [AuthGuard]
   },
   {

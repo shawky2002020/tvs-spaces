@@ -22,15 +22,15 @@
           <span class="user-avatar">
             <i class="fas fa-user user-avatar"></i>
           </span>
-          <span class="user-name">{{ user.username }}</span>
+          <span class="user-name">{{ user?.username }}</span>
           <i class="fas fa-chevron-down"></i>
 
           <div class="user-dropdown" *ngIf="showUserDropdown">
             <div class="dropdown-header">
               <i class="fas fa-user user-avatar dropdown-avatar"></i>
               <div class="dropdown-user-info">
-                <h4>{{ user.username }}</h4>
-                <p>{{ user.email }}</p>
+                <h4>{{ user?.username }}</h4>
+                <p>{{ user?.email }}</p>
               </div>
             </div>
             <div class="dropdown-divider"></div>
@@ -40,11 +40,11 @@
                   ><i class="fas fa-user"></i> My Profile</a
                 >
               </li>
-              <li>
+              <!-- <li>
                 <a routerLink="/dashboard/settings"
                   ><i class="fas fa-cog"></i> Settings</a
                 >
-              </li>
+              </li> -->
               <li>
                 <a routerLink="/dashboard/help"
                   ><i class="fas fa-question-circle"></i> Help Center</a

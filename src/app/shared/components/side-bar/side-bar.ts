@@ -6,6 +6,7 @@ import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.html',
+  standalone:true,
   styleUrls: ['./side-bar.scss'],
   imports:[RouterModule,CommonModule]
 })
