@@ -1,0 +1,55 @@
+<div class="date-plan-picker" *ngIf="selectedId">
+  <div class="space-info">
+    <h2>{{ space.name }}</h2>
+    <div class="meta">
+      <span class="type">{{ space.type | titlecase }}</span>
+      <span *ngIf="space.capacity">• Capacity: {{ space.capacity }}</span>
+    </div>
+  </div>
+
+  <div class="plan-section">
+    <label class="plan-label">Choose Plan:</label>
+    <mat-radio-group [(ngModel)]="plan" (change)="onPlanChange()">
+      <mat-radio-button value="Hourly">Hourly</mat-radio-button>
+      <mat-radio-button value="Daily">Daily</mat-radio-button>
+      <mat-radio-button value="Monthly">Monthly</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="date-section">
+    <label *ngIf="!isMonthly">Select Date{{ isDaily ? 's' : '' }}:</label>
+    <mat-form-field appearance="fill">
+      <input matInput [matDatepicker]="picker" [(ngModel)]="date" (dateChange)="onDateChange($event.value)" [matDatepickerFilter]="isDateDisabled" [min]="minDate" placeholder="Choose date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field *ngIf="isDaily" appearance="fill">
+      <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" (dateChange)="onEndDateChange($event.value)" [matDatepickerFilter]="isDateDisabled" [min]="date || minDate" placeholder="End date">
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field *ngIf="isMonthly" appearance="fill">
+      <input matInput [matDatepicker]="monthPicker" [(ngModel)]="date" (dateChange)="onDateChange($event.value)" [matDatepickerFilter]="isDateDisabled" [min]="minDate" placeholder="Choose month"  [matDatepickerFilter]="isDateDisabled">
+      <mat-datepicker-toggle matSuffix [for]="monthPicker"></mat-datepicker-toggle>
+      <mat-datepicker #monthPicker startView="multi-year" panelClass="month-picker" (monthSelected)="onDateChange($event)"></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="time-section" *ngIf="isHourly">
+    <label>Start Time:</label>
+    <input type="time" [(ngModel)]="startTime" (change)="onTimeChange()">
+    <label>End Time:</label>
+    <input type="time" [(ngModel)]="endTime" (change)="onTimeChange()">
+  </div>
+
+  <div class="price-summary">
+    <span *ngIf="price > 0">Total Price: <strong>{{ price | number:'1.0-2' }} EGP</strong></span>
+  </div>
+
+  <div class="actions">
+    <button mat-stroked-button color="primary" (click)="back()">Back</button>
+    <button mat-flat-button color="primary" (click)="next()" [disabled]="!date || (isDaily && !endDate) || (isHourly && (!startTime || !endTime))">Next</button>
+  </div>
+
+  <div class="error" *ngIf="error">{{ error }}</div>
+</div>

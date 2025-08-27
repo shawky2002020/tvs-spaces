@@ -4,7 +4,8 @@ import { Space } from '../../constants/space.model';
 @Component({
   selector: 'app-space-card',
   templateUrl: './space-card.component.html',
-  styleUrls: ['./space-card.component.scss']
+  styleUrls: ['./space-card.component.scss'],
+  standalone:true
 })
 export class SpaceCardComponent {
   @Input() title: string = '';

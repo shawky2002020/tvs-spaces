@@ -1,8 +1,8 @@
-<div class="profile-wrapper">
+<div class="profile-wrapper fade-in--slow">
   <h2 class="profile-title">My Profile</h2>
   <form
     [formGroup]="profileForm"
-    class="profile-form"
+    class="profile-form fade-in--slow"
     *ngIf="editMode"
     (ngSubmit)="saveProfile()"
   >
@@ -35,13 +35,13 @@
       </select>
     </div>
     <div class="form-actions">
-      <button class="btn btn-primary" type="submit">Save</button>
       <button class="btn btn-outline" type="button" (click)="cancelEdit()">
         Cancel
       </button>
+      <button class="btn btn-primary" type="submit">Save</button>
     </div>
   </form>
-  <div class="profile-view" *ngIf="!editMode">
+  <div class="profile-view fade-in--slow" *ngIf="!editMode">
     <div class="profile-row">
       <span class="label">Username:</span> <span>{{ user.username }}</span>
     </div>

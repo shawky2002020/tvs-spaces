@@ -1,0 +1,14 @@
+<div class="booking-step">
+      <h2>Booking Summary</h2>
+      <ng-container *ngIf="selection">
+        <div class="summary-item"><strong>Resource:</strong> {{ selection.resourceId || 'N/A' }}</div>
+        <div class="summary-item"><strong>Plan:</strong> {{ selection.plan }}</div>
+        <div class="summary-item"><strong>Date:</strong> {{ displayDate() }}</div>
+        <div class="summary-item" *ngIf="selection.plan === 'Hourly'"><strong>Time:</strong> {{ selection.startTime }} - {{ selection.endTime }}</div>
+        <div class="summary-item"><strong>Price:</strong> ${{ getPrice() }}</div>
+      </ng-container>
+      <div class="actions">
+        <button routerLink="../plan">Back</button>
+        <button (click)="proceedToCheckout()">Proceed to Checkout</button>
+      </div>
+    </div>

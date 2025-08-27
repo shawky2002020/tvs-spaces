@@ -1,0 +1,26 @@
+<div class="place-info">
+  <h1 class="title">Place Info</h1>
+
+  <section class="about-section">
+    <h3>About TVS Spaces</h3>
+    <p>{{ about }}</p>
+  </section>
+
+  <section class="wifi-section">
+    <h3>Wi-Fi Networks</h3>
+    <table class="wifi-table">
+      <thead>
+        <tr>
+          <th>Wi-Fi Name</th>
+          <th>Password</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let wifi of wifiList">
+          <td>{{ wifi.ssid }}</td>
+          <td><code>{{ wifi.password }}</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>

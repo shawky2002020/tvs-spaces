@@ -23,11 +23,11 @@ const routes: Routes = [
         path: 'payments',
         loadChildren: () => import('../../features/payment/payment.module').then(m => m.PaymentModule)
       },
-      // {
-      //   path: 'support',
-      //   loadComponent: () => import('../../features/support/components/support/support.component')
-      //     .then(m => m.SupportComponent)
-      // }
+      {
+        path: 'info',
+        loadComponent: () => import('../../features/place-info/place-info.component')
+          .then(m => m.PlaceInfoComponent)
+      }
     ]
   }
 ];

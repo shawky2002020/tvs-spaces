@@ -1,0 +1,498 @@
+@import "main.scss";
+.date-plan-picker {
+  max-width: 600px;
+  padding: 24px;
+  margin: $spacing-lg auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  font-family: "Roboto", sans-serif;
+
+  .space-info {
+    margin-bottom: 32px;
+    text-align: center;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0f0f0;
+
+    h2 {
+      margin: 0 0 8px 0;
+      color: #2c3e50;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      color: #7f8c8d;
+      font-size: 14px;
+
+      .type {
+        text-transform: capitalize;
+        font-weight: 500;
+        color: #3498db;
+        background: #e8f4fd;
+        padding: 4px 12px;
+        border-radius: 16px;
+      }
+    }
+  }
+
+  .plan-section {
+    margin-bottom: 24px;
+
+    .plan-label {
+      display: block;
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 16px;
+    }
+
+    mat-radio-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+
+      @media (max-width: 480px) {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .mat-radio-button {
+        ::ng-deep .mat-radio-label-content {
+          padding-left: 8px;
+          font-weight: 500;
+        }
+
+        &.mat-radio-checked {
+          ::ng-deep .mat-radio-outer-circle {
+            border-color: #3498db;
+          }
+
+          ::ng-deep .mat-radio-inner-circle {
+            background-color: #3498db;
+          }
+        }
+      }
+    }
+  }
+
+  .date-section {
+    margin-bottom: 24px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 14px;
+    }
+
+    mat-form-field {
+      width: 100%;
+      margin-bottom: 16px;
+
+      ::ng-deep {
+        .mat-form-field-wrapper {
+          padding-bottom: 0;
+        }
+
+        .mat-form-field-outline {
+          border-radius: 8px;
+        }
+
+        .mat-form-field-flex {
+          background: #f8f9fa;
+          border-radius: 8px;
+          padding: 0 12px;
+        }
+
+        .mat-form-field-outline-thick {
+          color: #3498db;
+        }
+
+        .mat-input-element {
+          color: #2c3e50;
+          font-weight: 500;
+        }
+
+        .mat-datepicker-toggle {
+          color: #7f8c8d;
+
+          &:hover {
+            color: #3498db;
+          }
+        }
+      }
+
+      &:focus-within {
+        ::ng-deep .mat-form-field-outline-thick {
+          color: #3498db;
+        }
+      }
+    }
+
+    // Custom month picker styling
+    .month-picker {
+      ::ng-deep {
+        .mat-calendar-period-button {
+          background-color: #3498db !important;
+          color: white !important;
+          border-radius: 6px;
+          margin: 8px;
+
+          &:hover {
+            background-color: #2980b9 !important;
+          }
+        }
+
+        .mat-calendar-body-selected {
+          background-color: #3498db !important;
+          color: white !important;
+        }
+
+        .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+          border-color: #3498db !important;
+        }
+      }
+    }
+  }
+
+  .time-section {
+    margin-bottom: 24px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 14px;
+    }
+
+    input[type="time"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-bottom: 16px;
+      background: white;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      }
+
+      &:hover {
+        border-color: #bdc3c7;
+      }
+    }
+  }
+
+  .price-summary {
+    margin: 32px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+
+    span {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    strong {
+      font-size: 24px;
+      font-weight: 700;
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 2px solid #f0f0f0;
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+    }
+
+    button {
+      min-width: 120px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+
+      &:first-child {
+        border: 2px solid #3498db;
+        color: #3498db;
+
+        &:hover {
+          background: #3498db;
+          color: white;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+      }
+
+      &:last-child {
+        background: #3498db;
+        color: white;
+
+        &:hover:not([disabled]) {
+          background: #2980b9;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        &[disabled] {
+          background: #bdc3c7;
+          cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  .error {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: #ffe6e6;
+    color: #e74c3c;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+    animation: shake 0.5s ease-in-out;
+
+    @keyframes shake {
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-5px);
+      }
+      75% {
+        transform: translateX(5px);
+      }
+    }
+  }
+
+  // Responsive design
+  @media (max-width: 768px) {
+    padding: 20px;
+    margin: 16px;
+
+    .space-info {
+      h2 {
+        font-size: 24px;
+      }
+    }
+
+    .price-summary {
+      span {
+        font-size: 16px;
+      }
+
+      strong {
+        font-size: 20px;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px;
+
+    .space-info {
+      .meta {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+
+    .actions {
+      button {
+        min-width: 100%;
+      }
+    }
+  }
+}
+
+// Global datepicker theming
+::ng-deep {
+  .mat-datepicker-content {
+    .mat-calendar {
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      background: $white-color !important;
+      height: fit-content !important;
+      z-index: $z-index-sticky;
+    }
+
+    .mat-calendar-body-selected {
+      background-color: #3498db !important;
+      color: white !important;
+    }
+
+    .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+      border-color: #3498db !important;
+    }
+
+    .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover {
+      background-color: #e8f4fd !important;
+    }
+
+    .mat-calendar-period-button {
+      background-color: #3498db !important;
+      color: white !important;
+      border-radius: 6px;
+      margin: 8px;
+
+      &:hover {
+        background-color: #2980b9 !important;
+      }
+    }
+  }
+}
+.date-section {
+  // ... your existing styles ...
+
+  ::ng-deep {
+    // Unavailable dates styling
+    .unavailable-date {
+      .mat-calendar-body-cell-content {
+        position: relative;
+        background-color: #ffebee !important; // Light red background
+        color: #d32f2f !important; // Red text
+        text-decoration: line-through;
+        cursor: not-allowed;
+
+        &::after {
+          content: "×";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 16px;
+          font-weight: bold;
+          color: #d32f2f;
+          opacity: 0.8;
+        }
+      }
+
+      &:hover .mat-calendar-body-cell-content {
+        background-color: #ffcdd2 !important; // Darker red on hover
+      }
+    }
+
+    // Past dates styling
+    .mat-calendar-body-disabled {
+      .mat-calendar-body-cell-content {
+        background-color: #f5f5f5 !important;
+        color: #bdbdbd !important;
+        cursor: not-allowed;
+      }
+    }
+
+    // Custom month picker unavailable months
+    .month-picker {
+      .mat-calendar-body-disabled {
+        .mat-calendar-body-cell-content {
+          background-color: #ffebee !important;
+          color: #d32f2f !important;
+          text-decoration: line-through;
+
+          &::after {
+            content: "×";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 14px;
+            font-weight: bold;
+            color: #d32f2f;
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+
+    // Today's date styling
+    .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+      border-color: #3498db !important;
+    }
+
+    // Selected date styling
+    .mat-calendar-body-selected {
+      background-color: #3498db !important;
+      color: white !important;
+
+      // Override for unavailable but selected (shouldn't happen, but just in case)
+      &.unavailable-date {
+        background-color: #d32f2f !important;
+        color: white !important;
+
+        &::after {
+          content: "×";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 16px;
+          font-weight: bold;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+// Alternative approach using data attributes
+::ng-deep {
+  .mat-calendar-body-cell[aria-disabled="true"] {
+    .mat-calendar-body-cell-content {
+      background-color: #ffebee !important;
+      color: #d32f2f !important;
+      text-decoration: line-through;
+      cursor: not-allowed;
+
+      &::before {
+        content: "Unavailable";
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #d32f2f;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 10px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+    }
+
+    &:hover .mat-calendar-body-cell-content::before {
+      opacity: 1;
+    }
+  }
+}

@@ -20,12 +20,12 @@ export class SideBar implements OnInit {
       icon: 'calendar-check',
       label: 'My Bookings',
     },
-    { path: '/rooms', label: 'Rooms', icon: 'door-open' },
-    { path: '/desks', label: 'Desks', icon: 'chair' },
+    { path: '/dashboard/bookings', label: 'Spaces', icon: 'door-open' },
+
     { path: '/kitchen', label: 'Kitchen', icon: 'utensils' },
     // { path: '/dashboard/payments', icon: 'credit-card', label: 'Payments' },
     // { path: '/dashboard/support', icon: 'life-ring', label: 'Support' },
-    { path: '/place-info', label: 'Place Info', icon: 'info-circle' }, 
+    { path: '/dashboard/info', label: 'Place Info', icon: 'info-circle' }, 
   ];
 
   isMobileMenuOpen: boolean = false;

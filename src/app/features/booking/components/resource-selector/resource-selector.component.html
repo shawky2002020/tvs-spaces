@@ -1,0 +1,59 @@
+<div class="booking-step">
+  <h2 class="main-title slide-in--up-slow">Choose Your Workspace</h2>
+  <div class="section fade-in--slow ">
+    <h2 class="section-title">Rooms</h2>
+    <ul class="section-points">
+      <li class="section-subtitle">
+        <i class="fa fa-door-closed" aria-hidden="true"></i>
+        Private, enclosed spaces for teams or meetings
+      </li>
+      <li class="section-subtitle">
+        <i class="fa fa-chalkboard" aria-hidden="true"></i>
+        Includes amenities like whiteboards, TV displays, and conference tables
+      </li>
+      <li class="section-subtitle">
+        <i class="fa fa-users" aria-hidden="true"></i>
+        Ideal for collaboration, privacy, and presentations
+      </li>
+    </ul>
+    <div class="space-list">
+      <app-space-card
+        *ngFor="let room of rooms"
+        [space]="room"
+        [class.selected]="selectedResourceId === room.id"
+        (click)="selectResource(room.id)"
+      >
+      </app-space-card>
+    </div>
+  </div>
+  <hr class="blue-line">
+  <div class="section">
+    <h3 class="section-title">Desks</h3>
+    <ul class="section-points">
+      <li class="section-subtitle">
+        <i class="fa fa-chair" aria-hidden="true"></i>
+        Flexible or dedicated desks in open areas
+      </li>
+      <li class="section-subtitle">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        Perfect for individuals, freelancers, and remote work
+      </li>
+      <li class="section-subtitle">
+        <i class="fa fa-wifi" aria-hidden="true"></i>
+        Access to all shared amenities and fast Wi-Fi
+      </li>
+    </ul>
+    <div class="space-list">
+      <app-space-card
+        *ngFor="let desk of desks"
+        [space]="desk"
+        [class.selected]="selectedResourceId === desk.id"
+        (click)="selectResource(desk.id)"
+      >
+      </app-space-card>
+    </div>
+  </div>
+  <button class="next-btn" [disabled]="!selectedResourceId" (click)="next()">
+    Next
+  </button>
+</div>

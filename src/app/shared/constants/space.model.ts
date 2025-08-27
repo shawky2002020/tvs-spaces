@@ -1,3 +1,10 @@
+
+export interface Availability {
+  start: Date;
+  end: Date;
+  reason?: string; // Optional reason for unavailability
+}
+
 export interface PricingPackage {
   hourly: number;
   halfDay: number;
@@ -12,6 +19,17 @@ export interface SpaceAmenity {
   icon: string;
 }
 
+export type BookingPlan = 'Hourly' | 'Daily' | 'Weekly' | 'Monthly';
+
+
+export interface BookingSelection {
+  resourceId?: string;
+  plan?: BookingPlan;
+  date?: Date | [Date, Date];
+  startTime?: string;
+  endTime?: string;
+}
+
 export interface Space {
   id: string;
   type: 'desk' | 'room';
@@ -24,8 +42,8 @@ export interface Space {
   pricing: PricingPackage;
   capacity?: number;
   featured?: boolean;
+  availability?: Availability[]; // Array of unavailable time periods
 }
-
 export const SPACES: Space[] = [
   {
     id: '1',
@@ -54,6 +72,13 @@ export const SPACES: Space[] = [
       pro: 3200,
       max: 4000,
     },
+    availability: [
+      {
+        start: new Date('2024-01-18T10:00:00'),
+        end: new Date('2024-01-18T16:00:00'),
+        reason: 'Reserved for client meeting'
+      }
+    ]
   },
   {
     id: '2',
@@ -146,7 +171,7 @@ export const SPACES: Space[] = [
     name: 'Big Meeting Room',
     slug: 'big-meeting-room',
     description: 'Spacious meeting room for larger teams and presentations.',
-    imageUrl: 'assets/imgs/3.jpg',
+    imageUrl: 'assets/imgs/spaces/meeting2.jpg',
     additionalImages: [
       'assets/imgs/spaces/meeting1.jpg',
       'assets/imgs/spaces/meeting2.jpg',

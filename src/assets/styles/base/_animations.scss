@@ -1,5 +1,18 @@
 /* ======================
-   Fade Animations
+   ANIMATION TIMING VARIABLES
+   ====================== */
+$timing-ultra-fast: 0.2s;
+$timing-fast: 0.3s;
+$timing-normal: 0.6s;
+$timing-slow: 0.8s;
+$timing-ultra-slow: 1.2s;
+
+$easing-default: ease;
+$easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+$easing-elastic: cubic-bezier(0.68, -0.55, 0.265, 2.55);
+
+/* ======================
+   FADE ANIMATIONS
    ====================== */
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -12,19 +25,34 @@
 }
 
 .fade-in {
-  animation: fadeIn 0.6s ease forwards;
+  &--fast { animation: fadeIn $timing-fast $easing-default forwards; }
+  &--normal { animation: fadeIn $timing-normal $easing-default forwards; }
+  &--slow { animation: fadeIn $timing-slow $easing-default forwards; }
 }
 
 .fade-out {
-  animation: fadeOut 0.6s ease forwards;
+  &--fast { animation: fadeOut $timing-fast $easing-default forwards; }
+  &--normal { animation: fadeOut $timing-normal $easing-default forwards; }
+  &--slow { animation: fadeOut $timing-slow $easing-default forwards; }
 }
 
 /* ======================
-   Slide Animations
+   SLIDE ANIMATIONS
    ====================== */
 @keyframes slideInUp {
   from {
     transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
     opacity: 0;
   }
   to {
@@ -44,16 +72,45 @@
   }
 }
 
-.slide-in-up {
-  animation: slideInUp 0.8s ease forwards;
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
-.slide-in-left {
-  animation: slideInLeft 0.8s ease forwards;
+.slide-in {
+  &--up {
+    &-fast { animation: slideInUp $timing-fast $easing-bounce forwards; }
+    &-normal { animation: slideInUp $timing-normal $easing-bounce forwards; }
+    &-slow { animation: slideInUp $timing-slow $easing-bounce forwards; }
+  }
+  
+  &--down {
+    &-fast { animation: slideInDown $timing-fast $easing-bounce forwards; }
+    &-normal { animation: slideInDown $timing-normal $easing-bounce forwards; }
+    &-slow { animation: slideInDown $timing-slow $easing-bounce forwards; }
+  }
+  
+  &--left {
+    &-fast { animation: slideInLeft $timing-fast $easing-bounce forwards; }
+    &-normal { animation: slideInLeft $timing-normal $easing-bounce forwards; }
+    &-slow { animation: slideInLeft $timing-slow $easing-bounce forwards; }
+  }
+  
+  &--right {
+    &-fast { animation: slideInRight $timing-fast $easing-bounce forwards; }
+    &-normal { animation: slideInRight $timing-normal $easing-bounce forwards; }
+    &-slow { animation: slideInRight $timing-slow $easing-bounce forwards; }
+  }
 }
 
 /* ======================
-   Bounce Animation
+   BOUNCE ANIMATIONS
    ====================== */
 @keyframes bounce {
   0%, 20%, 50%, 80%, 100% {
@@ -67,12 +124,37 @@
   }
 }
 
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .bounce {
-  animation: bounce 1.5s infinite;
+  &--infinite { animation: bounce 1.5s infinite; }
+  &--once { animation: bounce 1.5s $easing-bounce; }
+}
+
+.bounce-in {
+  &--fast { animation: bounceIn $timing-fast $easing-bounce forwards; }
+  &--normal { animation: bounceIn $timing-normal $easing-bounce forwards; }
+  &--slow { animation: bounceIn $timing-slow $easing-bounce forwards; }
 }
 
 /* ======================
-   Scale Animations
+   SCALE ANIMATIONS
    ====================== */
 @keyframes scaleIn {
   from {
@@ -96,22 +178,96 @@
   }
 }
 
-.scale-in {
-  animation: scaleIn 0.6s ease forwards;
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
-.scale-out {
-  animation: scaleOut 0.6s ease forwards;
+.scale {
+  &--in {
+    &-fast { animation: scaleIn $timing-fast $easing-elastic forwards; }
+    &-normal { animation: scaleIn $timing-normal $easing-elastic forwards; }
+    &-slow { animation: scaleIn $timing-slow $easing-elastic forwards; }
+  }
+  
+  &--out {
+    &-fast { animation: scaleOut $timing-fast $easing-default forwards; }
+    &-normal { animation: scaleOut $timing-normal $easing-default forwards; }
+    &-slow { animation: scaleOut $timing-slow $easing-default forwards; }
+  }
+  
+  &--pulse {
+    &-slow { animation: pulse 2s infinite $easing-default; }
+    &-normal { animation: pulse 1.5s infinite $easing-default; }
+    &-fast { animation: pulse 1s infinite $easing-default; }
+  }
 }
 
 /* ======================
-   Rotate Animations
+   ROTATE ANIMATIONS
    ====================== */
 @keyframes rotate {
   from { transform: rotate(0); }
   to { transform: rotate(360deg); }
 }
 
+@keyframes rotateIn {
+  from {
+    transform: rotate(-180deg) scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0) scale(1);
+    opacity: 1;
+  }
+}
+
 .rotate {
-  animation: rotate 2s linear infinite;
+  &--infinite { animation: rotate 2s linear infinite; }
+  &--once { animation: rotate 0.6s $easing-default; }
+}
+
+.rotate-in {
+  &--fast { animation: rotateIn $timing-fast $easing-elastic forwards; }
+  &--normal { animation: rotateIn $timing-normal $easing-elastic forwards; }
+  &--slow { animation: rotateIn $timing-slow $easing-elastic forwards; }
+}
+
+/* ======================
+   UTILITY CLASSES
+   ====================== */
+.animation {
+  &--delay {
+    &-100 { animation-delay: 0.1s; }
+    &-200 { animation-delay: 0.2s; }
+    &-300 { animation-delay: 0.3s; }
+    &-500 { animation-delay: 0.5s; }
+    &-700 { animation-delay: 0.7s; }
+    &-1000 { animation-delay: 1s; }
+  }
+  
+  &--fill {
+    &-forwards { animation-fill-mode: forwards; }
+    &-backwards { animation-fill-mode: backwards; }
+    &-both { animation-fill-mode: both; }
+  }
+  
+  &--iteration {
+    &-once { animation-iteration-count: 1; }
+    &-infinite { animation-iteration-count: infinite; }
+    &-twice { animation-iteration-count: 2; }
+    &-thrice { animation-iteration-count: 3; }
+  }
+}
+
+/* ======================
+   RESPONSIVE ANIMATIONS
+   ====================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

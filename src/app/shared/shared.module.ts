@@ -11,8 +11,8 @@ import { SideBar } from './components/side-bar/side-bar';
     CommonModule,
     HeaderComponent,
     FooterComponent,
-    LoaderComponent,
-    SideBar
+    SideBar,
+    LoaderComponent
     // Shared standalone components, directives, pipes
   ],
   exports: [
@@ -24,6 +24,7 @@ import { SideBar } from './components/side-bar/side-bar';
     // Shared standalone components, directives, pipes
   ],
   declarations: [
+    
   ]
 })
 export class SharedModule {}
