@@ -57,14 +57,14 @@ export class ProfileComponent implements OnInit {
         ...this.profileForm.value,
         password: this.profileForm.value.password
           ? this.profileForm.value.password
-          : this.user.password,
+          : null,
       };
       this.user = {
          ...this.user,
         ...this.profileForm.value,
         password: this.profileForm.value.password
           ? this.profileForm.value.password
-          : this.user.password,
+          : null,
       }
       this.userService.updateUser(updatedUser).subscribe(
         {

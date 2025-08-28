@@ -20,7 +20,7 @@
       <app-space-card
         *ngFor="let room of rooms"
         [space]="room"
-        [class.selected]="selectedResourceId === room.id"
+        [class.selected]="selectedSpaceId === room.id"
         (click)="selectResource(room.id)"
       >
       </app-space-card>
@@ -47,13 +47,13 @@
       <app-space-card
         *ngFor="let desk of desks"
         [space]="desk"
-        [class.selected]="selectedResourceId === desk.id"
+        [class.selected]="selectedSpaceId === desk.id"
         (click)="selectResource(desk.id)"
       >
       </app-space-card>
     </div>
   </div>
-  <button class="next-btn" [disabled]="!selectedResourceId" (click)="next()">
+  <button class="next-btn" [disabled]="!selectedSpaceId" (click)="next()">
     Next
   </button>
 </div>

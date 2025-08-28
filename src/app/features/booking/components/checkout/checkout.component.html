@@ -1,0 +1,116 @@
+<div class="checkout-container">
+  <div class="checkout-header">
+    <h1>Complete Your Booking</h1>
+    <p class="checkout-subtitle">You're just one step away from securing your space</p>
+  </div>
+
+  <div class="checkout-content">
+    <!-- Order Summary Section -->
+    <div class="order-summary">
+      <h2>Booking Summary</h2>
+      <div class="summary-card" *ngIf="selection">
+        <div class="summary-header">
+          <h3>{{ getResourceName() }}</h3>
+          <span class="booking-id">Booking #{{ generateBookingId() }}</span>
+        </div>
+        
+        <div class="summary-details">
+          <div class="summary-row">
+            <span>Plan</span>
+            <span class="value">{{ selection.plan }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Date</span>
+            <span class="value">{{ displayDate() }}</span>
+          </div>
+          <div class="summary-row" *ngIf="selection.plan === 'Hourly'">
+            <span>Time</span>
+            <span class="value">{{ selection.startTime }} - {{ selection.endTime }}</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span class="value price">${{ selection?.price || getPrice() }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Section -->
+    <div class="payment-section">
+      <h2>Payment Method</h2>
+      <div class="payment-options">
+        <div class="payment-option" [class.selected]="selectedPayment === 'card'" (click)="selectPayment('card')">
+          <div class="option-icon">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <div class="option-details">
+            <h3>Credit/Debit Card</h3>
+            <p>Pay securely with your card</p>
+          </div>
+          <div class="option-check">
+            <div class="check-circle" *ngIf="selectedPayment === 'card'"></div>
+          </div>
+        </div>
+
+        <div class="payment-option" [class.selected]="selectedPayment === 'paypal'" (click)="selectPayment('paypal')">
+          <div class="option-icon paypal">
+            <i class="fab fa-paypal"></i>
+          </div>
+          <div class="option-details">
+            <h3>PayPal</h3>
+            <p>Fast and secure payment</p>
+          </div>
+          <div class="option-check">
+            <div class="check-circle" *ngIf="selectedPayment === 'paypal'"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Details Form (shown when card is selected) -->
+      <div class="card-details" *ngIf="selectedPayment === 'card'">
+        <div class="form-group">
+          <label for="cardNumber">Card Number</label>
+          <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="expiry">Expiry Date</label>
+            <input type="text" id="expiry" placeholder="MM/YY" maxlength="5">
+          </div>
+          <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" placeholder="123" maxlength="3">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="cardName">Name on Card</label>
+          <input type="text" id="cardName" placeholder="John Doe">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="checkout-actions">
+    <button class="btn btn-outline" (click)="back()" [disabled]="loading">
+      <i class="fas fa-arrow-left"></i> Back
+    </button>
+    <button class="btn btn-primary" (click)="payNow()" [disabled]="!canProceed() || loading">
+      <span *ngIf="!loading">Complete Payment</span>
+      <app-loader *ngIf="loading"></app-loader>
+    </button>
+  </div>
+
+  <!-- Success Overlay -->
+  <div class="success-overlay" *ngIf="success">
+    <div class="success-content">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h2>Payment Successful!</h2>
+      <p>Your booking has been confirmed. Redirecting to your bookings...</p>
+    </div>
+  </div>
+</div>

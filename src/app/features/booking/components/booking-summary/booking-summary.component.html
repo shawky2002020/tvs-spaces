@@ -1,14 +1,43 @@
-<div class="booking-step">
+<div class="booking-summary-container">
+  <div class="booking-card">
+    <div class="booking-card-header">
       <h2>Booking Summary</h2>
-      <ng-container *ngIf="selection">
-        <div class="summary-item"><strong>Resource:</strong> {{ selection.resourceId || 'N/A' }}</div>
-        <div class="summary-item"><strong>Plan:</strong> {{ selection.plan }}</div>
-        <div class="summary-item"><strong>Date:</strong> {{ displayDate() }}</div>
-        <div class="summary-item" *ngIf="selection.plan === 'Hourly'"><strong>Time:</strong> {{ selection.startTime }} - {{ selection.endTime }}</div>
-        <div class="summary-item"><strong>Price:</strong> ${{ getPrice() }}</div>
-      </ng-container>
-      <div class="actions">
-        <button routerLink="../plan">Back</button>
-        <button (click)="proceedToCheckout()">Proceed to Checkout</button>
+    </div>
+    
+    <div class="booking-card-body" *ngIf="selection">
+      <div class="summary-item">
+        <div class="item-label">Resource</div>
+        <div class="item-value">{{ selection.space?.name }}</div>
+      </div>
+      
+      <div class="summary-item">
+        <div class="item-label">Plan</div>
+        <div class="item-value">{{ selection.plan }}</div>
+      </div>
+      
+      <div class="summary-item">
+        <div class="item-label">Date</div>
+        <div class="item-value">{{ displayDate() }}</div>
+      </div>
+      
+      <div class="summary-item" *ngIf="selection.plan === 'Hourly'">
+        <div class="item-label">Time</div>
+        <div class="item-value">{{ selection.startTime }} - {{ selection.endTime }}</div>
+      </div>
+      
+      <div class="summary-item total">
+        <div class="item-label">Total Price</div>
+        <div class="item-value price">${{ price }}</div>
       </div>
     </div>
+    
+    <div class="booking-card-footer">
+      <button class="btn btn-secondary" (click)="back()">
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+      <button class="btn btn-primary" (click)="proceedToCheckout()">
+        Proceed to Checkout <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</div>

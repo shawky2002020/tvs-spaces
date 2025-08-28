@@ -15,17 +15,13 @@ export class SideBar implements OnInit {
   menuItems = [
     { path: '/dashboard', icon: 'home', label: 'Dashboard' },
     { path: '/dashboard/profile', icon: 'user', label: 'Profile' },
-    {
-      path: '/dashboard/bookings',
-      icon: 'calendar-check',
-      label: 'My Bookings',
-    },
-    { path: '/dashboard/bookings', label: 'Spaces', icon: 'door-open' },
+
+    { path: '/dashboard/booking', label: 'Spaces', icon: 'door-open' },
 
     { path: '/kitchen', label: 'Kitchen', icon: 'utensils' },
     // { path: '/dashboard/payments', icon: 'credit-card', label: 'Payments' },
     // { path: '/dashboard/support', icon: 'life-ring', label: 'Support' },
-    { path: '/dashboard/info', label: 'Place Info', icon: 'info-circle' }, 
+    { path: '/dashboard/facilities', label: 'Facilities', icon: 'info-circle' },
   ];
 
   isMobileMenuOpen: boolean = false;

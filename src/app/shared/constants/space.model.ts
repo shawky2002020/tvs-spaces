@@ -23,11 +23,15 @@ export type BookingPlan = 'Hourly' | 'Daily' | 'Weekly' | 'Monthly';
 
 
 export interface BookingSelection {
-  resourceId?: string;
+  spaceId?: string;
   plan?: BookingPlan;
   date?: Date | [Date, Date];
+  startDate?: Date | [Date, Date];
+  endDate?: Date | [Date, Date];
   startTime?: string;
   endTime?: string;
+  price?:number;
+  space?:Space;
 }
 
 export interface Space {
@@ -52,13 +56,14 @@ export const SPACES: Space[] = [
     slug: 'shared-desk',
     description: 'Flexible seating in our open workspace areas.',
     imageUrl: 'assets/imgs/spaces/shared2.jpg',
- additionalImages: [
+    additionalImages: [
       'assets/imgs/spaces/shared0.jpg',
       'assets/imgs/spaces/shared1.jpg',
       'assets/imgs/spaces/shared2.jpg',
       'assets/imgs/spaces/shared3.jpg',
       'assets/imgs/spaces/shared4.jpg',
-    ],    amenities: [
+    ],
+    amenities: [
       { name: 'Shared workspace', icon: 'users' },
       { name: 'High-speed Wi-Fi', icon: 'wifi' },
       { name: 'Power outlets', icon: 'plug' },
@@ -74,9 +79,19 @@ export const SPACES: Space[] = [
     },
     availability: [
       {
-        start: new Date('2024-01-18T10:00:00'),
-        end: new Date('2024-01-18T16:00:00'),
+        start: new Date('2025-09-18T10:00:00'),
+        end: new Date('2025-09-18T16:00:00'),
         reason: 'Reserved for client meeting'
+      },
+      {
+        start: new Date('2025-09-19T09:00:00'),
+        end: new Date('2025-09-19T12:00:00'),
+        reason: 'Team workshop'
+      },
+      {
+        start: new Date('2025-09-22T14:00:00'),
+        end: new Date('2025-09-22T17:00:00'),
+        reason: 'Private booking'
       }
     ]
   },
@@ -108,6 +123,23 @@ export const SPACES: Space[] = [
       max: 4500,
     },
     featured: true,
+    availability: [
+      {
+        start: new Date('2025-09-01T08:00:00'),
+        end: new Date('2025-09-18T18:00:00'),
+        reason: 'Monthly member reservation'
+      },
+      {
+        start: new Date('2025-09-19T13:00:00'),
+        end: new Date('2025-09-19T15:00:00'),
+        reason: 'Maintenance'
+      },
+      {
+        start: new Date('2025-09-23T10:00:00'),
+        end: new Date('2025-09-23T16:00:00'),
+        reason: 'Private booking'
+      }
+    ]
   },
   {
     id: '3',
@@ -135,8 +167,24 @@ export const SPACES: Space[] = [
       pro: 4500,
       max: 5500,
     },
+    availability: [
+      {
+        start: new Date('2025-09-18T09:00:00'),
+        end: new Date('2025-09-18T17:00:00'),
+        reason: 'Full-day rental'
+      },
+      {
+        start: new Date('2025-09-20T10:00:00'),
+        end: new Date('2025-09-20T14:00:00'),
+        reason: 'Gaming session'
+      },
+      {
+        start: new Date('2025-09-24T08:00:00'),
+        end: new Date('2025-09-24T12:00:00'),
+        reason: 'Training session'
+      }
+    ]
   },
-
   {
     id: '4',
     type: 'room',
@@ -164,6 +212,23 @@ export const SPACES: Space[] = [
       max: 15000,
     },
     capacity: 4,
+    availability: [
+      {
+        start: new Date('2025-09-18T09:00:00'),
+        end: new Date('2025-09-18T12:00:00'),
+        reason: 'Team meeting'
+      },
+      {
+        start: new Date('2025-09-19T14:00:00'),
+        end: new Date('2025-09-19T17:00:00'),
+        reason: 'Client presentation'
+      },
+      {
+        start: new Date('2025-09-22T10:00:00'),
+        end: new Date('2025-09-22T16:00:00'),
+        reason: 'Full-day workshop'
+      }
+    ]
   },
   {
     id: '5',
@@ -195,5 +260,27 @@ export const SPACES: Space[] = [
     },
     capacity: 12,
     featured: true,
-  },
+    availability: [
+      {
+        start: new Date('2025-09-18T08:00:00'),
+        end: new Date('2025-09-18T10:00:00'),
+        reason: 'Morning briefing'
+      },
+      {
+        start: new Date('2025-09-19T13:00:00'),
+        end: new Date('2025-09-19T18:00:00'),
+        reason: 'Company all-hands meeting'
+      },
+      {
+        start: new Date('2025-09-23T09:00:00'),
+        end: new Date('2025-09-23T17:00:00'),
+        reason: 'Full-day conference'
+      },
+      {
+        start: new Date('2025-09-25T11:00:00'),
+        end: new Date('2025-09-25T15:00:00'),
+        reason: 'Product launch event'
+      }
+    ]
+  }
 ];

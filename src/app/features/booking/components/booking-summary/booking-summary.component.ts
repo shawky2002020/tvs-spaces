@@ -1,10 +1,8 @@
 //
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import {
-  BookingService,
-} from '../../services/booking.service';
-import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BookingService } from '../../services/booking.service';
+import { CommonModule, Location } from '@angular/common';
 import { BookingSelection } from '../../../../shared/constants/space.model';
 
 @Component({
@@ -17,10 +15,15 @@ import { BookingSelection } from '../../../../shared/constants/space.model';
 export class BookingSummaryComponent implements OnInit {
   bookingService = inject(BookingService);
   router = inject(Router);
+  route = inject(ActivatedRoute);
   selection: BookingSelection | undefined;
+  price!: number;
 
   ngOnInit() {
     this.selection = this.bookingService.getSelection();
+    this.price = this.bookingService.getPrice() ?? 0;
+    console.log('=== selection ===');
+    console.log(this.selection);
   }
 
   displayDate(): string {
@@ -32,32 +35,15 @@ export class BookingSummaryComponent implements OnInit {
     }
     return (this.selection.date as Date).toLocaleDateString();
   }
-
-  getPrice(): number {
-    // Dummy logic: Hourly = $10/hr, Daily = $50, Weekly = $200, Monthly = $600
-    switch (this.selection?.plan) {
-      case 'Hourly':
-        if (this.selection.startTime && this.selection.endTime) {
-          const [sh, sm] = this.selection.startTime.split(':').map(Number);
-          const [eh, em] = this.selection.endTime.split(':').map(Number);
-          const hours = eh + em / 60 - (sh + sm / 60);
-          return Math.max(10, Math.round(hours * 10));
-        }
-        return 10;
-      case 'Daily':
-        return 50;
-      case 'Weekly':
-        return 200;
-      case 'Monthly':
-        return 600;
-      default:
-        return 0;
-    }
+  back() {
+    this.router.navigate(['../dates'], {
+      relativeTo: this.route,
+    });
   }
 
   proceedToCheckout() {
     this.router.navigate(['../checkout'], {
-      relativeTo: (this as any).router.routerState.root,
+      relativeTo: this.route,
     });
   }
 }

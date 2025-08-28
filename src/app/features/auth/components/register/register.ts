@@ -110,6 +110,7 @@ export class Register {
         alert('registered successfully');
       },
       error:(err:ApiError)=> {
+        
         alert(err.error.message);
       },
     });

@@ -1,0 +1,312 @@
+@import '../../../../../assets/styles/abstracts/variables';
+
+.checkout-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: $spacing-lg;
+  position: relative;
+}
+
+.checkout-header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  
+  h1 {
+    font-family: $font-family-heading;
+    font-size: $font-size-xl;
+    color: $black-80;
+    margin-bottom: $spacing-xs;
+  }
+  
+  .checkout-subtitle {
+    color: $black-60;
+    font-size: $font-size-md;
+  }
+}
+
+.checkout-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-lg;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Order Summary Styles
+.order-summary {
+  h2 {
+    font-family: $font-family-heading;
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-md;
+    color: $black-80;
+  }
+}
+
+.summary-card {
+  background-color: $white-color;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+}
+
+.summary-header {
+  background: linear-gradient(135deg, $primary-color, $secondary-color);
+  color: $white-color;
+  padding: $spacing-md;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  h3 {
+    font-family: $font-family-heading;
+    margin: 0;
+    font-size: $font-size-md;
+  }
+  
+  .booking-id {
+    font-size: $font-size-xs;
+    opacity: 0.8;
+  }
+}
+
+.summary-details {
+  padding: $spacing-md;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: $spacing-sm 0;
+  border-bottom: 1px solid $light-color;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  .value {
+    font-weight: $font-weight-medium;
+    color: $black-80;
+  }
+}
+
+.summary-row.total {
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 2px solid $light-color;
+  font-weight: $font-weight-bold;
+  
+  .price {
+    color: $primary-color;
+    font-size: $font-size-lg;
+  }
+}
+
+// Payment Section Styles
+.payment-section {
+  h2 {
+    font-family: $font-family-heading;
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-md;
+    color: $black-80;
+  }
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  border: 2px solid $light-color;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: $secondary-color;
+    background-color: $white-80;
+  }
+  
+  &.selected {
+    border-color: $primary-color;
+    background-color: rgba($primary-color, 0.05);
+  }
+  
+  .option-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: $border-radius-circle;
+    background-color: $light-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: $spacing-md;
+    
+    i {
+      font-size: $font-size-lg;
+      color: $primary-color;
+    }
+    
+    &.paypal i {
+      color: #003087;
+    }
+  }
+  
+  .option-details {
+    flex: 1;
+    
+    h3 {
+      margin: 0;
+      font-size: $font-size-md;
+      color: $black-80;
+    }
+    
+    p {
+      margin: $spacing-xs 0 0;
+      font-size: $font-size-sm;
+      color: $black-60;
+    }
+  }
+  
+  .option-check {
+    .check-circle {
+      width: 20px;
+      height: 20px;
+      border-radius: $border-radius-circle;
+      background-color: $primary-color;
+      position: relative;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 5px;
+        border-left: 2px solid $white-color;
+        border-bottom: 2px solid $white-color;
+        transform: rotate(-45deg);
+        top: 6px;
+        left: 5px;
+      }
+    }
+  }
+}
+
+// Card Details Form
+.card-details {
+  background-color: $white-80;
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  margin-top: $spacing-md;
+  animation: fadeIn 0.3s ease;
+}
+
+.form-group {
+  margin-bottom: $spacing-md;
+  
+  label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-size: $font-size-sm;
+    color: $black-60;
+  }
+  
+  input {
+    width: 100%;
+    padding: $spacing-sm;
+    border: 1px solid $light-color;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-md;
+    transition: border-color 0.3s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+    }
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-md;
+}
+
+// Action Buttons
+.checkout-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: $spacing-xl;
+  
+  button {
+    min-width: 180px;
+    
+    i {
+      margin-right: $spacing-xs;
+    }
+  }
+}
+
+// Success Overlay
+.success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($black-color, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-index-modal;
+  animation: fadeIn 0.3s ease;
+}
+
+.success-content {
+  background-color: $white-color;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  text-align: center;
+  max-width: 400px;
+  animation: scaleIn 0.3s ease;
+  
+  .success-icon {
+    font-size: 64px;
+    color: $success-color;
+    margin-bottom: $spacing-md;
+  }
+  
+  h2 {
+    font-family: $font-family-heading;
+    color: $black-80;
+    margin-bottom: $spacing-sm;
+  }
+  
+  p {
+    color: $black-60;
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.8);
+  }
+  to { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}

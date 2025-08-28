@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BookingSelection, Space } from '../../../shared/constants/space.model';
-
-
-
+import { BookingPlan, BookingSelection, Space } from '../../../shared/constants/space.model';
 
 @Injectable({ providedIn: 'root' })
 export class BookingService {
@@ -10,10 +7,7 @@ export class BookingService {
   private confirmedBookings: BookingSelection[] = [];
 
   setPlan(plan: string) {
-    this.selection.resourceId = plan;
-  }
-  setSpace(space:Space){
-    
+    this.selection.plan = plan as BookingPlan;
   }
 
   setDates(start: Date, end: Date) {
@@ -29,7 +23,10 @@ export class BookingService {
   }
 
   setPrice(price: number) {
-    (this.selection as any).price = price;
+    this.selection.price = price;
+  }
+  getPrice() {
+    return this.selection.price;
   }
 
   getBookingDetails() {
@@ -42,6 +39,8 @@ export class BookingService {
 
   setSelection(partial: Partial<BookingSelection>) {
     this.selection = { ...this.selection, ...partial };
+    console.log('bookservice',this.selection);
+    
   }
 
   reset() {

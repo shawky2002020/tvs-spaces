@@ -12,7 +12,7 @@ const routes: Routes = [
         loadChildren: () => import('../../features/dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
-        path: 'bookings',
+        path: 'booking',
         loadChildren: () => import('../../features/booking/booking.module').then(m => m.BookingModule)
       },
       {
@@ -24,7 +24,7 @@ const routes: Routes = [
         loadChildren: () => import('../../features/payment/payment.module').then(m => m.PaymentModule)
       },
       {
-        path: 'info',
+        path: 'facilities',
         loadComponent: () => import('../../features/place-info/place-info.component')
           .then(m => m.PlaceInfoComponent)
       }

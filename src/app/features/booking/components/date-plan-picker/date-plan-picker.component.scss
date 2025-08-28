@@ -1,79 +1,104 @@
-@import "main.scss";
+@import 'main';
+
 .date-plan-picker {
-  max-width: 600px;
-  padding: 24px;
-  margin: $spacing-lg auto;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  font-family: "Roboto", sans-serif;
+  max-width: 700px;
+  padding: $spacing-lg;
+  margin: $spacing-xl auto;
+  background: $white-color;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-lg;
+  font-family: $font-family-base;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, $primary-color, $secondary-color, $accent-color);
+  }
 
   .space-info {
-    margin-bottom: 32px;
+    margin-bottom: $spacing-lg;
     text-align: center;
-    padding-bottom: 16px;
-    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid $white-80;
+    animation: fadeIn $timing-normal $easing-default forwards;
 
-    h2 {
-      margin: 0 0 8px 0;
-      color: #2c3e50;
-      font-size: 28px;
-      font-weight: 600;
+    h1 {
+      margin: 0 0 $spacing-xs 0;
+      color: $black-80;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      font-family: $font-family-heading;
     }
 
     .meta {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 12px;
-      color: #7f8c8d;
-      font-size: 14px;
+      gap: $spacing-sm;
+      color: $black-60;
+      font-size: $font-size-xs;
 
       .type {
         text-transform: capitalize;
-        font-weight: 500;
-        color: #3498db;
-        background: #e8f4fd;
-        padding: 4px 12px;
-        border-radius: 16px;
+        font-weight: $font-weight-medium;
+        color: $primary-color;
+        background: rgba($primary-color, 0.1);
+        padding: $spacing-xs $spacing-md;
+        border-radius: $border-radius-pill;
       }
     }
   }
 
+  label {
+    display: block;
+    margin-bottom: $spacing-sm;
+    font-weight: $font-weight-medium;
+    color: $black-80;
+    font-size: $font-size-sm;
+  }
+  
   .plan-section {
-    margin-bottom: 24px;
+    margin-bottom: $spacing-lg;
+    animation: fadeIn $timing-fast $easing-default forwards;
+    animation-delay: 0.1s;
 
     .plan-label {
-      display: block;
-      margin-bottom: 12px;
-      font-weight: 600;
-      color: #2c3e50;
-      font-size: 16px;
+      font-family: $font-family-heading;
+      color: $primary-color;
+      font-size: $font-size-md;
+      margin-bottom: $spacing-md;
     }
 
     mat-radio-group {
       display: flex;
-      gap: 20px;
+      gap: $spacing-lg;
       flex-wrap: wrap;
 
       @media (max-width: 480px) {
         flex-direction: column;
-        gap: 12px;
+        gap: $spacing-sm;
       }
 
       .mat-radio-button {
         ::ng-deep .mat-radio-label-content {
-          padding-left: 8px;
-          font-weight: 500;
+          padding-left: $spacing-sm;
+          font-weight: $font-weight-medium;
+          color: $black-80;
         }
 
         &.mat-radio-checked {
           ::ng-deep .mat-radio-outer-circle {
-            border-color: #3498db;
+            border-color: $primary-color;
           }
 
           ::ng-deep .mat-radio-inner-circle {
-            background-color: #3498db;
+            background-color: $primary-color;
           }
         }
       }
@@ -81,19 +106,20 @@
   }
 
   .date-section {
-    margin-bottom: 24px;
+    margin-bottom: $spacing-lg;
+    animation: fadeIn $timing-fast $easing-default forwards;
+    animation-delay: 0.2s;
 
     label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #2c3e50;
-      font-size: 14px;
+      font-family: $font-family-heading;
+      color: $primary-color;
+      font-size: $font-size-md;
+      margin-bottom: $spacing-md;
     }
 
     mat-form-field {
       width: 100%;
-      margin-bottom: 16px;
+      margin-bottom: $spacing-md;
 
       ::ng-deep {
         .mat-form-field-wrapper {
@@ -101,36 +127,36 @@
         }
 
         .mat-form-field-outline {
-          border-radius: 8px;
+          border-radius: $border-radius-md;
         }
 
         .mat-form-field-flex {
-          background: #f8f9fa;
-          border-radius: 8px;
-          padding: 0 12px;
+          background: $white-60;
+          border-radius: $border-radius-md;
+          padding: 0 $spacing-sm;
         }
 
         .mat-form-field-outline-thick {
-          color: #3498db;
+          color: $primary-color;
         }
 
         .mat-input-element {
-          color: #2c3e50;
-          font-weight: 500;
+          color: $black-80;
+          font-weight: $font-weight-medium;
         }
 
         .mat-datepicker-toggle {
-          color: #7f8c8d;
+          color: $black-60;
 
           &:hover {
-            color: #3498db;
+            color: $primary-color;
           }
         }
       }
 
       &:focus-within {
         ::ng-deep .mat-form-field-outline-thick {
-          color: #3498db;
+          color: $primary-color;
         }
       }
     }
@@ -139,92 +165,102 @@
     .month-picker {
       ::ng-deep {
         .mat-calendar-period-button {
-          background-color: #3498db !important;
-          color: white !important;
-          border-radius: 6px;
-          margin: 8px;
+          background-color: $primary-color !important;
+          color: $white-color !important;
+          border-radius: $border-radius-sm;
+          margin: $spacing-sm;
 
           &:hover {
-            background-color: #2980b9 !important;
+            background-color: darken($primary-color, 10%) !important;
           }
         }
 
         .mat-calendar-body-selected {
-          background-color: #3498db !important;
-          color: white !important;
+          background-color: $primary-color !important;
+          color: $white-color !important;
         }
 
         .mat-calendar-body-today:not(.mat-calendar-body-selected) {
-          border-color: #3498db !important;
+          border-color: $primary-color !important;
         }
       }
     }
   }
 
   .time-section {
-    margin-bottom: 24px;
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
+    margin-bottom: $spacing-lg;
+    padding: $spacing-md;
+    background: $white-60;
+    border-radius: $border-radius-md;
+    border: 1px solid $white-80;
+    animation: fadeIn $timing-fast $easing-default forwards;
+    animation-delay: 0.3s;
 
     label {
       display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #2c3e50;
-      font-size: 14px;
+      margin-bottom: $spacing-sm;
+      font-weight: $font-weight-medium;
+      color: $primary-color;
+      font-size: $font-size-sm;
+      font-family: $font-family-heading;
     }
 
     input[type="time"] {
       width: 100%;
-      padding: 12px;
-      border: 2px solid #e9ecef;
-      border-radius: 8px;
-      font-size: 16px;
-      margin-bottom: 16px;
-      background: white;
-      transition: border-color 0.3s ease;
+      padding: $spacing-sm;
+      border: 2px solid $white-80;
+      border-radius: $border-radius-md;
+      font-size: $font-size-sm;
+      margin-bottom: $spacing-md;
+      background: $white-color;
+      transition: all $transition-base;
+      color: $black-80;
 
       &:focus {
         outline: none;
-        border-color: #3498db;
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
       }
 
       &:hover {
-        border-color: #bdc3c7;
+        border-color: $light-color;
       }
     }
   }
 
   .price-summary {
-    margin: 32px 0;
-    padding: 20px;
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: white;
-    border-radius: 12px;
+    margin: $spacing-lg 0;
+    padding: $spacing-md;
+    background: linear-gradient(135deg, rgba($primary-color, 0.05), rgba($secondary-color, 0.05));
+    color: $black-80;
+    border-radius: $border-radius-md;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    border: 1px solid $white-80;
+    animation: fadeIn $timing-fast $easing-default forwards;
+    animation-delay: 0.4s;
 
     span {
-      font-size: 18px;
-      font-weight: 500;
+      font-size: $font-size-md;
+      font-weight: $font-weight-medium;
     }
 
     strong {
-      font-size: 24px;
-      font-weight: 700;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-bold;
+      color: $primary-color;
+      margin-left: $spacing-xs;
     }
   }
 
   .actions {
     display: flex;
-    gap: 16px;
+    gap: $spacing-md;
     justify-content: flex-end;
-    margin-top: 32px;
-    padding-top: 20px;
-    border-top: 2px solid #f0f0f0;
+    margin-top: $spacing-lg;
+    padding-top: $spacing-md;
+    border-top: 1px solid $white-80;
+    animation: fadeIn $timing-fast $easing-default forwards;
+    animation-delay: 0.5s;
 
     @media (max-width: 480px) {
       flex-direction: column;
@@ -232,37 +268,38 @@
 
     button {
       min-width: 120px;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 600;
+      padding: $spacing-sm $spacing-md;
+      border-radius: $border-radius-md;
+      font-weight: $font-weight-medium;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      transition: all 0.3s ease;
+      transition: all $transition-base;
 
       &:first-child {
-        border: 2px solid #3498db;
-        color: #3498db;
+        border: 2px solid $primary-color;
+        color: $primary-color;
+        background: transparent;
 
         &:hover {
-          background: #3498db;
-          color: white;
+          background: rgba($primary-color, 0.1);
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+          box-shadow: $shadow-sm;
         }
       }
 
       &:last-child {
-        background: #3498db;
-        color: white;
+        background: $primary-color;
+        color: $white-color;
+        border: none;
 
         &:hover:not([disabled]) {
-          background: #2980b9;
+          background: darken($primary-color, 10%);
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+          box-shadow: $shadow-md;
         }
 
         &[disabled] {
-          background: #bdc3c7;
+          background: $black-40;
           cursor: not-allowed;
           transform: none;
           box-shadow: none;
@@ -272,59 +309,52 @@
   }
 
   .error {
-    margin-top: 16px;
-    padding: 12px 16px;
-    background: #ffe6e6;
-    color: #e74c3c;
-    border: 1px solid #f5c6cb;
-    border-radius: 8px;
-    font-weight: 500;
+    margin-top: $spacing-md;
+    padding: $spacing-sm $spacing-md;
+    background: rgba($error-color, 0.1);
+    color: $error-color;
+    border: 1px solid rgba($error-color, 0.2);
+    border-radius: $border-radius-md;
+    font-weight: $font-weight-medium;
     text-align: center;
-    animation: shake 0.5s ease-in-out;
+    animation: shake 0.5s $easing-default;
 
     @keyframes shake {
-      0%,
-      100% {
-        transform: translateX(0);
-      }
-      25% {
-        transform: translateX(-5px);
-      }
-      75% {
-        transform: translateX(5px);
-      }
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
     }
   }
 
   // Responsive design
   @media (max-width: 768px) {
-    padding: 20px;
-    margin: 16px;
+    padding: $spacing-md;
+    margin: $spacing-md;
 
     .space-info {
-      h2 {
-        font-size: 24px;
+      h1 {
+        font-size: $font-size-lg;
       }
     }
 
     .price-summary {
       span {
-        font-size: 16px;
+        font-size: $font-size-sm;
       }
 
       strong {
-        font-size: 20px;
+        font-size: $font-size-md;
       }
     }
   }
 
   @media (max-width: 480px) {
-    padding: 16px;
+    padding: $spacing-sm;
 
     .space-info {
       .meta {
         flex-direction: column;
-        gap: 8px;
+        gap: $spacing-xs;
       }
     }
 
@@ -340,48 +370,72 @@
 ::ng-deep {
   .mat-datepicker-content {
     .mat-calendar {
-      border-radius: 12px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      border-radius: $border-radius-md;
+      box-shadow: $shadow-lg;
       background: $white-color !important;
       height: fit-content !important;
       z-index: $z-index-sticky;
     }
+    .mat-calendar-body-disabled{
+      .mat-calendar-body-cell-content{
+        background-color: rgba($error-color,.7) !important;
+        cursor: not-allowed;
+        border-radius: 50%;
+        color: $white-80 !important;
+        position: relative;
+      }
+      .mat-calendar-body-cell-content::after{
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 4px;
+        background-color: rgba($error-color,.9) !important;
+        transform: translate(-50%, -50%) rotate(45deg);
+        font-size: 16px;
+        font-weight: bold;
+        color: $error-color;
+        opacity: 0.8;
+        z-index: 1;
+      }
+    }
 
     .mat-calendar-body-selected {
-      background-color: #3498db !important;
-      color: white !important;
+      background-color: $primary-color !important;
+      color: $white-color !important;
     }
 
     .mat-calendar-body-today:not(.mat-calendar-body-selected) {
-      border-color: #3498db !important;
+      border-color: $primary-color !important;
     }
 
     .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover {
-      background-color: #e8f4fd !important;
+      background-color: rgba($primary-color, 0.1) !important;
+      border-radius: 50%;
     }
 
     .mat-calendar-period-button {
-      background-color: #3498db !important;
-      color: white !important;
-      border-radius: 6px;
-      margin: 8px;
+      background-color: $primary-color !important;
+      color: $white-color !important;
+      border-radius: $border-radius-sm;
+      margin: $spacing-sm;
 
       &:hover {
-        background-color: #2980b9 !important;
+        background-color: darken($primary-color, 10%) !important;
       }
     }
   }
 }
-.date-section {
-  // ... your existing styles ...
 
+.date-section {
   ::ng-deep {
     // Unavailable dates styling
     .unavailable-date {
       .mat-calendar-body-cell-content {
         position: relative;
-        background-color: #ffebee !important; // Light red background
-        color: #d32f2f !important; // Red text
+        background-color: rgba($error-color, 0.1) !important;
+        color: $error-color !important;
         text-decoration: line-through;
         cursor: not-allowed;
 
@@ -393,62 +447,39 @@
           transform: translate(-50%, -50%);
           font-size: 16px;
           font-weight: bold;
-          color: #d32f2f;
+          color: $error-color;
           opacity: 0.8;
         }
       }
 
       &:hover .mat-calendar-body-cell-content {
-        background-color: #ffcdd2 !important; // Darker red on hover
+        background-color: rgba($error-color, 0.2) !important;
       }
     }
 
     // Past dates styling
     .mat-calendar-body-disabled {
       .mat-calendar-body-cell-content {
-        background-color: #f5f5f5 !important;
-        color: #bdbdbd !important;
+        background-color: $white-80 !important;
+        color: $black-40 !important;
         cursor: not-allowed;
-      }
-    }
-
-    // Custom month picker unavailable months
-    .month-picker {
-      .mat-calendar-body-disabled {
-        .mat-calendar-body-cell-content {
-          background-color: #ffebee !important;
-          color: #d32f2f !important;
-          text-decoration: line-through;
-
-          &::after {
-            content: "×";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 14px;
-            font-weight: bold;
-            color: #d32f2f;
-            opacity: 0.8;
-          }
-        }
       }
     }
 
     // Today's date styling
     .mat-calendar-body-today:not(.mat-calendar-body-selected) {
-      border-color: #3498db !important;
+      border-color: $primary-color !important;
     }
 
     // Selected date styling
     .mat-calendar-body-selected {
-      background-color: #3498db !important;
-      color: white !important;
+      background-color: $primary-color !important;
+      color: $white-color !important;
 
       // Override for unavailable but selected (shouldn't happen, but just in case)
       &.unavailable-date {
-        background-color: #d32f2f !important;
-        color: white !important;
+        background-color: $error-color !important;
+        color: $white-color !important;
 
         &::after {
           content: "×";
@@ -458,41 +489,9 @@
           transform: translate(-50%, -50%);
           font-size: 16px;
           font-weight: bold;
-          color: white;
+          color: $white-color;
         }
       }
-    }
-  }
-}
-
-// Alternative approach using data attributes
-::ng-deep {
-  .mat-calendar-body-cell[aria-disabled="true"] {
-    .mat-calendar-body-cell-content {
-      background-color: #ffebee !important;
-      color: #d32f2f !important;
-      text-decoration: line-through;
-      cursor: not-allowed;
-
-      &::before {
-        content: "Unavailable";
-        position: absolute;
-        top: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #d32f2f;
-        color: white;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-size: 10px;
-        white-space: nowrap;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-    }
-
-    &:hover .mat-calendar-body-cell-content::before {
-      opacity: 1;
     }
   }
 }
