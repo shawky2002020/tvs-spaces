@@ -5,8 +5,9 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
+  AfterViewInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -44,37 +45,52 @@ import { SpaceAvailabilityUtils } from '../../../../shared/utils/SpaceAvailabili
   templateUrl: './date-plan-picker.component.html',
   styleUrls: ['./date-plan-picker.component.scss'],
 })
-export class DatePlanPickerComponent implements OnInit, OnChanges {
-  space !: Space ;
+export class DatePlanPickerComponent
+  implements OnInit, OnChanges, AfterViewInit
+{
+  space!: Space;
   bookingService = inject(BookingService);
   router = inject(Router);
   snackBar = inject(MatSnackBar);
-
-  selectedId :string | undefined;
+  location = inject(Location);
+  selectedId: string | undefined;
   plan: 'Hourly' | 'Daily' | 'Monthly' = 'Hourly';
   date: Date | null = null;
   endDate: Date | null = null;
-  startTime: string = '09:00';
+  startTime: string = '10:00';
   endTime: string = '17:00';
   price: number = 0;
   error: string = '';
   loading: boolean = false;
-
+  constructor() {}
+  ngAfterViewInit(): void {
+    this.styleUnavailableDates();
+  }
   // Time options for hourly booking
   timeOptions: string[] = this.generateTimeOptions();
   unavailableDates: Date[] = [];
 
   ngOnInit() {
-    this.initializeFromBookingService();
-    this.selectedId = this.bookingService.getBookingDetails().resourceId;
-     const selspace = SPACES.filter((space)=>{      
-       return space.id == this.selectedId
-    })[0] ;
-    if(selspace)
-      this.space = selspace;
-    console.log(selspace);
-    
-  }
+  this.initializeFromBookingService();
+  this.selectedId = this.bookingService.getBookingDetails().resourceId;
+  const selspace = SPACES.filter((space) => {
+    return space.id == this.selectedId;
+  })[0];
+  if (selspace) this.space = selspace;
+  
+  // Debug: Check the unavailable dates
+  console.log('=== DEBUG: Unavailable Dates Analysis ===');
+  console.log('Space:', this.space?.name);
+  console.log('Space availability array:', this.space?.availability);
+  
+  this.updateUnavailableDates();
+  
+  console.log('Unavailable dates after update:', this.unavailableDates);
+  console.log('Types of unavailable dates:');
+  this.unavailableDates.forEach((date, index) => {
+    console.log(`Date ${index}:`, date, 'Type:', typeof date, 'Instanceof Date:', date instanceof Date);
+  });
+}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['space'] && this.space) {
@@ -92,8 +108,9 @@ export class DatePlanPickerComponent implements OnInit, OnChanges {
       }
       this.date != bookingData.date;
       this.endDate = bookingData.endTime ? new Date(bookingData.endTime) : null;
-      this.startTime = bookingData.startTime || '09:00';
+      this.startTime = bookingData.startTime || '10:00';
       this.endTime = bookingData.endTime || '17:00';
+      this.updateUnavailableDates();
       this.calculatePrice();
     }
   }
@@ -122,12 +139,12 @@ export class DatePlanPickerComponent implements OnInit, OnChanges {
     return new Date();
   }
 
-  get maxDate(): Date {
-    const max = new Date();
-    max.setMonth(max.getMonth() + 3); // 3 months in advance
-    return max;
-  }
+  // get maxDate(): Date {
+  //   const max = new Date();
+  //   return max;
+  // }
 
+  //FORM VALIDATIONS
   get isHourly(): boolean {
     return this.plan === 'Hourly';
   }
@@ -161,7 +178,7 @@ export class DatePlanPickerComponent implements OnInit, OnChanges {
   onPlanChange() {
     this.date = null;
     this.endDate = null;
-    this.startTime = '09:00';
+    this.startTime = '10:00';
     this.endTime = '17:00';
     this.price = 0;
     this.error = '';
@@ -225,12 +242,12 @@ export class DatePlanPickerComponent implements OnInit, OnChanges {
   validateAvailability() {
     if (!this.date) return;
 
-    if (this.isDateDisabled(this.date)) {
-      this.error = 'Selected date is not available';
-      return;
-    }
+    // if (!this.isDateFree(this.date)) {
+    //   this.error = 'Selected date is not available';
+    //   return;
+    // }
 
-    if (this.endDate && this.isDateDisabled(this.endDate)) {
+    if (this.endDate && this.isDateFree(this.endDate)) {
       this.error = 'Selected end date is not available';
       return;
     }
@@ -318,42 +335,121 @@ export class DatePlanPickerComponent implements OnInit, OnChanges {
     }
     return date;
   }
+ isDateFree = (d: any): boolean => {
+  console.log('=== isDateFree called ===');
+  console.log('Input parameter d:', d);
 
-// In your component class
-isDateDisabled = (d: Date | null): boolean => {
-  if (!d) return false;
-  
+  let date: Date;
+
+  // Handle Moment.js objects
+  if (d && d._isAMomentObject && d._d instanceof Date) {
+    console.log('📅 Input is a Moment.js object');
+    date = d._d; // Extract the underlying Date object
+  }
+  // Handle native Date objects
+  else if (d instanceof Date) {
+    console.log('📅 Input is a native Date object');
+    date = d;
+  }
+  // Handle invalid inputs
+  else {
+    console.log('❌ DISABLED - Not a valid date object');
+    console.log('=== End isDateFree ===\n');
+    return true;
+  }
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  if (d < today) return true;
-  
-  if (d > this.maxDate) return true;
-  
+  console.log('Today date:', today.toDateString());
+
+  // Create clean dates for comparison (ignore time)
+  const cleanDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  console.log('Clean input date:', cleanDate.toDateString());
+
+  // Disable past dates
+  if (cleanDate < today) {
+    console.log('❌ DISABLED - Date is in the past');
+    console.log('=== End isDateFree ===\n');
+    return true;
+  }
+
+  console.log('Unavailable dates array:', this.unavailableDates);
+  console.log('Number of unavailable dates:', this.unavailableDates.length);
+
   // Check if date is in unavailable dates
-  const isUnavailable = this.unavailableDates.some(unavailableDate => 
-    unavailableDate.getDate() === d.getDate() &&
-    unavailableDate.getMonth() === d.getMonth() &&
-    unavailableDate.getFullYear() === d.getFullYear()
-  );
+  const isUnavailable = this.unavailableDates.some((unavailableDate, index) => {
+    if (!unavailableDate || !(unavailableDate instanceof Date)) {
+      console.log(`Skipping unavailable date ${index + 1} - not a valid Date object`);
+      return false;
+    }
+
+    const cleanUnavailable = new Date(
+      unavailableDate.getFullYear(),
+      unavailableDate.getMonth(),
+      unavailableDate.getDate()
+    );
+    
+    console.log(`Comparing: ${cleanUnavailable.toDateString()} === ${cleanDate.toDateString()}`);
+    
+    return cleanUnavailable.getTime() === cleanDate.getTime();
+  });
+
+  console.log('Final result - isUnavailable:', isUnavailable);
   
-  // Add custom class to unavailable dates
   if (isUnavailable) {
-    setTimeout(() => this.addUnavailableDateClass(d));
+    console.log('❌ DISABLED - Date is in unavailable dates');
+  } else {
+    console.log('✅ ENABLED - Date is available');
   }
   
-  return isUnavailable;
+  console.log('=== End isDateFree ===\n');
+  return !isUnavailable;
 };
+  // Call this separately (e.g., in ngAfterViewInit or after calendar renders)
+  private styleUnavailableDates() {
+    setTimeout(() => {
+      this.unavailableDates.forEach((date) => {
+        this.addUnavailableDateClass(date);
+      });
+    }, 100);
+  }
 
-private addUnavailableDateClass(date: Date) {
-  const dateCells = document.querySelectorAll('.mat-calendar-body-cell');
-  dateCells.forEach(cell => {
-    const cellDate = cell.getAttribute('aria-label');
-    if (cellDate && cellDate.includes(date.toDateString())) {
-      cell.classList.add('unavailable-date');
+  private addUnavailableDateClass(targetDate: Date) {
+    const dateCells = document.querySelectorAll('.mat-calendar-body-cell');
+
+    dateCells.forEach((cell) => {
+      const ariaLabel = cell.getAttribute('aria-label');
+
+      if (ariaLabel) {
+        const parsedDate = this.parseAriaLabelDate(ariaLabel);
+
+        if (parsedDate && this.isSameDate(parsedDate, targetDate)) {
+          cell.classList.add('unavailable-date');
+          console.log(
+            'unavailable-date class added for',
+            targetDate.toDateString()
+          );
+        }
+      }
+    });
+  }
+
+  private parseAriaLabelDate(ariaLabel: string): Date | null {
+    try {
+      return new Date(ariaLabel);
+    } catch (error) {
+      console.warn('Could not parse date from aria-label:', ariaLabel);
+      return null;
     }
-  });
-}
+  }
 
+  private isSameDate(date1: Date, date2: Date): boolean {
+    return (
+      date1.getDate() === date2.getDate() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getFullYear() === date2.getFullYear()
+    );
+  }
   next() {
     if (!this.isFormValid || this.error) {
       this.snackBar.open('Please complete all fields correctly.', 'Close', {
@@ -381,7 +477,6 @@ private addUnavailableDateClass(date: Date) {
       }
 
       this.bookingService.setPrice(this.price);
-      this.bookingService.setSpace(this.space);
 
       this.error = '';
       this.router.navigate(['/book/summary']);
@@ -440,7 +535,7 @@ private addUnavailableDateClass(date: Date) {
   }
 
   back() {
-    this.router.navigate(['../select']);
+    this.location.back();
   }
 
   // Helper method to format date for display
@@ -453,6 +548,4 @@ private addUnavailableDateClass(date: Date) {
       day: 'numeric',
     });
   }
-
-  
 }

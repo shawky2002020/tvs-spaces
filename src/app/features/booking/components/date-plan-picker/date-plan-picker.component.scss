@@ -14,7 +14,7 @@
     padding-bottom: 16px;
     border-bottom: 2px solid #f0f0f0;
 
-    h2 {
+    h1 {
       margin: 0 0 8px 0;
       color: #2c3e50;
       font-size: 28px;
@@ -40,16 +40,17 @@
     }
   }
 
+  label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 16px;
+    font-family: sec3;
+  }
   .plan-section {
     margin-bottom: 24px;
 
-    .plan-label {
-      display: block;
-      margin-bottom: 12px;
-      font-weight: 600;
-      color: #2c3e50;
-      font-size: 16px;
-    }
 
     mat-radio-group {
       display: flex;
@@ -82,14 +83,6 @@
 
   .date-section {
     margin-bottom: 24px;
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #2c3e50;
-      font-size: 14px;
-    }
 
     mat-form-field {
       width: 100%;
@@ -199,13 +192,13 @@
   }
 
   .price-summary {
-    margin: 32px 0;
-    padding: 20px;
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: white;
+    // margin: 32px 0;
+    // padding: 20px;
+    // background: linear-gradient(135deg, #3498db, #2980b9);
+    color: $black-80;
     border-radius: 12px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    // box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 
     span {
       font-size: 18px;
@@ -373,7 +366,6 @@
   }
 }
 .date-section {
-  // ... your existing styles ...
 
   ::ng-deep {
     // Unavailable dates styling

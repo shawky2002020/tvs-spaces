@@ -12,9 +12,7 @@ export class BookingService {
   setPlan(plan: string) {
     this.selection.resourceId = plan;
   }
-  setSpace(space:Space){
-    
-  }
+  
 
   setDates(start: Date, end: Date) {
     this.selection.date = start;
