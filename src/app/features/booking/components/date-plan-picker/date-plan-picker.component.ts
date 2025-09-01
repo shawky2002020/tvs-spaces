@@ -40,7 +40,7 @@ import { SpaceAvailabilityUtils } from '../../../../shared/utils/SpaceAvailabili
     MatButtonModule,
     MatSnackBarModule,
     MatIconModule,
-    MatMomentDateModule,
+    MatNativeDateModule,
   ],
   templateUrl: './date-plan-picker.component.html',
   styleUrls: ['./date-plan-picker.component.scss'],
@@ -48,11 +48,71 @@ import { SpaceAvailabilityUtils } from '../../../../shared/utils/SpaceAvailabili
 export class DatePlanPickerComponent
   implements OnInit, OnChanges, AfterViewInit
 {
+  // --- Monthly plan support ---
+  selectedMonth: Date | null = null;
+  selectedDay: Date | null = null;
+
+  get minDay(): Date | null {
+    if (!this.selectedMonth) return null;
+    return new Date(this.selectedMonth.getFullYear(), this.selectedMonth.getMonth(), 1);
+  }
+  get maxDay(): Date | null {
+    if (!this.selectedMonth) return null;
+    return new Date(this.selectedMonth.getFullYear(), this.selectedMonth.getMonth() + 1, 0);
+  }
+
+  onMonthChange(month: Date | null) {
+    this.selectedMonth = month;
+    this.selectedDay = null;
+    if (month) {
+      // Set date and endDate to first and last day of month
+      this.date = new Date(month.getFullYear(), month.getMonth(), 1);
+      this.endDate = new Date(month.getFullYear(), month.getMonth() + 1, 0);
+      this.calculatePrice();
+    }
+  }
+
+  onDayChange(day: Date | null) {
+    this.selectedDay = day;
+    if (day && this.selectedMonth) {
+      this.date = new Date(day);
+      this.endDate = new Date(day);
+      this.calculatePrice();
+    }
+  }
+
+  onMonthPickerClosed() {
+    // Optionally reset day selection if month changed
+    if (this.selectedMonth && this.selectedDay) {
+      if (
+        this.selectedDay.getMonth() !== this.selectedMonth.getMonth() ||
+        this.selectedDay.getFullYear() !== this.selectedMonth.getFullYear()
+      ) {
+        this.selectedDay = null;
+      }
+    }
+  }
+
+  isDayFree = (d: any): boolean => {
+    // Used for day picker in monthly plan
+    if (!d) return false;
+    let date: Date = d instanceof Date ? d : (d._isAMomentObject && d._d instanceof Date ? d._d : new Date());
+    if (!this.selectedMonth) return false;
+    // Only allow days in selected month
+    if (date.getMonth() !== this.selectedMonth.getMonth() || date.getFullYear() !== this.selectedMonth.getFullYear()) return false;
+    // Disable past days
+    const today = new Date(); today.setHours(0,0,0,0);
+    const cleanDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    if (cleanDate < today) return false;
+    // Disable if in unavailableDates
+    const isUnavailable = this.unavailableDates.some(unavailableDate => {
+      if (!unavailableDate || !(unavailableDate instanceof Date)) return false;
+      const cleanUnavailable = new Date(unavailableDate.getFullYear(), unavailableDate.getMonth(), unavailableDate.getDate());
+      return cleanUnavailable.getTime() === cleanDate.getTime();
+    });
+    return !isUnavailable;
+  };
   space!: Space;
-  // bookingService = inject(BookingService);
-  // router = inject(Router);
-  // snackBar = inject(MatSnackBar);
-  // location = inject(Location);
   selectedId: string | undefined;
   plan: 'Hourly' | 'Daily' | 'Monthly' = 'Hourly';
   date: Date | null = null;
@@ -124,10 +184,7 @@ export class DatePlanPickerComponent
     return new Date();
   }
 
-  // get maxDate(): Date {
-  //   const max = new Date();
-  //   return max;
-  // }
+ 
 
   //FORM VALIDATIONS
   get isHourly(): boolean {
@@ -167,6 +224,8 @@ export class DatePlanPickerComponent
     this.endTime = '17:00';
     this.price = 0;
     this.error = '';
+    this.selectedMonth = null;
+    this.selectedDay = null;
   }
 
   onDateChange(selectedDate: Date | null) {

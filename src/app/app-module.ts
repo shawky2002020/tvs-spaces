@@ -17,7 +17,6 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthLayoutComponent } from './layouts/auth-layout/components/auth-layout.component';
 import { SideBar } from './shared/components/side-bar/side-bar';
 import { SharedModule } from './shared/shared.module';
-import { MatIconModule } from '@angular/material/icon';
 
 
 // Required factory function for AoT
@@ -37,7 +36,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     SharedModule,
     CommonModule,
     RouterModule,
-    MatIconModule,
     HeaderComponent,
     HttpClientModule,
     FooterComponent,
