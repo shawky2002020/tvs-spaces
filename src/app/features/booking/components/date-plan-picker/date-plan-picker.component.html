@@ -1,4 +1,4 @@
-<div class="date-plan-picker fade-in--fast">
+<div class="date-plan-picker slide-in--up-slow">
   <div class="space-info fade-in--slow">
     <h1>{{ space.name }}</h1>
     <div class="meta">
@@ -7,34 +7,60 @@
     </div>
   </div>
 
-  <div class="plan-section fade-in--fast">
+  <div class="plan-section">
     <label class="plan-label">Choose Plan:</label>
-    <mat-radio-group [(ngModel)]="plan" (change)="onPlanChange()" aria-label="Select booking plan">
+    <mat-radio-group
+      [(ngModel)]="plan"
+      (change)="onPlanChange()"
+      aria-label="Select booking plan"
+    >
       <mat-radio-button value="Hourly">Hourly</mat-radio-button>
+      <!-- <mat-radio-button value="Half-day">Half Day</mat-radio-button> -->
       <mat-radio-button value="Daily">Daily</mat-radio-button>
       <mat-radio-button value="Monthly">Monthly</mat-radio-button>
     </mat-radio-group>
   </div>
 
-  <div class="date-section fade-in--fast">
-    <label *ngIf="!isMonthly">Select Date{{ isDaily ? "s" : "" }}:</label>
-    
+  <!-- Quantity Selection -->
+  <!-- <div class="quantity-section slide-in--left-slow" *ngIf="space.capacity && space.capacity > 1">
+    <label>Select Quantity:</label>
     <mat-form-field appearance="fill">
+      <mat-label>Number of {{ space.type === 'desk' ? 'desks' : 'rooms' }}</mat-label>
+      <input 
+        matInput 
+        type="number" 
+        [(ngModel)]="quantity" 
+        min="1" 
+        [max]="space.capacity" 
+        (change)="onQuantityChange()"
+        aria-label="Select quantity"
+      >
+      <mat-hint *ngIf="space.capacity">Available: {{ space.capacity }}</mat-hint>
+    </mat-form-field>
+  </div> -->
+
+  <div class="date-section slide-in--left-slow">
+    <label *ngIf="!isMonthly">Select Date{{ isDaily ? "s" : "" }}:</label>
+
+    <mat-form-field *ngIf="isHourly || isDaily" appearance="fill">
       <mat-label>Choose date</mat-label>
       <input
         matInput
         [matDatepicker]="picker"
         [(ngModel)]="date"
         (dateChange)="onDateChange($event.value)"
-        [matDatepickerFilter]="isDateFree"
         [min]="minDate"
         placeholder="Choose date"
         aria-label="Select date"
       />
-      <mat-datepicker-toggle matSuffix [for]="picker" aria-label="Open date picker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker"
+        aria-label="Open date picker"
+      ></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    
+
     <mat-form-field *ngIf="isDaily" appearance="fill">
       <mat-label>End date</mat-label>
       <input
@@ -42,7 +68,6 @@
         [matDatepicker]="endPicker"
         [(ngModel)]="endDate"
         (dateChange)="onEndDateChange($event.value)"
-        [matDatepickerFilter]="isDateFree"
         [min]="date || minDate"
         placeholder="End date"
         aria-label="Select end date"
@@ -54,7 +79,7 @@
       ></mat-datepicker-toggle>
       <mat-datepicker #endPicker></mat-datepicker>
     </mat-form-field>
-    
+
     <!-- Month Picker -->
     <mat-form-field *ngIf="isMonthly" appearance="fill">
       <mat-label>Choose month</mat-label>
@@ -89,7 +114,6 @@
         [matDatepicker]="dayPicker"
         [(ngModel)]="selectedDay"
         (dateChange)="onDayChange($event.value)"
-        [matDatepickerFilter]="isDayFree"
         [min]="minDay"
         [max]="maxDay"
         placeholder="Choose day"
@@ -108,41 +132,110 @@
     </mat-form-field>
 
     <!-- Time Pickers (show after day is selected) -->
-    <div class="time-section" *ngIf="isMonthly && selectedDay">
-      <label>Start Time:</label>
-      <input type="time" [(ngModel)]="startTime" (change)="onTimeChange()" aria-label="Select start time" />
-      <label>End Time:</label>
-      <input type="time" [(ngModel)]="endTime" (change)="onTimeChange()" aria-label="Select end time" />
+    <!-- <div class="time-section" *ngIf="isMonthly && selectedDay">
+      <div class="start">
+        <mat-form-field appearance="fill">
+          <mat-label>Start Time</mat-label>
+          <mat-select
+            [(ngModel)]="startTime"
+            (selectionChange)="onTimeChange()"
+            panelClass="custom-dropdown"
+          >
+            <mat-option
+              *ngFor="let hour of hours"
+              [value]="hour"
+              [disabled]="!isHourAvailable(hour)"
+            >
+              {{ hour }}:00
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="end">
+        <mat-form-field appearance="fill">
+          <mat-label>End Time</mat-label>
+          <mat-select
+            [(ngModel)]="endTime"
+            (selectionChange)="onTimeChange()"
+            panelClass="custom-dropdown"
+          >
+            <mat-option *ngFor="let hour of hours" [value]="hour">
+              {{ hour }}:00
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div> -->
+
+    <div class="time-section" *ngIf="date">
+      <div class="start">
+        <mat-form-field appearance="fill">
+          <mat-label>Start Time</mat-label>
+          <mat-select
+            [(ngModel)]="startTime"
+            (selectionChange)="onTimeChange()"
+            panelClass="custom-dropdown"
+          >
+            <mat-option
+              *ngFor="let hour of hours"
+              [value]="hour"
+              [ngClass]="{ 'unavailable-hour': !isHourAvailable(hour) }"
+              [disabled]="!isHourAvailable(hour)"
+            >
+              {{ hour }}:00
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="end">
+        <mat-form-field appearance="fill">
+          <mat-label>End Time</mat-label>
+          <mat-select
+            [(ngModel)]="endTime"
+            (selectionChange)="onTimeChange()"
+            panelClass="custom-dropdown"
+          >
+            <mat-option
+              *ngFor="let hour of hours"
+              [value]="hour"
+              [ngClass]="{ 'unavailable-hour': !isHourAvailable(hour) }"
+              [disabled]="!isHourAvailable(hour)"
+            >
+              {{ hour }}:00
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="error" *ngIf="error" role="alert">{{ error }}</div>
+
+    <div class="price-summary" *ngIf="price > 0 && !error">
+      <span
+        >Total Price: <strong>{{ price | number : "1.0-2" }} EGP</strong></span
+      >
+      <span *ngIf="quantity > 1" class="price-breakdown">
+        ({{ quantity }} × {{ price / quantity | number : "1.0-2" }} EGP)
+      </span>
+    </div>
+
+    <div class="actions">
+      <button class="btn-secondary btn" (click)="back()" aria-label="Go back">
+        Back
+      </button>
+      <button
+        class="btn-primary btn"
+        (click)="next()"
+        [disabled]="
+          !date ||
+          (isDaily && !endDate) ||
+          (isHourly && (!startTime || !endTime))
+        "
+        aria-label="Proceed to next step"
+      >
+        Next
+      </button>
     </div>
   </div>
-
-  <div class="time-section" *ngIf="isHourly">
-    <label>Start Time:</label>
-    <input type="time" [(ngModel)]="startTime" (change)="onTimeChange()" aria-label="Select start time" />
-    <label>End Time:</label>
-    <input type="time" [(ngModel)]="endTime" (change)="onTimeChange()" aria-label="Select end time" />
-  </div>
-
-  <div class="price-summary" *ngIf="price > 0">
-    <span>Total Price: <strong>{{ price | number : "1.0-2" }} EGP</strong></span>
-  </div>
-
-  <div class="actions">
-    <button mat-stroked-button color="primary" (click)="back()" aria-label="Go back">
-     Back
-    </button>
-    <button
-      mat-flat-button
-      color="primary"
-      (click)="next()"
-      [disabled]="
-        !date || (isDaily && !endDate) || (isHourly && (!startTime || !endTime))
-      "
-      aria-label="Proceed to next step"
-    >
-      Next 
-    </button>
-  </div>
-
-  <div class="error" *ngIf="error" role="alert">{{ error }}</div>
 </div>

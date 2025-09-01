@@ -194,24 +194,34 @@
     border-radius: $border-radius-md;
     border: 1px solid $white-80;
     animation: fadeIn $timing-fast $easing-default forwards;
-    animation-delay: 0.3s;
+    animation-delay: .3s;
+    opacity: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 12px;
+    .start,.end{
+      width: 100%;
+      display: flex;
+      flex-flow: column wrap;
+      align-items: center;
+      justify-content: center;
+    }
 
     label {
-      display: block;
-      margin-bottom: $spacing-sm;
+      display: flex;
       font-weight: $font-weight-medium;
       color: $primary-color;
       font-size: $font-size-sm;
       font-family: $font-family-heading;
+      @include flex-center;
+      text-align: center;
     }
 
     input[type="time"] {
-      width: 100%;
       padding: $spacing-sm;
       border: 2px solid $white-80;
       border-radius: $border-radius-md;
       font-size: $font-size-sm;
-      margin-bottom: $spacing-md;
       background: $white-color;
       transition: all $transition-base;
       color: $black-80;
@@ -275,36 +285,7 @@
       letter-spacing: 0.5px;
       transition: all $transition-base;
 
-      &:first-child {
-        border: 2px solid $primary-color;
-        color: $primary-color;
-        background: transparent;
-
-        &:hover {
-          background: rgba($primary-color, 0.1);
-          transform: translateY(-2px);
-          box-shadow: $shadow-sm;
-        }
-      }
-
-      &:last-child {
-        background: $primary-color;
-        color: $white-color;
-        border: none;
-
-        &:hover:not([disabled]) {
-          background: darken($primary-color, 10%);
-          transform: translateY(-2px);
-          box-shadow: $shadow-md;
-        }
-
-        &[disabled] {
-          background: $black-40;
-          cursor: not-allowed;
-          transform: none;
-          box-shadow: none;
-        }
-      }
+      
     }
   }
 
@@ -494,4 +475,32 @@
       }
     }
   }
+}
+
+.unavailable-hour {
+  color: black !important;
+  background: $light-color !important;
+  text-decoration: line-through;
+}
+
+.quantity-section {
+  margin-bottom: 1.5rem;
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+.price-breakdown {
+  display: block;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 0.25rem;
 }

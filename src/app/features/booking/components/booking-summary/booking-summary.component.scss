@@ -97,26 +97,26 @@
   border: none;
   cursor: pointer;
   
-  &.btn-primary {
-    background-color: $primary-color;
-    color: $white-color;
+  // &.btn-primary {
+  //   background-color: $primary-color;
+  //   color: $white-color;
     
-    &:hover {
-      background-color: darken($primary-color, 10%);
-      transform: translateY(-2px);
-    }
-  }
+  //   &:hover {
+  //     background-color: darken($primary-color, 10%);
+  //     transform: translateY(-2px);
+  //   }
+  // }
   
-  &.btn-secondary {
-    background-color: $white-color;
-    color: $black-80;
-    border: 1px solid $light-color;
+  // &.btn-secondary {
+  //   background-color: $white-color;
+  //   color: $black-80;
+  //   border: 1px solid $light-color;
     
-    &:hover {
-      background-color: $light-color;
-      transform: translateY(-2px);
-    }
-  }
+  //   &:hover {
+  //     background-color: $light-color;
+  //     transform: translateY(-2px);
+  //   }
+  // }
 }
 
 /* Responsive adjustments */

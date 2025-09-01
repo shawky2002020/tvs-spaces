@@ -1,2 +1,25 @@
-@import './assets/styles/main.scss';
+@import 'main';
+/* Apply only to mat-select with panelClass="custom-dropdown" */
+/* The dropdown panel (overlay) */
+/* Panel background */
+.mat-mdc-select-panel.custom-dropdown {
+  background-color: $primary-color !important;
+  color: #f8fafc !important;
+}
 
+/* Option text */
+.mat-mdc-option {
+  color: #f8fafc !important;
+}
+
+/* Hovered option */
+.mat-mdc-option:hover {
+  background-color: #334155 !important;
+  color: #ffffff !important;
+}
+
+/* Selected option */
+.mat-mdc-option.mdc-list-item--selected {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}

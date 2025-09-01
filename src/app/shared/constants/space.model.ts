@@ -1,5 +1,5 @@
 
-export interface Availability {
+export interface ReservedDates {
   start: Date;
   end: Date;
   reason?: string; // Optional reason for unavailability
@@ -19,7 +19,7 @@ export interface SpaceAmenity {
   icon: string;
 }
 
-export type BookingPlan = 'Hourly' | 'Daily' | 'Weekly' | 'Monthly';
+export type BookingPlan = 'Hourly' | 'Daily' | 'Half-day' | 'Monthly';
 
 
 export interface BookingSelection {
@@ -28,10 +28,11 @@ export interface BookingSelection {
   date?: Date | [Date, Date];
   startDate?: Date | [Date, Date];
   endDate?: Date | [Date, Date];
-  startTime?: string;
-  endTime?: string;
-  price?:number;
-  space?:Space;
+  startTime?: number;
+  endTime?: number;
+  price?: number;
+  space?: Space;
+  reservedUnits?: number; // Added field for quantity selection
 }
 
 export interface Space {
@@ -46,8 +47,9 @@ export interface Space {
   pricing: PricingPackage;
   capacity?: number;
   featured?: boolean;
-  availability?: Availability[]; // Array of unavailable time periods
+  reservedDates?: ReservedDates[]; // Array of unavailable time periods
 }
+
 export const SPACES: Space[] = [
   {
     id: '1',
@@ -77,16 +79,32 @@ export const SPACES: Space[] = [
       pro: 3200,
       max: 4000,
     },
-    availability: [
+    capacity: 7,
+    reservedDates: [
       {
         start: new Date('2025-09-18T10:00:00'),
-        end: new Date('2025-09-18T16:00:00'),
+        end: new Date('2025-09-18T12:00:00'),
         reason: 'Reserved for client meeting'
+      },
+      {
+        start: new Date('2025-09-18T12:00:00'),
+        end: new Date('2025-09-18T14:00:00'),
+        reason: 'Partial booking'
+      },
+      {
+        start: new Date('2025-09-18T14:00:00'),
+        end: new Date('2025-09-18T16:00:00'),
+        reason: 'Reserved for team'
       },
       {
         start: new Date('2025-09-19T09:00:00'),
         end: new Date('2025-09-19T12:00:00'),
         reason: 'Team workshop'
+      },
+      {
+        start: new Date('2025-09-20T08:00:00'),
+        end: new Date('2025-09-20T18:00:00'),
+        reason: 'Full day event'
       },
       {
         start: new Date('2025-09-22T14:00:00'),
@@ -123,7 +141,8 @@ export const SPACES: Space[] = [
       max: 4500,
     },
     featured: true,
-    availability: [
+    capacity: 1,
+    reservedDates: [
       {
         start: new Date('2025-09-01T08:00:00'),
         end: new Date('2025-09-18T18:00:00'),
@@ -138,6 +157,11 @@ export const SPACES: Space[] = [
         start: new Date('2025-09-23T10:00:00'),
         end: new Date('2025-09-23T16:00:00'),
         reason: 'Private booking'
+      },
+      {
+        start: new Date('2025-09-25T09:00:00'),
+        end: new Date('2025-09-25T11:00:00'),
+        reason: 'Short booking'
       }
     ]
   },
@@ -167,7 +191,8 @@ export const SPACES: Space[] = [
       pro: 4500,
       max: 5500,
     },
-    availability: [
+    capacity: 1,
+    reservedDates: [
       {
         start: new Date('2025-09-18T09:00:00'),
         end: new Date('2025-09-18T17:00:00'),
@@ -182,6 +207,11 @@ export const SPACES: Space[] = [
         start: new Date('2025-09-24T08:00:00'),
         end: new Date('2025-09-24T12:00:00'),
         reason: 'Training session'
+      },
+      {
+        start: new Date('2025-09-26T15:00:00'),
+        end: new Date('2025-09-26T18:00:00'),
+        reason: 'Afternoon block'
       }
     ]
   },
@@ -211,8 +241,8 @@ export const SPACES: Space[] = [
       pro: 12000,
       max: 15000,
     },
-    capacity: 4,
-    availability: [
+    capacity: 1,
+    reservedDates: [
       {
         start: new Date('2025-09-18T09:00:00'),
         end: new Date('2025-09-18T12:00:00'),
@@ -227,6 +257,11 @@ export const SPACES: Space[] = [
         start: new Date('2025-09-22T10:00:00'),
         end: new Date('2025-09-22T16:00:00'),
         reason: 'Full-day workshop'
+      },
+      {
+        start: new Date('2025-09-27T08:00:00'),
+        end: new Date('2025-09-27T10:00:00'),
+        reason: 'Morning block'
       }
     ]
   },
@@ -258,9 +293,9 @@ export const SPACES: Space[] = [
       pro: 20000,
       max: 25000,
     },
-    capacity: 12,
+    capacity: 1,
     featured: true,
-    availability: [
+    reservedDates: [
       {
         start: new Date('2025-09-18T08:00:00'),
         end: new Date('2025-09-18T10:00:00'),
@@ -280,6 +315,11 @@ export const SPACES: Space[] = [
         start: new Date('2025-09-25T11:00:00'),
         end: new Date('2025-09-25T15:00:00'),
         reason: 'Product launch event'
+      },
+      {
+        start: new Date('2025-09-28T14:00:00'),
+        end: new Date('2025-09-28T18:00:00'),
+        reason: 'Afternoon block'
       }
     ]
   }

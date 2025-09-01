@@ -17,7 +17,7 @@ export class BookingService {
     }
   }
 
-  setTimes(startTime: string, endTime: string) {
+  setTimes(startTime: number, endTime: number) {
     this.selection.startTime = startTime;
     this.selection.endTime = endTime;
   }
@@ -34,12 +34,14 @@ export class BookingService {
   }
 
   getSelection(): BookingSelection {
-    return this.selection;
+    return this.selection ?? JSON.parse(localStorage.getItem('bookingSelection') || '{}');
   }
 
   setSelection(partial: Partial<BookingSelection>) {
     this.selection = { ...this.selection, ...partial };
-    console.log('bookservice',this.selection);
+    console.log(this.selection);
+    
+    localStorage.setItem('bookingSelection', JSON.stringify(this.selection));
     
   }
 
@@ -53,5 +55,10 @@ export class BookingService {
 
   getConfirmedBookings(): BookingSelection[] {
     return this.confirmedBookings;
+  }
+
+  // Add method to set quantity
+  setQuantity(quantity: number) {
+    this.selection.reservedUnits = quantity;
   }
 }
