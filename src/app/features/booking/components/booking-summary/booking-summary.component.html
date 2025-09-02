@@ -22,12 +22,12 @@
       
       <div class="summary-item" *ngIf="selection.plan === 'Hourly'">
         <div class="item-label">Time</div>
-        <div class="item-value">{{ selection.startTime }} - {{ selection.endTime }}</div>
+        <div class="item-value">{{ selection.startTime }}:00 - {{ selection.endTime }}:00</div>
       </div>
       
       <div class="summary-item total">
         <div class="item-label">Total Price</div>
-        <div class="item-value price">${{ price }}</div>
+        <div class="item-value price">{{ price }} EGP</div>
       </div>
     </div>
     

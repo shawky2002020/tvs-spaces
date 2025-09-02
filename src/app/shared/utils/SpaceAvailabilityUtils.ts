@@ -1,92 +1,100 @@
 import { Space, ReservedDates } from '../constants/space.model';
 
 export class SpaceAvailabilityUtils {
-  // Check if a space is available for a given date range and quantity
-  static isSpaceAvailable(
-    space: Space,
-    startDate: Date,
-    endDate: Date,
-    requestedUnits: number = 1
-  ): boolean {
-    if (!space.reservedDates || space.reservedDates.length === 0) {
-      return space.capacity ? space.capacity >= requestedUnits : true;
-    }
-
-    // Get all bookings that overlap with the requested period
-    const overlappingBookings = space.reservedDates.filter(availability => {
-      const conflictStart = new Date(availability.start);
-      const conflictEnd = new Date(availability.end);
-      // Check for any overlap
-      return startDate < conflictEnd && endDate > conflictStart;
-    });
-
-    // If there are no overlapping bookings, check if the requested units are within capacity
-    if (overlappingBookings.length === 0) {
-      return space.capacity ? space.capacity >= requestedUnits : true;
-    }
-
-    // Calculate total reserved units for each overlapping booking
-    // For now, we'll assume each availability entry reserves 1 unit
-    // In a real system, each availability would have its own reservedUnits property
-    const totalReservedUnits = overlappingBookings.length;
-
-    // Check if there's enough capacity left
-    const availableUnits = space.capacity ? space.capacity - totalReservedUnits : 0;
-    return availableUnits >= requestedUnits;
+  private static timeToMinutes(t: string): number {
+    const [h, m] = t.split(':').map(Number);
+    return h * 60 + m;
   }
 
-  // Get all unavailable dates for a space (for calendar highlighting)
-  static getUnavailableDates(space: Space): Date[] {
-    if (!space.reservedDates) return [];
+  /**
+   * Expand reservedDates into an availability map:
+   * {
+   *   "2025-09-19": { "13": 2, "14": 7 }
+   * }
+   */
+  static buildAvailabilityMap(
+    space: Space
+  ): Record<string, Record<number, number>> {
+    const map: Record<string, Record<number, number>> = {};
 
-    const unavailableDates: Date[] = [];
+    if (!space.reservedDates) return map;
 
     space.reservedDates.forEach((period) => {
-      const start = new Date(period.start);
-      const end = new Date(period.end);
-      const current = new Date(start);
+      const startDay = new Date(period.startDay);
+      const endDay = new Date(period.endDay);
 
-      while (current <= end) {
-        unavailableDates.push(new Date(current));
+      const reservedUnits = period.reservedUnits || 1;
+      const startTime = period.startTime
+        ? this.timeToMinutes(period.startTime)
+        : 0;
+      const endTime = period.endTime
+        ? this.timeToMinutes(period.endTime)
+        : 24 * 60;
+
+      const current = new Date(startDay);
+
+      while (current <= endDay) {
+        const dayKey = current.toISOString().split('T')[0]; // "YYYY-MM-DD"
+        if (!map[dayKey]) map[dayKey] = {};
+
+        // loop over hours
+        const startHour = Math.floor(startTime / 60);
+        const endHour = Math.ceil(endTime / 60);
+
+        for (let h = startHour; h < endHour; h++) {
+          map[dayKey][h] = (map[dayKey][h] || 0) + reservedUnits;
+        }
+
         current.setDate(current.getDate() + 1);
       }
     });
 
-    return unavailableDates;
+    return map;
   }
 
-  // Add new unavailable period (for admin/backend integration)
-  static addUnavailablePeriod(
+  /**
+   * Get available units for a specific date & hour
+   */
+  static getAvailableUnits(
     space: Space,
-    start: Date,
-    end: Date,
-    reason?: string
-  ): Space {
-    const newAvailability: ReservedDates = { start, end, reason };
-
-    return {
-      ...space,
-      reservedDates: [...(space.reservedDates || []), newAvailability],
-    };
+    map: Record<string, Record<number, number>>,
+    date: Date
+  ): number {
+    const dayKey = date.toISOString().split('T')[0];
+    const hour = date.getHours();
+    const reserved = map[dayKey]?.[hour] || 0;
+    return (space.capacity || 0) - reserved;
   }
 
-  // Remove unavailable period
-  static removeUnavailablePeriod(space: Space, start: Date, end: Date): Space {
-    return {
-      ...space,
-      reservedDates: (space.reservedDates || []).filter(
-        (avail) =>
-          avail.start.getTime() !== start.getTime() ||
-          avail.end.getTime() !== end.getTime()
-      ),
-    };
+  /**
+   * Build full daily grid for UI
+   * Example: [{ hour: 9, available: 6 }, { hour: 10, available: 7 }, ...]
+   */
+  static buildDailyGrid(
+    space: Space,
+    map: Record<string, Record<number, number>>,
+    day: Date,
+    startHour: number = 10,
+    endHour: number = 23
+  ): { hour: number; available: number }[] {
+    const grid: { hour: number; available: number }[] = [];
+    const dayKey = day.toISOString().split('T')[0];
+    console.log(dayKey);
+    console.log(map[dayKey]);
+    
+    
+
+    for (let h = startHour; h <= endHour; h++) {
+      const reserved = map[dayKey]?.[h] || 0;
+      console.log('reserved',reserved);
+      
+      const available = (space.capacity || 0) - reserved;
+      grid.push({ hour: h, available });
+    }
+    console.log(day,map);
+    
+    console.log(`grid of ${day}`,grid);
+    
+    return grid;
   }
-  // Compare date components (day, month, year)
-  isSameDate = (dateCell: any, date: Date) => {
-    return (
-      dateCell.getDate() === date.getDate() &&
-      dateCell.getMonth() === date.getMonth() &&
-      dateCell.getFullYear() === date.getFullYear()
-    );
-  };
 }

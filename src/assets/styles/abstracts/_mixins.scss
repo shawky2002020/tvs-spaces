@@ -4,3 +4,40 @@
   align-items: center;
   justify-content: center;
 }
+
+// Define breakpoints
+$breakpoints: (
+  "xs": 480px,
+  "sm": 768px,
+  "md": 1024px,
+  "lg": 1280px,
+  "xl": 1440px
+);
+
+// respond-to mixin
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "No breakpoint found for `#{$breakpoint}`. Check your map.";
+  }
+}
+
+// Example: your flex-center mixin
+@mixin flex-center($direction: row) {
+  display: flex;
+  flex-flow: $direction nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+// Usage
+.my-container {
+  @include flex-center(row);
+
+  @include respond-to(sm) {
+    flex-direction: column;
+  }
+}

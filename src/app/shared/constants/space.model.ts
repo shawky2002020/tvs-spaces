@@ -1,17 +1,27 @@
-
 export interface ReservedDates {
-  start: Date;
-  end: Date;
-  reason?: string; // Optional reason for unavailability
+  startDay: string;   // e.g. '2025-09-18'
+  endDay: string;     // e.g. '2025-09-18' (same day if not multiple days)
+  startTime: string;  // e.g. '09:00'
+  endTime: string;    // e.g. '12:00'
+  reason?: string;
+  reservedUnits?: number; // how many desks are booked
 }
+
 
 export interface PricingPackage {
   hourly: number;
   halfDay: number;
   day: number;
-  lite?: number;
-  pro?: number;
-  max?: number;
+  lite?: number; // Added lite package
+  max?:number,
+  pro?:number
+
+}
+
+export enum PricingPackageType {
+  hourly = 'hourly',
+  halfDay = 'halfDay',
+  day = 'day'
 }
 
 export interface SpaceAmenity {
@@ -20,7 +30,6 @@ export interface SpaceAmenity {
 }
 
 export type BookingPlan = 'Hourly' | 'Daily' | 'Half-day' | 'Monthly';
-
 
 export interface BookingSelection {
   spaceId?: string;
@@ -73,45 +82,45 @@ export const SPACES: Space[] = [
     ],
     pricing: {
       hourly: 40,
-      halfDay: 150,
-      day: 200,
-      lite: 2000,
-      pro: 3200,
-      max: 4000,
+      halfDay: 35,
+      day: 32,
+     
     },
     capacity: 7,
     reservedDates: [
       {
-        start: new Date('2025-09-18T10:00:00'),
-        end: new Date('2025-09-18T12:00:00'),
-        reason: 'Reserved for client meeting'
+        startDay: '2025-09-15',
+        endDay: '2025-09-15',
+        startTime: '09:00',
+        endTime: '11:00',
+        reason: 'Morning bookings',
+        reservedUnits: 2,
       },
       {
-        start: new Date('2025-09-18T12:00:00'),
-        end: new Date('2025-09-18T14:00:00'),
-        reason: 'Partial booking'
+        startDay: '2025-09-16',
+        endDay: '2025-09-16',
+        startTime: '13:00',
+        endTime: '15:00',
+        reason: 'Afternoon work session',
+        reservedUnits: 6,
       },
       {
-        start: new Date('2025-09-18T14:00:00'),
-        end: new Date('2025-09-18T16:00:00'),
-        reason: 'Reserved for team'
+        startDay: '2025-09-20',
+        endDay: '2025-09-20',
+        startTime: '10:00',
+        endTime: '12:00',
+        reason: 'Client meeting',
+        reservedUnits: 4,
       },
       {
-        start: new Date('2025-09-19T09:00:00'),
-        end: new Date('2025-09-19T12:00:00'),
-        reason: 'Team workshop'
+        startDay: '2025-09-20',
+        endDay: '2025-09-20',
+        startTime: '08:00',
+        endTime: '18:00',
+        reason: 'Full day event',
+        reservedUnits: 4,
       },
-      {
-        start: new Date('2025-09-20T08:00:00'),
-        end: new Date('2025-09-20T18:00:00'),
-        reason: 'Full day event'
-      },
-      {
-        start: new Date('2025-09-22T14:00:00'),
-        end: new Date('2025-09-22T17:00:00'),
-        reason: 'Private booking'
-      }
-    ]
+    ],
   },
   {
     id: '2',
@@ -134,36 +143,36 @@ export const SPACES: Space[] = [
     ],
     pricing: {
       hourly: 50,
-      halfDay: 180,
-      day: 250,
-      lite: 2500,
-      pro: 3800,
-      max: 4500,
+      halfDay: 45,
+      day: 42,
+      
     },
     featured: true,
     capacity: 1,
     reservedDates: [
       {
-        start: new Date('2025-09-01T08:00:00'),
-        end: new Date('2025-09-18T18:00:00'),
-        reason: 'Monthly member reservation'
+        startDay: '2025-09-19',
+        endDay: '2025-09-20',
+        startTime: '14:00',
+        endTime: '16:00',
+        reason: 'Maintenance',
       },
       {
-        start: new Date('2025-09-19T13:00:00'),
-        end: new Date('2025-09-19T15:00:00'),
-        reason: 'Maintenance'
+        startDay: '2025-09-01',
+        endDay: '2025-09-18',
+        startTime: '19:00',
+        endTime: '23:00',
+        reason: 'Monthly member reservation',
       },
+      
       {
-        start: new Date('2025-09-23T10:00:00'),
-        end: new Date('2025-09-23T16:00:00'),
-        reason: 'Private booking'
+        startDay: '2025-09-23',
+        endDay: '2025-09-23',
+        startTime: '10:00',
+        endTime: '16:00',
+        reason: 'Private booking',
       },
-      {
-        start: new Date('2025-09-25T09:00:00'),
-        end: new Date('2025-09-25T11:00:00'),
-        reason: 'Short booking'
-      }
-    ]
+    ],
   },
   {
     id: '3',
@@ -185,35 +194,37 @@ export const SPACES: Space[] = [
     ],
     pricing: {
       hourly: 60,
-      halfDay: 220,
-      day: 300,
-      lite: 3000,
-      pro: 4500,
-      max: 5500,
+      halfDay: 55,
+      day: 52,
+     
     },
-    capacity: 1,
+    capacity: 3,
     reservedDates: [
       {
-        start: new Date('2025-09-18T09:00:00'),
-        end: new Date('2025-09-18T17:00:00'),
-        reason: 'Full-day rental'
+        startDay: '2025-09-18',
+        endDay: '2025-09-18',
+        startTime: '09:00',
+        endTime: '12:00',
+        reason: 'Morning rentals',
+        reservedUnits: 2,
       },
       {
-        start: new Date('2025-09-20T10:00:00'),
-        end: new Date('2025-09-20T14:00:00'),
-        reason: 'Gaming session'
+        startDay: '2025-09-19',
+        endDay: '2025-09-19',
+        startTime: '13:00',
+        endTime: '17:00',
+        reason: 'Gaming session',
+        reservedUnits: 1,
       },
       {
-        start: new Date('2025-09-24T08:00:00'),
-        end: new Date('2025-09-24T12:00:00'),
-        reason: 'Training session'
+        startDay: '2025-09-21',
+        endDay: '2025-09-21',
+        startTime: '08:00',
+        endTime: '18:00',
+        reason: 'Hackathon',
+        reservedUnits: 3,
       },
-      {
-        start: new Date('2025-09-26T15:00:00'),
-        end: new Date('2025-09-26T18:00:00'),
-        reason: 'Afternoon block'
-      }
-    ]
+    ],
   },
   {
     id: '4',
@@ -235,35 +246,34 @@ export const SPACES: Space[] = [
     ],
     pricing: {
       hourly: 120,
-      halfDay: 450,
-      day: 800,
-      lite: 8000,
-      pro: 12000,
-      max: 15000,
+      halfDay: 115,
+      day: 110,
+      
     },
     capacity: 1,
     reservedDates: [
       {
-        start: new Date('2025-09-18T09:00:00'),
-        end: new Date('2025-09-18T12:00:00'),
-        reason: 'Team meeting'
+        startDay: '2025-09-18',
+        endDay: '2025-09-18',
+        startTime: '09:00',
+        endTime: '12:00',
+        reason: 'Team meeting',
       },
       {
-        start: new Date('2025-09-19T14:00:00'),
-        end: new Date('2025-09-19T17:00:00'),
-        reason: 'Client presentation'
+        startDay: '2025-09-20',
+        endDay: '2025-09-20',
+        startTime: '10:00',
+        endTime: '16:00',
+        reason: 'Workshop',
       },
       {
-        start: new Date('2025-09-22T10:00:00'),
-        end: new Date('2025-09-22T16:00:00'),
-        reason: 'Full-day workshop'
+        startDay: '2025-09-22',
+        endDay: '2025-09-22',
+        startTime: '14:00',
+        endTime: '17:00',
+        reason: 'Client presentation',
       },
-      {
-        start: new Date('2025-09-27T08:00:00'),
-        end: new Date('2025-09-27T10:00:00'),
-        reason: 'Morning block'
-      }
-    ]
+    ],
   },
   {
     id: '5',
@@ -287,40 +297,34 @@ export const SPACES: Space[] = [
     ],
     pricing: {
       hourly: 200,
-      halfDay: 750,
-      day: 1400,
-      lite: 14000,
-      pro: 20000,
-      max: 25000,
+      halfDay: 190,
+      day: 185,
+      
     },
     capacity: 1,
     featured: true,
     reservedDates: [
       {
-        start: new Date('2025-09-18T08:00:00'),
-        end: new Date('2025-09-18T10:00:00'),
-        reason: 'Morning briefing'
+        startDay: '2025-09-19',
+        endDay: '2025-09-19',
+        startTime: '09:00',
+        endTime: '12:00',
+        reason: 'Morning briefing',
       },
       {
-        start: new Date('2025-09-19T13:00:00'),
-        end: new Date('2025-09-19T18:00:00'),
-        reason: 'Company all-hands meeting'
+        startDay: '2025-09-23',
+        endDay: '2025-09-23',
+        startTime: '11:00',
+        endTime: '15:00',
+        reason: 'Company meeting',
       },
       {
-        start: new Date('2025-09-23T09:00:00'),
-        end: new Date('2025-09-23T17:00:00'),
-        reason: 'Full-day conference'
+        startDay: '2025-09-26',
+        endDay: '2025-09-26',
+        startTime: '13:00',
+        endTime: '18:00',
+        reason: 'Conference',
       },
-      {
-        start: new Date('2025-09-25T11:00:00'),
-        end: new Date('2025-09-25T15:00:00'),
-        reason: 'Product launch event'
-      },
-      {
-        start: new Date('2025-09-28T14:00:00'),
-        end: new Date('2025-09-28T18:00:00'),
-        reason: 'Afternoon block'
-      }
-    ]
-  }
+    ],
+  },
 ];

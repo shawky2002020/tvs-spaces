@@ -35,7 +35,10 @@ export class ProfileComponent implements OnInit {
     console.log(this.user);
     this.profileForm = this.fb.group({
       username: [this.user.username, [Validators.required]],
-      email: [this.user.email, [Validators.required, Validators.email]],
+      email: [
+        { value: this.user.email , disabled:true},
+        [Validators.required, Validators.email],
+      ],
       password: ['', [Validators.minLength(8)]],
       type: [this.user.type, [Validators.required]],
     });
@@ -60,24 +63,22 @@ export class ProfileComponent implements OnInit {
           : null,
       };
       this.user = {
-         ...this.user,
+        ...this.user,
         ...this.profileForm.value,
         password: this.profileForm.value.password
           ? this.profileForm.value.password
           : null,
-      }
-      this.userService.updateUser(updatedUser).subscribe(
-        {
-          next:(res)=>{
-            alert(res.message);
-            this.authService.setUserLocalStorage(this.user);
-            window.location.reload();
-          },
-          error:(err : ApiError)=>{
-            alert(err.error.message)
-          }
-        }
-      )
+      };
+      this.userService.updateUser(updatedUser).subscribe({
+        next: (res) => {
+          alert(res.message);
+          this.authService.setUserLocalStorage(this.user);
+          window.location.reload();
+        },
+        error: (err: ApiError) => {
+          alert(err.error.message);
+        },
+      });
       this.editMode = false;
     }
   }

@@ -1,4 +1,4 @@
-@import "main.scss";
+@import "main";
 
 .auth-layout-wrapper {
   display: flex;
@@ -13,6 +13,9 @@
   min-height: 100vh;
   overflow-x: hidden;
   margin-left: 260px;
+  @include respond-to(sm){
+    margin-left: 50px;
+  }
 }
 
 .dashboard-header {

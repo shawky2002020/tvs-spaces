@@ -1,4 +1,4 @@
-@import "main.scss";
+@import "main";
 
 .auth-sidebar {
   width: 260px;
@@ -127,11 +127,11 @@
     top: 0;
     left: 0;
     transform: translateX(-100%);
-    width: 280px;
+    width: 280px !important;
   }
   
   .auth-sidebar.mobile-open {
-    transform: translateX(-300px);
+    transform: translateX(0);
     flex-flow: column;
   }
   
@@ -180,10 +180,7 @@
     font-size: $font-size-md;
   }
   .sidebar-nav ul {
-    gap: $spacing-md;
-  }
-  .sidebar-nav li {
-    margin-bottom: 0;
+    gap: $spacing-lg ;
   }
  
 }
