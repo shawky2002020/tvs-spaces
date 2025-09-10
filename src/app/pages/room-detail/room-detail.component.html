@@ -167,40 +167,46 @@
     <!-- Enquiry Form -->
     <section class="enquiry-section" id="enquiry-section">
       <h2>Interested in this space?</h2>
-      <div class="enquiry-form">
+      <form class="enquiry-form" (ngSubmit)="submitEnquiry()" autocomplete="off" novalidate>
         <div class="form-group">
           <label for="name">Your Name</label>
-          <input type="text" id="name" placeholder="Enter your name">
+          <input type="text" id="name" name="name" [(ngModel)]="enquiry.name" placeholder="Enter your name" required [class.invalid]="enquirySubmitted && enquiryErrors['name']">
+          <div class="error-message" *ngIf="enquirySubmitted && enquiryErrors['name']">{{ enquiryErrors['name'] }}</div>
         </div>
         <div class="form-group">
           <label for="email">Email Address</label>
-          <input type="email" id="email" placeholder="Enter your email">
+          <input type="email" id="email" name="email" [(ngModel)]="enquiry.email" placeholder="Enter your email" required [class.invalid]="enquirySubmitted && enquiryErrors['email']">
+          <div class="error-message" *ngIf="enquirySubmitted && enquiryErrors['email']">{{ enquiryErrors['email'] }}</div>
         </div>
         <div class="form-group">
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" placeholder="Enter your phone number">
+          <input type="tel" id="phone" name="phone" [(ngModel)]="enquiry.phone" placeholder="Enter your phone number" required [class.invalid]="enquirySubmitted && enquiryErrors['phone']">
+          <div class="error-message" *ngIf="enquirySubmitted && enquiryErrors['phone']">{{ enquiryErrors['phone'] }}</div>
         </div>
         <div class="form-group">
           <label for="plan">Preferred Plan</label>
-          <select id="plan">
-            <option value="hourly" [selected]="selectedPlan === 'hourly'">Hourly ({{ space.pricing.hourly }} EGP)</option>
-            <option value="halfDay" [selected]="selectedPlan === 'halfDay'">Half Day ({{ space.pricing.halfDay }} EGP)</option>
-            <option value="day" [selected]="selectedPlan === 'day'">Full Day ({{ space.pricing.day }} EGP)</option>
-            <option value="pro" *ngIf="space.pricing.pro" [selected]="selectedPlan === 'pro'">Monthly Pro ({{ space.pricing.pro }} EGP)</option>
+          <select id="plan" name="plan" [(ngModel)]="enquiry.plan" required [class.invalid]="enquirySubmitted && enquiryErrors['plan']">
+            <option value="" disabled selected>Select a plan</option>
+            <option value="hourly">Hourly ({{ space.pricing.hourly }} EGP)</option>
+            <option value="halfDay">Half Day ({{ space.pricing.halfDay }} EGP)</option>
+            <option value="day">Full Day ({{ space.pricing.day }} EGP)</option>
+            <option value="pro" *ngIf="space.pricing.pro">Monthly Pro ({{ space.pricing.pro }} EGP)</option>
           </select>
+          <div class="error-message" *ngIf="enquirySubmitted && enquiryErrors['plan']">{{ enquiryErrors['plan'] }}</div>
         </div>
         <div class="form-group">
           <label for="date">Preferred Date</label>
-          <input type="date" id="date">
+          <input type="date" id="date" name="date" [(ngModel)]="enquiry.date" required [class.invalid]="enquirySubmitted && enquiryErrors['date']">
+          <div class="error-message" *ngIf="enquirySubmitted && enquiryErrors['date']">{{ enquiryErrors['date'] }}</div>
         </div>
         <div class="form-group full-width">
           <label for="message">Additional Requirements</label>
-          <textarea id="message" rows="4" placeholder="Tell us about any specific requirements"></textarea>
+          <textarea id="message" name="message" rows="4" [(ngModel)]="enquiry.message" placeholder="Tell us about any specific requirements"></textarea>
         </div>
         <div class="form-actions">
-          <button class="btn btn-primary btn-lg">Submit Enquiry</button>
+          <button class="btn btn-primary btn-lg" type="submit">Submit Enquiry</button>
         </div>
-      </div>
+      </form>
     </section>
   </div>
 </div>

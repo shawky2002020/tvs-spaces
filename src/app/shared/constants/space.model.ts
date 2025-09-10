@@ -19,9 +19,9 @@ export interface PricingPackage {
 }
 
 export enum PricingPackageType {
-  hourly = 'hourly',
-  halfDay = 'halfDay',
-  day = 'day'
+  hourly = 'Lite',
+  halfDay = 'Pro',
+  day = 'Max'
 }
 
 export interface SpaceAmenity {

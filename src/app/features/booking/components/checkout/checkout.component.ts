@@ -85,7 +85,7 @@ export class CheckoutComponent implements OnInit {
       this.loading = false;
       
       if (this.selection) {
-        this.bookingService.confirmBooking(this.selection);
+        // this.bookingService.confirmBooking(this.selection);
       }
       
       setTimeout(() => {
