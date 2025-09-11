@@ -1,37 +1,69 @@
 .place-info {
-  max-width: 600px;
+  max-width: 700px;
   margin: 2.5rem auto;
   background: var(--background, #fff);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.07);
   padding: 2.5rem 2rem 2rem;
+  font-family: 'Inter', Arial, sans-serif;
 }
 .title {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: var(--primary, #1976d2);
   margin-bottom: 2rem;
   text-align: center;
+  letter-spacing: 0.5px;
 }
-.about-section {
-  margin-bottom: 2.5rem;
-  h3 {
-    font-size: 1.8rem;
-    color: var(--primary, #1976d2);
-    margin-bottom: 0.5rem;
-  }
-  p {
-    color: #444;
-    font-size: 1.08rem;
-    line-height: 1.6;
-  }
+.about-section, .address-section, .hours-section, .amenities-section, .wifi-section, .contact-section {
+  margin-bottom: 2.2rem;
 }
-.wifi-section {
-  h3 {
-    font-size: 1.8rem;
-    color: var(--primary, #1976d2);
-    margin-bottom: 0.5rem;
-  }
+.about-section h3,
+.address-section h3,
+.hours-section h3,
+.amenities-section h3,
+.wifi-section h3,
+.contact-section h3 {
+  font-size: 1.3rem;
+  color: var(--primary, #1976d2);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.about-section p {
+  color: #444;
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+.address-section p {
+  color: #333;
+  font-size: 1.05rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.hours-section ul,
+.amenities-list,
+.contact-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.hours-section li,
+.amenities-list li,
+.contact-list li {
+  color: #444;
+  font-size: 1.04rem;
+  margin-bottom: 0.4em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.amenities-list i,
+.contact-list i,
+.address-section i {
+  color: #1976d2;
+  font-size: 1.1em;
 }
 .wifi-table {
   width: 100%;
@@ -56,8 +88,28 @@
     color: #1976d2;
   }
 }
+.contact-list a {
+  color: #1976d2;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-list a:hover {
+  color: #0d47a1;
+  text-decoration: underline;
+}
 @media (max-width: 700px) {
   .place-info {
     padding: 1.2rem 0.5rem;
+  }
+  .title {
+    font-size: 1.5rem;
+  }
+  .about-section h3,
+  .address-section h3,
+  .hours-section h3,
+  .amenities-section h3,
+  .wifi-section h3,
+  .contact-section h3 {
+    font-size: 1.1rem;
   }
 }

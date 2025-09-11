@@ -10,9 +10,9 @@ import { CommonModule } from '@angular/common';
 })
 export class PlaceInfoComponent {
   wifiList = [
-    { ssid: 'TVS-Main', password: 'tvs2025main' },
-    { ssid: 'TVS-Guest', password: 'tvs2025guest' },
-    { ssid: 'TVS-Meeting', password: 'tvs2025meet' },
+    { ssid: 'Televirgins', password: 'TV$Spaces2025' },
+    { ssid: 'Televirgins-EXT', password: 'TV$Spaces2025' },
+    { ssid: 'ZTE23AC#B', password: '5F5L36B73R' },
   ];
 
   about = `

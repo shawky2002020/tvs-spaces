@@ -6,6 +6,36 @@
     <p>{{ about }}</p>
   </section>
 
+  <section class="address-section">
+    <h3>Address</h3>
+    <p>
+      <i class="fas fa-map-marker-alt"></i> Office 9, 94 Fareed Smeika,
+      Heliopolis, Cairo
+    </p>
+  </section>
+
+  <section class="hours-section">
+    <h3>Opening Hours</h3>
+    <ul>
+      <li>Monday - Friday: 8:00 AM – 10:00 PM</li>
+      <li>Saturday: 9:00 AM – 8:00 PM</li>
+      <li>Sunday: Closed</li>
+    </ul>
+  </section>
+
+  <section class="amenities-section">
+    <h3>Amenities</h3>
+    <ul class="amenities-list">
+      <li><i class="fas fa-wifi"></i> High-Speed Wi-Fi</li>
+      <li><i class="fas fa-coffee"></i> Free Coffee & Tea</li>
+      <li><i class="fas fa-utensils"></i> Fully Equipped Kitchen</li>
+      <li><i class="fas fa-users"></i> Community Events</li>
+      <li><i class="fas fa-print"></i> Printing & Scanning</li>
+      <li><i class="fas fa-video"></i> Meeting Rooms</li>
+      <li><i class="fas fa-clock"></i> 24/7 Access (selected plans)</li>
+    </ul>
+  </section>
+
   <section class="wifi-section">
     <h3>Wi-Fi Networks</h3>
     <table class="wifi-table">
@@ -18,9 +48,25 @@
       <tbody>
         <tr *ngFor="let wifi of wifiList">
           <td>{{ wifi.ssid }}</td>
-          <td><code>{{ wifi.password }}</code></td>
+          <td>
+            <code>{{ wifi.password }}</code>
+          </td>
         </tr>
       </tbody>
     </table>
+  </section>
+
+  <section class="contact-section">
+    <h3>Contact</h3>
+    <ul class="contact-list">
+      <li>
+        <i class="fas fa-phone"></i>
+        <a href="tel:+201055066838">+201 055 066 838</a>
+      </li>
+      <li>
+        <i class="fas fa-envelope"></i>
+        <a href="mailto:support@tvsspaces.com">support@tvsspaces.com</a>
+      </li>
+    </ul>
   </section>
 </div>

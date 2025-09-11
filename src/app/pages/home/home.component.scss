@@ -27,19 +27,18 @@
   }
 
   .hero-content {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: start;
-    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(1,400px);
     z-index: 2;
   }
   .hero-text {
-    flex: 1;
     height: 100%;
+    flex: 1;
     display: flex;
     flex-flow: column nowrap;
     align-items: start;
-    justify-content: start;
+    justify-content: space-around;
     color: $light-color;
     font-size: $font-size-xxl;
     text-align: left;
@@ -71,10 +70,8 @@
     }
 
     .hero-description {
-      font-size: $font-size-lg;
       color: $white-60;
       max-width: 500px; /* Control line length for better readability */
-      line-height: 1.6;
       text-align: left;
     }
 
@@ -116,7 +113,7 @@
       bottom: 0;
       left: 0;
       font-size: $font-size-xl;
-      font-family: main;
+      font-family: $font-family-base;
 
       font-weight: 600;
       z-index: 1;
@@ -142,7 +139,7 @@
   padding: $spacing-xl 0;
   .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: $spacing-lg;
   }
 
@@ -474,7 +471,7 @@
   padding: $spacing-xl 0;
   .spaces-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     gap: $spacing-lg;
   }
 
@@ -532,6 +529,10 @@
     color: $primary-color;
     font-size: $font-size-xxl;
     font-weight: $font-weight-bold;
+    @include respond-to(lg) {
+      margin-top: 12px;
+      font-size: $font-size-xl; /* Adjusted size for smaller screens */
+    }
   }
 
   .space-features {
@@ -633,17 +634,6 @@
   @include flex-center;
   min-height: 500px;
 
-  // .cta::before {
-  //   content: "";
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   width: 100%;
-  //   height: 100%;
-  //   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="none" width="100" height="100"/><rect fill="rgba(255,255,255,0.05)" width="50" height="50"/><rect fill="rgba(255,255,255,0.05)" x="50" y="50" width="50" height="50"/></svg>');
-  //   opacity: 0.4;
-  // }
-
   .cta-content {
     position: relative;
     z-index: 1;
@@ -655,18 +645,18 @@
   .cta-content h2 {
     color: $black-80;
     margin-bottom: $spacing-md;
-    font-size: 74px;
+    font-size: 54px;
     font-family: $font-family-base;
     font-weight: $font-weight-bold;
     letter-spacing: -0.5px;
     @include respond-to(lg) {
-      font-size: 48px; /* Adjusted size for smaller screens */
+      font-size: 42px ; /* Adjusted size for smaller screens */
     }
     @include respond-to(md) {
-      font-size: 36px; /* Further adjustment */
+      font-size: 36px ; /* Further adjustment */
     }
     @include respond-to(sm) {
-      font-size: 28px; /* Further adjustment */
+      font-size: 28px ; /* Further adjustment */
     }
   }
 
@@ -697,6 +687,7 @@
   }
 
   .cta-actions .btn {
+    width: 100%;
     padding: $spacing-sm $spacing-lg;
     border-radius: $border-radius-md;
     font-weight: $font-weight-medium;
