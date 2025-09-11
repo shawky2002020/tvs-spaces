@@ -8,4 +8,21 @@ import { RouterModule } from '@angular/router';
   standalone:true,
   imports: [RouterModule]
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  mobileMenuOpen = false;
+
+  openMobileMenu() {
+    this.mobileMenuOpen = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeMobileMenu() {
+    this.mobileMenuOpen = false;
+    document.body.style.overflow = '';
+  }
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+    document.body.style.overflow = this.mobileMenuOpen ? 'hidden' : '';
+  }
+}

@@ -8,23 +8,19 @@
 // Add more imports as needed
 
 @font-face {
-  font-family: main;
+  font-family: primary;
   src: url("/assets/fonts/honfleur-regular.otf") format('opentype');
   font-display: swap;
 }
+
 @font-face {
-  font-family: sec1;
-  src: url("/assets/fonts/Dhan Studio - Arsilon.otf") format('opentype');
-  font-display: swap;
-}
-@font-face {
-  font-family: sec2;
+  font-family: accent;
   src: url("/assets/fonts/AleynaPersonalUse-Regular.otf") format('opentype');
   font-display: swap;
 }
 
 @font-face {
-  font-family: sec3;
-  src: url("/assets/fonts/acumin.ttf") format('truetype');
+  font-family: secondary;
+  src: url("/assets/fonts/tafel-sans-pro-regular.woff") format('woff');
   font-display: swap;
 }

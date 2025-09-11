@@ -17,9 +17,12 @@ h6 {
 
 h1 {
   font-family: $font-family-heading;
-
   font-weight: $font-weight-bold;
   font-size: $font-size-xxxl;
+  @include respond-to(sm) {
+    font-size: $font-size-xxl;
+  }
+
 }
 
 h2 {
@@ -27,14 +30,21 @@ h2 {
   font-size: $font-size-xxl;
   font-weight: $font-weight-bold;
   font-size: $font-size-xxl;
+   @include respond-to(sm) {
+    font-size: $font-size-xl;
+  }
+  
 }
 
 h3 {
   font-family: $font-family-accent;
   font-size: $font-size-xl;
-
   font-weight: $font-weight-medium;
   font-size: $font-size-xl;
+   @include respond-to(sm) {
+    font-size: $font-size-lg;
+  }
+  
 }
 
 h4 {
@@ -46,4 +56,79 @@ p {
   margin-bottom: $spacing-md;
   color: $black-60;
   font-size: $font-size-base;
+}
+
+
+
+/* Section Headers - Minimal Style */
+.section-header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  position: relative;
+  width: fit-content;
+  margin: auto;
+  background: rgba(245, 245, 245, 0.385);
+  padding: 12px 12px 4px 12px;
+  backdrop-filter: blur(20px);
+  margin-bottom: 12px;
+
+}
+
+.section-title {
+  color: $primary-color;
+  font-size: 2.5rem;
+  font-weight: $font-weight-bold;
+  letter-spacing: -0.5px;
+  position: relative;
+  display: inline-block;
+  font-family: $font-family-base;
+  @include respond-to(lg) {
+    font-size: 2rem !important;
+    text-align: center;
+  }
+  @include respond-to(sm) {
+    font-size: 1.75rem !important;
+  }
+}
+
+.section-tag {
+  position: absolute;
+  top: -15px;
+  left: -30px;
+  font-family: $font-family-accent;
+  display: inline-block;
+  background-color: rgba($primary-color, 0.1);
+  color: $primary-color;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-pill;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: $spacing-md;
+  @include respond-to(sm) {
+    font-size: $font-size-sm;
+    top: -10px;
+    left: -20px;
+    padding: $spacing-xs $spacing-xs;
+  }
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: $accent-color;
+  border-radius: $border-radius-pill;
+}
+
+.section-subtitle {
+  // font-size: $font-size-md; /* Reduced size */
+  color: $black-60;
+  max-width: 600px;
+  line-height: 1.6;
 }

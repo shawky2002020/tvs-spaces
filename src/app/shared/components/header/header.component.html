@@ -3,9 +3,8 @@
   <div class="container">
     <div class="header-content">
       <a routerLink="">
-
         <div class="logo">
-  <img src="logo/logowhite.png" alt="Logo" class="logo-img">
+          <img src="logo/logowhite.png" alt="Logo" class="logo-img" />
         </div>
       </a>
       <nav class="nav">
@@ -16,12 +15,11 @@
       </nav>
       <div class="header-actions">
         <!-- <button class="btn btn-outline">Sign In</button> -->
-         <a routerLink="/auth/login">
-
-           <button class="btn btn-primary">Get Started</button>
-         </a>
+        <a routerLink="/auth/login">
+          <button class="btn btn-primary">Get Started</button>
+        </a>
       </div>
-      <div class="mobile-menu-toggle">
+      <div class="mobile-menu-toggle" (click)="openMobileMenu()">
         <i class="fas fa-bars"></i>
       </div>
     </div>
@@ -29,24 +27,37 @@
 </header>
 
 <!-- Mobile Menu -->
-<div class="mobile-menu">
+<div class="mobile-menu" [class.active]="mobileMenuOpen">
   <div class="mobile-menu-content">
     <div class="mobile-menu-header">
-      <h3>TVS Spaces</h3>
-      <button class="mobile-menu-close">
+      <div class="logo">
+        <img src="logo/logoblack.jpg" alt="Logo" class="logo-img" />
+      </div>
+      <button class="mobile-menu-close" (click)="closeMobileMenu()">
         <i class="fas fa-times"></i>
       </button>
     </div>
     <nav class="mobile-nav">
-      <a href="#home" class="mobile-nav-link">Home</a>
-      <a href="#about" class="mobile-nav-link">About</a>
-      <a href="#spaces" class="mobile-nav-link">Spaces</a>
-      <a href="#pricing" class="mobile-nav-link">Pricing</a>
-      <a href="#contact" class="mobile-nav-link">Contact</a>
+      <a href="#home" class="mobile-nav-link" (click)="closeMobileMenu()"
+        >Home</a
+      >
+      <a href="#about" class="mobile-nav-link" (click)="closeMobileMenu()"
+        >About</a
+      >
+      <a href="#desks" class="mobile-nav-link" (click)="closeMobileMenu()"
+        >Spaces</a
+      >
+      <a href="#contact" class="mobile-nav-link" (click)="closeMobileMenu()"
+        >Contact</a
+      >
     </nav>
     <div class="mobile-menu-actions">
-      <button class="btn btn-outline btn-block">Sign In</button>
-      <button class="btn btn-primary btn-block">Get Started</button>
+      <a routerLink="/auth/login" (click)="closeMobileMenu()">
+        <button class="btn btn-outline btn-block">Sign In</button>
+      </a>
+      <a routerLink="/auth/register" (click)="closeMobileMenu()">
+        <button class="btn btn-primary btn-block">Get Started</button>
+      </a>
     </div>
   </div>
 </div>

@@ -71,8 +71,11 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: $primary-color;
+  color: $white-color;
   cursor: pointer;
+  background: $primary-color;
+  border-radius: 4px;
+  padding: 4px;
 }
 
 /* Mobile Menu */
@@ -107,8 +110,11 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: $primary-color;
+  color: $white-color;
   cursor: pointer;
+  background: $primary-color;
+  border-radius: 4px;
+  padding: 4px;
 }
 
 .mobile-nav {
@@ -130,4 +136,14 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
+}
+
+@media screen and (max-width: 968px) {
+  .nav , .header-actions {
+    display: none;
+  }
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
 }
