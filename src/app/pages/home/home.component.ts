@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Space, SPACES } from '../../shared/constants/space.model';
+import { BookingModule } from "../../features/booking/booking.module";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone:true,
-  imports:[RouterModule]
+  imports: [RouterModule, BookingModule]
 })
 export class HomeComponent {
   spaces: Space[] = SPACES;
