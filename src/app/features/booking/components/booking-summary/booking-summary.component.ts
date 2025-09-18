@@ -1,9 +1,9 @@
 //
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookingService } from '../../services/booking.service';
 import { CommonModule, Location } from '@angular/common';
 import { BookingSelection } from '../../../../shared/constants/space.model';
+import { BookingService } from '../../services/booking.service';
 
 @Component({
   selector: 'app-booking-summary',

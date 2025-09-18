@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookingService } from '../../services/booking.service';
 import { Space, SPACES } from '../../../../shared/constants/space.model';
 import { SpaceCardComponent } from '../../../../shared/components/space-card/space-card.component';
 import { DeskDetailComponent } from "../../../../pages/desk-detail/desk-detail.component";
+import { BookingService } from '../../services/booking.service';
 
 @Component({
   selector: 'app-resource-selector',

@@ -1,60 +1,49 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {
-  BookingPlan,
-  BookingSelection,
-  Space,
-} from '../../../shared/constants/space.model';
+import { BOOKING_URLS } from '../../../shared/constants/urls/url';
+import { BookingSelection, Space, BookingPlan } from '../../../shared/constants/space.model';
 
 @Injectable({ providedIn: 'root' })
 export class BookingService {
-  private apiUrl = '/api/bookings';
   private selection: BookingSelection = {};
 
   constructor(private http: HttpClient) {}
 
-  // --- Backend API Calls ---
 
   // Check availability
   checkAvailability(request: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/availability`, request);
+    return this.http.post(BOOKING_URLS.AVAILABILITY, request);
   }
 
   // Get available time slots for a specific date
   getAvailabilityGrid(spaceId: string, date: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${spaceId}/availability/${date}`);
+    return this.http.get(BOOKING_URLS.AVAILABILITY_GRID(spaceId, date));
   }
 
   // Get unavailable dates for a space in a month
-  getUnavailableDates(
-    spaceId: string,
-    year: number,
-    month: number
-  ): Observable<any> {
-    return this.http.get(
-      `${this.apiUrl}/${spaceId}/unavailable-dates/${year}/${month}`
-    );
+  getUnavailableDates(spaceId: string, year: number, month: number): Observable<any> {
+    return this.http.get(BOOKING_URLS.UNAVAILABLE_DATES(spaceId, year, month));
   }
 
   // Calculate price
   calculatePrice(request: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/calculate-price`, request);
+    return this.http.post(BOOKING_URLS.CALCULATE_PRICE, request);
   }
 
   // Create booking
   createBooking(request: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, request);
+    return this.http.post(BOOKING_URLS.CREATE, request);
   }
 
   // Get all spaces
   getAllSpaces(): Observable<Space[]> {
-    return this.http.get<Space[]>(`${this.apiUrl}/spaces`);
+    return this.http.get<Space[]>(BOOKING_URLS.SPACES);
   }
 
   // Get space by ID
   getSpaceById(id: string): Observable<Space> {
-    return this.http.get<Space>(`${this.apiUrl}/spaces/${id}`);
+    return this.http.get<Space>(BOOKING_URLS.SPACE_BY_ID(id));
   }
 
   // --- Local selection cache for UI state only ---

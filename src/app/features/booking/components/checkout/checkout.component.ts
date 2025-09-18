@@ -2,9 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { BookingService } from '../../services/booking.service';
 import { BookingSelection, SPACES } from '../../../../shared/constants/space.model';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { BookingService } from '../../services/booking.service';
 
 @Component({
   selector: 'app-checkout',

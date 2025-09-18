@@ -973,8 +973,20 @@
   height: 640px;
   @include flex-center;
   background: $secondary-grad;
+   @include respond-to(sm){
+    height: 450px;
+    }
+    @include respond-to(xs){
+          height: 400px;
+
+    }
   h1 {
     font-size: $font-size-xxxl;
     padding: 24px 64px;
+    
+    @include respond-to(sm){
+      font-size: $font-size-xl;
+      padding: 12px;
+    }
   }
 }

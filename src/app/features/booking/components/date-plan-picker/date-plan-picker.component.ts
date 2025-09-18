@@ -30,8 +30,8 @@ import {
   PricingPackage,
   PricingPackageType,
 } from '../../../../shared/constants/space.model';
-import { BookingService } from '../../services/booking.service';
 import { SpaceAvailabilityUtils } from '../../../../shared/utils/SpaceAvailabilityUtils';
+import { BookingService } from '../../services/booking.service';
 
 @Component({
   selector: 'app-date-plan-picker',
@@ -52,9 +52,11 @@ import { SpaceAvailabilityUtils } from '../../../../shared/utils/SpaceAvailabili
   templateUrl: './date-plan-picker.component.html',
   styleUrls: ['./date-plan-picker.component.scss'],
 })
-export class DatePlanPickerComponent
-  implements OnInit, OnChanges, AfterViewInit
-{
+export class DatePlanPickerComponent implements OnInit, OnChanges, AfterViewInit {
+  // For 7-day grid navigation
+  gridStartDay: number = new Date().getDate();
+  gridDaysCount: number = 7;
+  daysInMonth: number = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
   // --- Availability Map (no longer used, now backend-driven) ---
   availabilityMap: Record<string, Record<number, number>> = {};
 
@@ -99,11 +101,108 @@ export class DatePlanPickerComponent
   ngOnInit() {
     this.initializeFromBookingService();
     this.updateUnavailableDates();
+    this.month = new Date().getMonth();
+    this.year = new Date().getFullYear();
+    this.generateSlotGrid();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['space'] && this.space) {
       this.updateUnavailableDates();
+      this.generateSlotGrid();
+    }
+  }
+  // --- Date grid for month view ---
+
+  // Generate grid for current month and check availability for each day
+  // --- For grid UI ---
+  month: number = new Date().getMonth();
+  year: number = new Date().getFullYear();
+  hoursGrid: Array<number> = Array.from({ length: 14 }, (_, i) => i + 9); // 9am-18pm
+  slotGrid: Array<{
+    date: Date;
+    slots: Array<{ hour: number; available: boolean }>;
+  }> = [];
+
+  // Select a slot (date + hour)
+  selectSlot(selectedDate: Date, selectedHour: number) {
+    this.date = selectedDate;
+    this.startTime = selectedHour;
+    this.endTime = selectedHour + 1; // default to 1 hour slot
+    this.onDateChange(selectedDate);
+    this.onTimeChange();
+  }
+
+  // Navigation for next/prev 7 days
+  nextDays() {
+    this.daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
+    if (this.gridStartDay + this.gridDaysCount <= this.daysInMonth) {
+      this.gridStartDay += this.gridDaysCount;
+    } else if (this.month < 11) {
+      this.month++;
+      this.gridStartDay = 1;
+      this.year = this.year;
+    } else {
+      this.month = 0;
+      this.year++;
+      this.gridStartDay = 1;
+    }
+    this.generateSlotGrid();
+  }
+
+  prevDays() {
+    if (this.gridStartDay - this.gridDaysCount > 0) {
+      this.gridStartDay -= this.gridDaysCount;
+    } else if (this.month > 0) {
+      this.month--;
+      this.daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
+      this.gridStartDay = this.daysInMonth - (this.daysInMonth % this.gridDaysCount || this.gridDaysCount) + 1;
+    } else {
+      this.month = 11;
+      this.year--;
+      this.daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
+      this.gridStartDay = this.daysInMonth - (this.daysInMonth % this.gridDaysCount || this.gridDaysCount) + 1;
+    }
+    this.generateSlotGrid();
+  }
+
+  // Generate grid for current month and check slot availability for each day/hour
+  generateSlotGrid() {
+    if (!this.space || !this.space.id) return;
+    this.daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
+    this.slotGrid = [];
+    const start = this.gridStartDay;
+    console.log('start day',start);
+    
+    const end = Math.min(start + this.gridDaysCount - 1, this.daysInMonth);
+    for (let day = start; day <= end; day++) {
+      const date = new Date(this.year, this.month, day);
+      const now = new Date();
+      now.setHours(0, 0, 0, 0);
+      if (date < now) {
+        const slots = this.hoursGrid.map(hour => ({ hour, available: false }));
+        this.slotGrid.push({ date, slots });
+      } else {
+        // For async population, push placeholder and update later
+        const slots = this.hoursGrid.map(hour => ({ hour, available: false }));
+        this.slotGrid.push({ date, slots });
+        this.bookingService.getAvailabilityGrid(this.space.id, date.toISOString().slice(0, 10)).subscribe(
+          (response) => {
+            const found = this.slotGrid.find(row => row.date.getTime() === date.getTime());
+            if (found) {
+              found.slots = this.hoursGrid.map(hour => {
+                const slot = response.slots?.find((s: any) => s.hour === hour);
+                return { hour, available: slot ? slot.available : false };
+              });
+            }
+          },
+          (error) => {
+            // On error, keep all slots unavailable
+            console.log(error);
+            
+          }
+        );
+      }
     }
   }
 
@@ -219,15 +318,19 @@ export class DatePlanPickerComponent
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth() + 1; // backend expects 1-based month
-    this.bookingService.getUnavailableDates(this.space.id, year, month).subscribe(
-      (response) => {
-        // Assume response.dates is an array of ISO date strings
-        this.unavailableDates = (response.dates || []).map((d: string) => new Date(d));
-      },
-      (error) => {
-        this.unavailableDates = [];
-      }
-    );
+    this.bookingService
+      .getUnavailableDates(this.space.id, year, month)
+      .subscribe(
+        (response) => {
+          // Assume response.dates is an array of ISO date strings
+          this.unavailableDates = (response.dates || []).map(
+            (d: string) => new Date(d)
+          );
+        },
+        (error) => {
+          this.unavailableDates = [];
+        }
+      );
   }
 
   private generateTimeOptions(): string[] {
@@ -407,7 +510,9 @@ export class DatePlanPickerComponent
       spaceId: this.space.id,
       plan: this.plan,
       date: this.date.toISOString().slice(0, 10),
-      endDate: this.endDate ? this.endDate.toISOString().slice(0, 10) : undefined,
+      endDate: this.endDate
+        ? this.endDate.toISOString().slice(0, 10)
+        : undefined,
       startTime: this.isHourly ? this.startTime : 9,
       endTime: this.isHourly ? this.endTime : 17,
       quantity: this.quantity,

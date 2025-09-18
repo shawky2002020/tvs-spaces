@@ -11,7 +11,7 @@
   padding: $spacing-lg $spacing-md;
   min-height: 100vh;
   transition: transform $transition-base, width $transition-base;
-  position: fixed ;
+  position: fixed;
   left: 0;
   top: 0;
   z-index: $z-index-fixed;
@@ -65,7 +65,7 @@
 }
 
 .sidebar-nav a::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: 0;
@@ -129,12 +129,12 @@
     transform: translateX(-100%);
     width: 280px !important;
   }
-  
+
   .auth-sidebar.mobile-open {
     transform: translateX(0);
     flex-flow: column;
   }
-  
+
   .mobile-toggle {
     display: block;
     position: absolute;
@@ -164,7 +164,6 @@
 }
 
 @media (max-width: 900px) {
-  
   .auth-sidebar {
     width: 100%;
     align-items: center;
@@ -180,8 +179,6 @@
     font-size: $font-size-md;
   }
   .sidebar-nav ul {
-    gap: $spacing-lg ;
+    gap: $spacing-lg;
   }
- 
 }
-
