@@ -39,209 +39,62 @@
     </mat-form-field>
   </div> -->
 
-  <div class="date-section slide-in--left-slow">
-    <label *ngIf="!isMonthly">Select Date{{ isDaily ? "s" : "" }}:</label>
-
-    <mat-form-field *ngIf="isHourly || isDaily" appearance="fill">
-      <mat-label>Choose date</mat-label>
-      <input
-        matInput
-        [matDatepicker]="picker"
-        [(ngModel)]="date"
-        (dateChange)="onDateChange($event.value)"
-        [min]="minDate"
-        placeholder="Choose date"
-        aria-label="Select date"
-      />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="picker"
-        aria-label="Open date picker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field *ngIf="isDaily" appearance="fill">
-      <mat-label>End date</mat-label>
-      <input
-        matInput
-        [matDatepicker]="endPicker"
-        [(ngModel)]="endDate"
-        (dateChange)="onEndDateChange($event.value)"
-        [min]="date || minDate"
-        placeholder="End date"
-        aria-label="Select end date"
-      />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="endPicker"
-        aria-label="Open end date picker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #endPicker></mat-datepicker>
-    </mat-form-field>
-
-    <!-- Month Picker -->
-    <mat-form-field *ngIf="isMonthly" appearance="fill">
-      <mat-label>Choose month</mat-label>
-      <input
-        matInput
-        [matDatepicker]="monthPicker"
-        [(ngModel)]="selectedMonth"
-        (dateChange)="onMonthChange($event.value)"
-        [min]="minDate"
-        placeholder="Choose month"
-        aria-label="Select month"
-      />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="monthPicker"
-        aria-label="Open month picker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker
-        #monthPicker
-        startView="multi-year"
-        panelClass="month-picker"
-        (monthSelected)="onMonthChange($event)"
-        (closed)="onMonthPickerClosed()"
-      ></mat-datepicker>
-    </mat-form-field>
-
-    <!-- Day Picker (shows after month is selected) -->
-    <mat-form-field *ngIf="isMonthly && selectedMonth" appearance="fill">
-      <mat-label>Choose day</mat-label>
-      <input
-        matInput
-        [matDatepicker]="dayPicker"
-        [(ngModel)]="selectedDay"
-        (dateChange)="onDayChange($event.value)"
-        [min]="minDay"
-        [max]="maxDay"
-        placeholder="Choose day"
-        aria-label="Select day"
-      />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="dayPicker"
-        aria-label="Open day picker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker
-        #dayPicker
-        startView="month"
-        panelClass="day-picker"
-      ></mat-datepicker>
-    </mat-form-field>
-
-    <!-- Time Pickers (show after day is selected) -->
-    <!-- <div class="time-section" *ngIf="isMonthly && selectedDay">
-      <div class="start">
-        <mat-form-field appearance="fill">
-          <mat-label>Start Time</mat-label>
-          <mat-select
-            [(ngModel)]="startTime"
-            (selectionChange)="onTimeChange()"
-            panelClass="custom-dropdown"
-          >
-            <mat-option
-              *ngFor="let hour of hours"
-              [value]="hour"
-              [disabled]="!isHourAvailable(hour)"
-            >
-              {{ hour }}:00
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+  <div class="date-grid-section">
+    <div class="month-nav">
+      <button class="btn" (click)="prevDays()">&#8592; Prev 7 Days</button>
+      <span class="month-label">{{ year }} - {{ month + 1 | number:'2.0' }}</span>
+      <button class="btn" (click)="nextDays()">Next 7 Days &#8594;</button>
+    </div>
+    <label>Select Date & Hour:</label>
+    <div class="date-hour-grid">
+      <div class="grid-header">
+        <div class="grid-cell header-cell">Day</div>
+        <div class="grid-cell header-cell" *ngFor="let hour of hoursGrid">{{ hour }}:00</div>
       </div>
-
-      <div class="end">
-        <mat-form-field appearance="fill">
-          <mat-label>End Time</mat-label>
-          <mat-select
-            [(ngModel)]="endTime"
-            (selectionChange)="onTimeChange()"
-            panelClass="custom-dropdown"
-          >
-            <mat-option *ngFor="let hour of hours" [value]="hour">
-              {{ hour }}:00
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div> -->
-
-    <div class="time-section" *ngIf="date">
-      <div class="start">
-        <mat-form-field appearance="fill">
-          <mat-label>Start Time</mat-label>
-          <mat-select
-            [(ngModel)]="startTime"
-            (selectionChange)="onTimeChange()"
-            panelClass="custom-dropdown"
-          >
-            <mat-option
-              *ngFor="let hour of hours"
-              [value]="hour"
-              [ngClass]="{ 'unavailable-hour': !isStartHourAvailable(hour) }"
-              [disabled]="!isStartHourAvailable(hour)"
-            >
-              {{ hour > 12 ? hour - 12 : hour }}:00
-              {{ hour > 12 ? "PM" : "AM" }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="end">
-        <mat-form-field appearance="fill">
-          <mat-label>End Time</mat-label>
-          <mat-select
-            [(ngModel)]="endTime"
-            (selectionChange)="onTimeChange()"
-            panelClass="custom-dropdown"
-          >
-            <mat-option
-              *ngFor="let hour of hours"
-              [value]="hour"
-              [ngClass]="{ 'unavailable-hour': !isEndHourAvailable(hour) }"
-              [disabled]="!isEndHourAvailable(hour)"
-            >
-              {{ hour > 12 ? hour - 12 : hour }}:00
-              {{ hour > 12 ? "PM" : "AM" }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div class="grid-row" *ngFor="let row of slotGrid">
+        <div class="grid-cell day-cell">{{ row.date | date:'d MMM' }}</div>
+        <div
+          class="grid-cell slot-cell"
+          *ngFor="let slot of row.slots"
+          [ngClass]="{
+            available: slot.available,
+            unavailable: !slot.available,
+            selected: date && row.date.getTime() === date.getTime() && startTime === slot.hour
+          }"
+          (click)="slot.available ? selectSlot(row.date, slot.hour) : null"
+        >
+          <span>{{ slot.available ? '✔' : '✖' }}</span>
+        </div>
       </div>
     </div>
-    <div class="error" *ngIf="error" role="alert">{{ error }}</div>
+  </div>
+  <div class="error" *ngIf="error" role="alert">{{ error }}</div>
 
-    <div class="price-summary" *ngIf="price > 0 && !error">
-      <span
-        >Total Price: <strong>{{ price | number : "1.0-2" }} EGP</strong></span
-      >
-      <span *ngIf="price > 0 && !error" class="price-breakdown">
-        (  {{ bookedHours }} hours ×
-        {{ getPackagePrice() }} EGP)
-        <br />
-        Package : {{ pricingPackage }}
-      </span>
-      <span> </span>
-    </div>
+  <div class="price-summary" *ngIf="price > 0 && !error">
+    <span
+      >Total Price: <strong>{{ price | number : "1.0-2" }} EGP</strong></span
+    >
+    <span *ngIf="price > 0 && !error" class="price-breakdown">
+      ( {{ bookedHours }} hours × {{ getPackagePrice() }} EGP)
+      <br />
+      Package : {{ pricingPackage }}
+    </span>
+    <span> </span>
+  </div>
 
-    <div class="actions">
-      <button class="btn-secondary btn" (click)="back()" aria-label="Go back">
-        Back
-      </button>
-      <button
-        class="btn-primary btn"
-        (click)="next()"
-        [disabled]="
-          !date ||
-          (isDaily && !endDate) ||
-          (isHourly && (!startTime || !endTime))
-        "
-        aria-label="Proceed to next step"
-      >
-        Next
-      </button>
-    </div>
+  <div class="actions">
+    <button class="btn-secondary btn" (click)="back()" aria-label="Go back">
+      Back
+    </button>
+    <button
+      class="btn-primary btn"
+      (click)="next()"
+      [disabled]="
+        !date || (isDaily && !endDate) || (isHourly && (!startTime || !endTime))
+      "
+      aria-label="Proceed to next step"
+    >
+      Next
+    </button>
   </div>
 </div>

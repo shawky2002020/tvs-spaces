@@ -9,7 +9,7 @@
   <!-- Header -->
   <header class="detail-header">
     <div class="container">
-      <h1 class="handwritten">{{ space.name }}</h1>
+      <h2>{{ space.name }}</h2>
       <p class="description">{{ space.description }}</p>
       <div class="capacity" *ngIf="space.capacity">
         <i class="fas fa-users"></i> Capacity: Up to {{ space.capacity }} guests
@@ -198,7 +198,7 @@
           <textarea id="message" rows="4" placeholder="Tell us about any specific requirements"></textarea>
         </div>
         <div class="form-actions">
-          <button class="btn btn-primary btn-lg">Submit Enquiry</button>
+          <button class="btn btn-primary btn">Submit Enquiry</button>
         </div>
       </div>
     </section>

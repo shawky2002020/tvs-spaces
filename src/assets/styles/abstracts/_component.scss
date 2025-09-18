@@ -1,4 +1,5 @@
 /* Button Styles */
+@import "./mixins";
 .btn {
   display: inline-flex;
   align-items: center;
@@ -14,6 +15,10 @@
   transition: all 0.3s ease-in-out;
   min-height: 48px;
   gap: $spacing-sm;
+  @include respond-to(sm){
+    font-size: $font-size-xs;
+    padding: $spacing-xs $spacing-md;
+  }
 }
 
 .btn-primary {
