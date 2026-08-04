@@ -1,16 +1,19 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
+import { provideRouter, RouterOutlet } from '@angular/router';
 import { App } from './app';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterModule.forRoot([])
-      ],
       declarations: [
         App
       ],
+      imports: [
+        RouterOutlet
+      ],
+      providers: [
+        provideRouter([])
+      ]
     }).compileComponents();
   });
 
@@ -20,10 +23,9 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', () => {
+  it('should have the title signal as myApp', () => {
     const fixture = TestBed.createComponent(App);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, myApp');
+    const app = fixture.componentInstance;
+    expect((app as any).title()).toEqual('myApp');
   });
 });
