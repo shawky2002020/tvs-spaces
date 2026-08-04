@@ -54,6 +54,9 @@ export class DatePlanPickerComponent implements OnInit {
 
     if (selection.space) {
       this.space = selection.space;
+      if (selection.plan === 'Hourly' || selection.plan === 'Daily') {
+        this.plan = selection.plan;
+      }
       this.generateSlotGrid();
       return;
     }
@@ -222,11 +225,15 @@ export class DatePlanPickerComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
-    this.bookingService.checkAvailability({
+    const selectedDate = this.date;
+    const selectedEndDate = this.endDate;
+    const request = {
       ...this.buildRequest(),
       requestedUnits: this.quantity,
-    }).subscribe({
+    };
+
+    this.loading = true;
+    this.bookingService.checkAvailability(request).subscribe({
       next: (response) => {
         this.loading = false;
         if (!response.available) {
@@ -238,7 +245,9 @@ export class DatePlanPickerComponent implements OnInit {
           spaceId: this.space.id,
           space: this.space,
           plan: this.plan,
-          date: this.date,
+          date: selectedDate.getTime() === selectedEndDate.getTime()
+            ? selectedDate
+            : [selectedDate, selectedEndDate],
           startTime: this.startTime,
           endTime: this.endTime,
           price: this.price,
