@@ -10,57 +10,12 @@ permissions:
   contents: read
 
 jobs:
-  sync-lockfile:
-    if: >-
-      (github.event_name == 'pull_request' && github.head_ref == 'feature/tvs-functional-e2e') ||
-      (github.event_name == 'push' && github.ref == 'refs/heads/feature/tvs-functional-e2e')
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: write
-
-    steps:
-      - name: Checkout feature branch
-        uses: actions/checkout@v4
-        with:
-          ref: feature/tvs-functional-e2e
-
-      - name: Set up Node.js 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-
-      - name: Generate synchronized lockfile
-        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
-
-      - name: Commit lockfile when changed
-        run: |
-          if git diff --quiet -- package-lock.json; then
-            echo "package-lock.json is synchronized"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json
-          git commit -m "chore: synchronize Playwright dependency lockfile"
-          git push origin HEAD:feature/tvs-functional-e2e
-
   build-and-test:
-    needs: sync-lockfile
-    if: always() && (needs.sync-lockfile.result == 'success' || needs.sync-lockfile.result == 'skipped')
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
     steps:
-      - name: Checkout latest feature branch
-        if: github.event_name == 'pull_request' && github.head_ref == 'feature/tvs-functional-e2e'
-        uses: actions/checkout@v4
-        with:
-          ref: feature/tvs-functional-e2e
-
-      - name: Checkout event commit
-        if: github.event_name != 'pull_request' || github.head_ref != 'feature/tvs-functional-e2e'
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Node.js 22
@@ -79,11 +34,7 @@ jobs:
         run: npm test -- --watch=false --browsers=ChromeHeadless
 
   full-stack-browser-e2e:
-    needs: [sync-lockfile, build-and-test]
-    if: >-
-      always() &&
-      (needs.sync-lockfile.result == 'success' || needs.sync-lockfile.result == 'skipped') &&
-      needs.build-and-test.result == 'success'
+    needs: build-and-test
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -119,14 +70,7 @@ jobs:
       E2E_BASE_URL: http://127.0.0.1:4200
 
     steps:
-      - name: Checkout latest Angular branch
-        if: github.event_name == 'pull_request' && github.head_ref == 'feature/tvs-functional-e2e'
-        uses: actions/checkout@v4
-        with:
-          ref: feature/tvs-functional-e2e
-
-      - name: Checkout Angular event commit
-        if: github.event_name != 'pull_request' || github.head_ref != 'feature/tvs-functional-e2e'
+      - name: Checkout Angular application
         uses: actions/checkout@v4
 
       - name: Checkout Spring Boot feature branch
