@@ -9,31 +9,38 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('../../features/dashboard/dashboard.module').then(m => m.DashboardModule)
+        loadChildren: () =>
+          import('../../features/dashboard/dashboard.module').then(
+            (module) => module.DashboardModule
+          ),
       },
       {
         path: 'booking',
-        loadChildren: () => import('../../features/booking/booking.module').then(m => m.BookingModule)
+        loadChildren: () =>
+          import('../../features/booking/booking.module').then(
+            (module) => module.BookingModule
+          ),
       },
       {
         path: 'profile',
-        loadChildren: () => import('../../features/profile/profile.module').then(m => m.ProfileModule)
-      },
-      {
-        path: 'payments',
-        loadChildren: () => import('../../features/payment/payment.module').then(m => m.PaymentModule)
+        loadChildren: () =>
+          import('../../features/profile/profile.module').then(
+            (module) => module.ProfileModule
+          ),
       },
       {
         path: 'facilities',
-        loadComponent: () => import('../../features/place-info/place-info.component')
-          .then(m => m.PlaceInfoComponent)
-      }
-    ]
-  }
+        loadComponent: () =>
+          import('../../features/place-info/place-info.component').then(
+            (module) => module.PlaceInfoComponent
+          ),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AuthLayoutRoutingModule { }
+export class AuthLayoutRoutingModule {}
