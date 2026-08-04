@@ -5,22 +5,21 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AUTH_URLS } from '../../shared/constants/urls/url';
 import { User, UserResponse } from '../../shared/models/user.model';
 import { UserUpdateRequest } from '../../shared/models/api.model';
-const USERKEY = 'user';
+
+const USER_KEY = 'user';
+const BOOKING_SELECTION_KEY = 'bookingSelection';
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private accessToken: string | null = null;
-  private UserSubject = new BehaviorSubject<User | null>(null);
+  private userSubject = new BehaviorSubject<User | null>(this.getUserFromLocalStorage());
 
-  User$ = this.UserSubject.asObservable();
+  readonly User$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  get User(): User  {
-    const user = this.UserSubject.value ?? this.getUserFromLocalStorage();
-    if (user && !this.UserSubject.value) {
-      this.UserSubject.next(user);
-    }
-    return user;
+  get User(): User {
+    return this.userSubject.value ?? ({} as User);
   }
 
   login(email: string, password: string): Observable<UserResponse> {
@@ -32,18 +31,14 @@ export class AuthService {
       )
       .pipe(
         tap((res) => {
-          this.setUserLocalStorage(res.user);
-
-          this.UserSubject.next(res.user);
-
-          this.accessToken = res.token; // store in memory
+          this.updateCachedUser(res.user);
+          this.accessToken = res.token;
           this.router.navigate(['/dashboard']);
         })
       );
   }
-  signup(
-    user:UserUpdateRequest
-  ): Observable<UserResponse> {
+
+  signup(user: UserUpdateRequest): Observable<UserResponse> {
     return this.http
       .post<UserResponse>(
         AUTH_URLS.REGISTER,
@@ -52,10 +47,8 @@ export class AuthService {
       )
       .pipe(
         tap((res) => {
-          console.log(res);
-          this.setUserLocalStorage(res.user);
-          this.UserSubject.next(res.user);
-          this.accessToken = res.token; // store in memory
+          this.updateCachedUser(res.user);
+          this.accessToken = res.token;
           this.router.navigate(['/dashboard']);
         })
       );
@@ -72,10 +65,11 @@ export class AuthService {
     });
   }
 
-  private clearLocalSession() {
+  private clearLocalSession(): void {
     this.accessToken = null;
-    this.UserSubject.next(null);
-    localStorage.removeItem(USERKEY);
+    this.userSubject.next(null);
+    localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(BOOKING_SELECTION_KEY);
     this.router.navigate(['/auth/login']);
   }
 
@@ -83,9 +77,9 @@ export class AuthService {
     return !!this.accessToken;
   }
 
-  refreshToken(): Observable<any> {
+  refreshToken(): Observable<{ token: string }> {
     return this.http
-      .post<any>(AUTH_URLS.REFRESH, {}, { withCredentials: true })
+      .post<{ token: string }>(AUTH_URLS.REFRESH, {}, { withCredentials: true })
       .pipe(
         tap((res) => {
           this.accessToken = res.token;
@@ -93,14 +87,24 @@ export class AuthService {
       );
   }
 
-  setUserLocalStorage(user: User) {
-    const UserStr = JSON.stringify(user);
-    localStorage.setItem(USERKEY, UserStr);
+  updateCachedUser(user: User): void {
+    this.userSubject.next(user);
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
-  getUserFromLocalStorage(): User {
-    const userStr = localStorage.getItem(USERKEY);
-    const user = userStr ? JSON.parse(userStr) : null;
 
-    return user || ({} as User);
+  setUserLocalStorage(user: User): void {
+    this.updateCachedUser(user);
+  }
+
+  private getUserFromLocalStorage(): User | null {
+    const userStr = localStorage.getItem(USER_KEY);
+    if (!userStr) return null;
+
+    try {
+      return JSON.parse(userStr) as User;
+    } catch {
+      localStorage.removeItem(USER_KEY);
+      return null;
+    }
   }
 }

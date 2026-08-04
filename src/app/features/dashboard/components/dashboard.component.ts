@@ -1,76 +1,133 @@
-import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { BookingService } from '../../booking/services/booking.service';
+
+interface DashboardBooking {
+  id: number;
+  reference: string;
+  space: string;
+  date: string;
+  time: string;
+  status: 'UPCOMING' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
+  canCancel: boolean;
+}
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, RouterLink],
 })
 export class DashboardComponent implements OnInit {
-  bookingService = inject(BookingService);
+  private readonly bookingService = inject(BookingService);
 
   stats = [
-    { title: 'Total Points', value: '0', icon: 'star' },
-    { title: 'Total Visits', value: '0', icon: 'map-marker-alt' },
-    { title: 'Total Reservations', value: '0', icon: 'calendar-alt' }
+    { title: 'Total Reservations', value: '0', icon: 'calendar-alt' },
+    { title: 'Upcoming', value: '0', icon: 'clock' },
+    { title: 'Active', value: '0', icon: 'door-open' },
+    { title: 'Completed Visits', value: '0', icon: 'check-circle' },
   ];
 
-  recentBookings: any[] = [];
-
-  recommendedSpaces = [
-    { name: 'Solo Desk', image: 'assets/imgs/spaces/solo0.jpg', rating: 4.8 },
-    { name: 'Team Room', image: 'assets/imgs/spaces/sm-meeting0.jpg', rating: 4.9 },
-    { name: 'PC Station', image: 'assets/imgs/spaces/pc-station0.jpg', rating: 4.7 }
-  ];
+  bookings: DashboardBooking[] = [];
+  loading = true;
+  error = '';
 
   ngOnInit(): void {
+    this.loadDashboard();
+  }
+
+  cancelBooking(booking: DashboardBooking): void {
+    if (!booking.canCancel || !confirm(`Cancel booking ${booking.reference}?`)) return;
+
+    this.bookingService.cancelBooking(booking.id).subscribe({
+      next: () => this.loadDashboard(),
+      error: (err) => {
+        this.error = err.error?.message || 'Unable to cancel this booking.';
+      },
+    });
+  }
+
+  private loadDashboard(): void {
+    this.loading = true;
+    this.error = '';
     this.loadStats();
     this.loadBookings();
   }
 
-  loadStats() {
+  private loadStats(): void {
     this.bookingService.getDashboardStats().subscribe({
       next: (data) => {
         this.stats = [
-          { title: 'Total Points', value: String(data.totalPoints || 0), icon: 'star' },
-          { title: 'Total Visits', value: String(data.totalVisits || 0), icon: 'map-marker-alt' },
-          { title: 'Total Reservations', value: String(data.totalReservations || 0), icon: 'calendar-alt' }
+          {
+            title: 'Total Reservations',
+            value: String(data.totalReservations ?? 0),
+            icon: 'calendar-alt',
+          },
+          {
+            title: 'Upcoming',
+            value: String(data.upcomingReservations ?? 0),
+            icon: 'clock',
+          },
+          {
+            title: 'Active',
+            value: String(data.activeReservations ?? 0),
+            icon: 'door-open',
+          },
+          {
+            title: 'Completed Visits',
+            value: String(data.totalVisits ?? 0),
+            icon: 'check-circle',
+          },
         ];
       },
-      error: (err) => console.error('Error loading dashboard stats', err)
+      error: (err) => {
+        this.loading = false;
+        this.error = err.error?.message || 'Unable to load dashboard statistics.';
+      },
     });
   }
 
-  loadBookings() {
+  private loadBookings(): void {
     this.bookingService.getMyBookings().subscribe({
       next: (data) => {
-        this.recentBookings = data.map(b => ({
-          dbId: b.id,
-          id: b.reference,
-          space: b.spaceName,
-          date: new Date(b.startAt).toLocaleDateString(),
-          time: `${new Date(b.startAt).getHours()}:00 - ${new Date(b.endAt).getHours()}:00`,
-          status: b.status
-        }));
-      },
-      error: (err) => console.error('Error loading user bookings', err)
-    });
-  }
+        const now = Date.now();
+        this.bookings = data
+          .map((booking) => {
+            const start = new Date(booking.startAt);
+            const end = new Date(booking.endAt);
+            let status: DashboardBooking['status'];
 
-  cancelBooking(dbId: number) {
-    if (confirm('Are you sure you want to cancel this booking?')) {
-      this.bookingService.cancelBooking(dbId).subscribe({
-        next: () => {
-          this.loadStats();
-          this.loadBookings();
-        },
-        error: (err) => {
-          alert('Failed to cancel booking.');
-        }
-      });
-    }
+            if (booking.status === 'CANCELLED') {
+              status = 'CANCELLED';
+            } else if (end.getTime() <= now) {
+              status = 'COMPLETED';
+            } else if (start.getTime() <= now) {
+              status = 'ACTIVE';
+            } else {
+              status = 'UPCOMING';
+            }
+
+            return {
+              id: booking.id,
+              reference: booking.reference,
+              space: booking.spaceName,
+              date: start.toLocaleDateString(),
+              time: `${start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+              status,
+              canCancel: status === 'UPCOMING' || booking.status === 'CONFIRMED' || booking.status === 'PENDING',
+              createdAt: new Date(booking.createdAt).getTime(),
+            };
+          })
+          .sort((first, second) => second.createdAt - first.createdAt)
+          .map(({ createdAt, ...booking }) => booking);
+        this.loading = false;
+      },
+      error: (err) => {
+        this.loading = false;
+        this.error = err.error?.message || 'Unable to load your bookings.';
+      },
+    });
   }
 }

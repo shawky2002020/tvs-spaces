@@ -1,20 +1,15 @@
-export class User {
-  id!: string;
-  username!: string;
-  email!: string;
-  password?: string; // Optional for security reasons
-  lastLogin!: Date;
-  creationDate!: Date;
-  authorities!: { authority: string }[];
-  type!:string;
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  type: string;
+  role: string;
+  lastLogin: string | Date;
+  creationDate: string | Date;
 }
 
 export interface UserResponse {
-  user: User & {
-    accountNonExpired: boolean;
-    accountNonLocked: boolean;
-    credentialsNonExpired: boolean;
-    enabled: boolean;
-  };
+  user: User;
   token: string;
+  message?: string;
 }

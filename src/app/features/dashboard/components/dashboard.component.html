@@ -1,7 +1,13 @@
 <div class="dashboard-container">
-  <!-- Dashboard Overview -->
   <section class="dashboard-overview">
-    <h2>Overview</h2>
+    <div class="section-header">
+      <h2>Overview</h2>
+      <a routerLink="/dashboard/booking" class="view-all">New Booking</a>
+    </div>
+
+    <p class="error" *ngIf="error" role="alert">{{ error }}</p>
+    <p *ngIf="loading">Loading dashboard...</p>
+
     <div class="stats-grid">
       <div class="stat-card" *ngFor="let stat of stats">
         <div class="stat-icon">
@@ -15,13 +21,12 @@
     </div>
   </section>
 
-  <!-- Recent Bookings -->
   <section class="recent-bookings">
     <div class="section-header">
-      <h2>Recent Bookings</h2>
-      <a routerLink="/bookings" class="view-all">View All</a>
+      <h2>My Bookings</h2>
     </div>
-    <div class="table-responsive">
+
+    <div class="table-responsive" *ngIf="bookings.length > 0; else noBookings">
       <table class="bookings-table">
         <thead>
           <tr>
@@ -30,25 +35,34 @@
             <th>Date</th>
             <th>Time</th>
             <th>Status</th>
-            <th>Actions</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let booking of recentBookings">
-            <td>{{ booking.id }}</td>
+          <tr *ngFor="let booking of bookings">
+            <td>{{ booking.reference }}</td>
             <td>{{ booking.space }}</td>
             <td>{{ booking.date }}</td>
             <td>{{ booking.time }}</td>
             <td>
-              <span class="status-badge" [ngClass]="{
-                'status-completed': booking.status === 'Completed',
-                'status-active': booking.status === 'Active' || booking.status === 'CONFIRMED',
-                'status-upcoming': booking.status === 'Upcoming',
-                'status-cancelled': booking.status === 'CANCELLED'
-              }">{{ booking.status }}</span>
+              <span
+                class="status-badge"
+                [ngClass]="{
+                  'status-completed': booking.status === 'COMPLETED',
+                  'status-active': booking.status === 'ACTIVE',
+                  'status-upcoming': booking.status === 'UPCOMING',
+                  'status-cancelled': booking.status === 'CANCELLED'
+                }"
+              >
+                {{ booking.status | titlecase }}
+              </span>
             </td>
             <td>
-              <button class="btn btn-danger btn-sm" *ngIf="booking.status === 'CONFIRMED'" (click)="cancelBooking(booking.dbId)">
+              <button
+                class="action-btn"
+                *ngIf="booking.canCancel"
+                (click)="cancelBooking(booking)"
+              >
                 Cancel
               </button>
             </td>
@@ -56,51 +70,27 @@
         </tbody>
       </table>
     </div>
+
+    <ng-template #noBookings>
+      <p *ngIf="!loading">You have no bookings yet.</p>
+    </ng-template>
   </section>
 
-  <!-- Two Column Layout -->
-  <div class="two-column-grid">
-    <!-- Recommended Spaces -->
-    <section class="recommended-spaces">
-      <h2>Recommended For You</h2>
-      <div class="space-cards">
-        <div class="space-card" *ngFor="let space of recommendedSpaces">
-          <div class="space-image">
-            <img [src]="space.image" [alt]="space.name">
-          </div>
-          <div class="space-info">
-            <h3>{{ space.name }}</h3>
-            <div class="space-rating">
-              <i class="fas fa-star"></i>
-              <span>{{ space.rating }}</span>
-            </div>
-          </div>
-          <button class="btn btn-primary btn-sm">Book Now</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Quick Actions -->
-    <section class="quick-actions">
-      <h2>Quick Actions</h2>
-      <div class="action-buttons">
-        <button class="action-button">
-          <i class="fas fa-plus-circle"></i>
-          <span>New Booking</span>
-        </button>
-        <button class="action-button">
-          <i class="fas fa-credit-card"></i>
-          <span>Make Payment</span>
-        </button>
-        <button class="action-button">
-          <i class="fas fa-headset"></i>
-          <span>Contact Support</span>
-        </button>
-        <button class="action-button">
-          <i class="fas fa-cog"></i>
-          <span>Account Settings</span>
-        </button>
-      </div>
-    </section>
-  </div>
+  <section class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-buttons">
+      <a class="action-button" routerLink="/dashboard/booking">
+        <i class="fas fa-plus-circle"></i>
+        <span>New Booking</span>
+      </a>
+      <a class="action-button" routerLink="/dashboard/profile">
+        <i class="fas fa-cog"></i>
+        <span>Account Settings</span>
+      </a>
+      <a class="action-button" routerLink="/dashboard/facilities">
+        <i class="fas fa-info-circle"></i>
+        <span>Facilities</span>
+      </a>
+    </div>
+  </section>
 </div>

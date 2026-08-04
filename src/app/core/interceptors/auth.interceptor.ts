@@ -1,47 +1,72 @@
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  finalize,
+  shareReplay,
+  switchMap,
+  throwError,
+} from 'rxjs';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private auth: AuthService, private router: Router) {}
+  private refreshRequest$: Observable<{ token: string }> | null = null;
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Skip token for auth endpoints
-    if (req.url.includes('/auth/')) {
-      return next.handle(req);
+  constructor(private readonly auth: AuthService) {}
+
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
+    if (request.url.includes('/auth/')) {
+      return next.handle(request);
     }
 
-    const authReq = req.clone({
-      setHeaders: { Authorization: `Bearer ${this.auth.getToken()}` }
-    });
+    const token = this.auth.getToken();
+    const authenticatedRequest = token
+      ? request.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
+      : request;
 
-    return next.handle(authReq).pipe(
-      catchError(err => {
-        if (err.status === 401) {
-          // Try refreshing token
-          return this.auth.refreshToken().pipe(
-            switchMap(newToken => {
-              // Retry with new token
-              console.log('This new token is',newToken.token);
-              
-              const cloned = req.clone({
-                setHeaders: { Authorization: `Bearer ${newToken.token}` }
-              });
-              return next.handle(cloned);
-            }),
-            catchError(refreshErr => {
-              // If refresh also fails, redirect to login
-              this.auth.logout();
-              this.router.navigate(['/auth/login']);
-              return throwError(() => refreshErr);
-            })
-          );
+    return next.handle(authenticatedRequest).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status !== 401) {
+          return throwError(() => error);
         }
-        return throwError(() => err);
+
+        return this.refreshAccessToken().pipe(
+          switchMap(({ token: refreshedToken }) =>
+            next.handle(
+              request.clone({
+                setHeaders: { Authorization: `Bearer ${refreshedToken}` },
+              })
+            )
+          ),
+          catchError((refreshError) => {
+            this.auth.logout();
+            return throwError(() => refreshError);
+          })
+        );
       })
     );
+  }
+
+  private refreshAccessToken(): Observable<{ token: string }> {
+    if (!this.refreshRequest$) {
+      this.refreshRequest$ = this.auth.refreshToken().pipe(
+        shareReplay(1),
+        finalize(() => {
+          this.refreshRequest$ = null;
+        })
+      );
+    }
+    return this.refreshRequest$;
   }
 }

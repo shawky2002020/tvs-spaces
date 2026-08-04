@@ -1,0 +1,157 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [main, feature/tvs-functional-e2e]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Run unit tests
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+
+  full-stack-browser-e2e:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: mydatabase
+          MYSQL_USER: myuser
+          MYSQL_PASSWORD: secret
+          MYSQL_ROOT_PASSWORD: root-secret
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot-secret"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+
+    env:
+      DB_HOST: 127.0.0.1
+      DB_NAME: mydatabase
+      DB_USERNAME: myuser
+      DB_PASSWORD: secret
+      DB_DDL_AUTO: validate
+      JWT_SECRET: browser-e2e-jwt-secret-browser-e2e-jwt-secret-browser-e2e-123456
+      JWT_ACCESS_EXPIRATION: 900000
+      JWT_REFRESH_EXPIRATION: 604800000
+      COOKIE_SECURE: 'false'
+      COOKIE_SAME_SITE: Strict
+      CORS_ALLOWED_ORIGINS: http://localhost:4200
+      BUSINESS_TIME_ZONE: Africa/Cairo
+      E2E_BASE_URL: http://localhost:4200
+
+    steps:
+      - name: Checkout Angular application
+        uses: actions/checkout@v4
+
+      - name: Checkout Spring Boot feature branch
+        uses: actions/checkout@v4
+        with:
+          repository: shawky2002020/TvsSpaces-back
+          ref: feature/tvs-functional-e2e
+          path: server
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: server/pom.xml
+
+      - name: Install Angular dependencies
+        run: npm ci
+
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Package and start Spring Boot
+        working-directory: server
+        run: |
+          chmod +x mvnw
+          ./mvnw --batch-mode -DskipTests package
+          nohup java -jar target/spaces-back-0.0.1-SNAPSHOT.jar \
+            --spring.profiles.active=local > ../backend-e2e.log 2>&1 &
+          echo $! > ../backend-e2e.pid
+          for attempt in $(seq 1 60); do
+            if curl --silent --show-error --fail http://127.0.0.1:8080/actuator/health; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat ../backend-e2e.log
+          exit 1
+
+      - name: Start Angular development server
+        run: |
+          nohup npm start -- --host localhost --port 4200 > frontend-e2e.log 2>&1 &
+          echo $! > frontend-e2e.pid
+          for attempt in $(seq 1 60); do
+            if curl --silent --show-error --fail http://localhost:4200/auth/register; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat frontend-e2e.log
+          exit 1
+
+      - name: Run full reservation browser flow
+        run: npm run e2e -- --project=chromium
+
+      - name: Upload browser test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-stack-browser-e2e-evidence
+          path: |
+            backend-e2e.log
+            frontend-e2e.log
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+          retention-days: 3
+
+      - name: Stop application processes
+        if: always()
+        run: |
+          if [ -f frontend-e2e.pid ]; then
+            kill "$(cat frontend-e2e.pid)" 2>/dev/null || true
+          fi
+          if [ -f backend-e2e.pid ]; then
+            kill "$(cat backend-e2e.pid)" 2>/dev/null || true
+          fi

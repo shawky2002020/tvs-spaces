@@ -1,7 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { BookingSelection } from '../../../../shared/constants/space.model';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { BookingService } from '../../services/booking.service';
@@ -9,33 +8,40 @@ import { BookingService } from '../../services/booking.service';
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, FormsModule, LoaderComponent],
+  imports: [CommonModule, LoaderComponent],
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent implements OnInit {
-  bookingService = inject(BookingService);
-  router = inject(Router);
-  location = inject(Location);
+  private readonly bookingService = inject(BookingService);
+  private readonly router = inject(Router);
+  private readonly location = inject(Location);
+
   selection: BookingSelection | undefined;
   loading = false;
   success = false;
   selectedPayment: 'card' | 'paypal' = 'card';
   bookingId: string = '';
+  bookingReference: string = '';
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.selection = this.bookingService.getSelection();
-    if (!this.selection || !this.selection.spaceId) {
-      this.router.navigate(['/book/select']);
+    if (!this.selection?.spaceId || !this.selection.date || !this.selection.plan) {
+      this.router.navigate(['/dashboard/booking']);
     }
     this.bookingId = this.generateBookingId();
   }
 
   displayDate(): string {
     if (!this.selection?.date) return '';
-    const startFormatted = this.formatDate(this.selection.date);
+    if (Array.isArray(this.selection.date)) {
+      return this.selection.date
+        .map((date) => this.formatDate(String(date)))
+        .join(' - ');
+    }
+    const startFormatted = this.formatDate(String(this.selection.date));
     if (this.selection.endDate && this.selection.endDate !== this.selection.date) {
-      return `${startFormatted} - ${this.formatDate(this.selection.endDate)}`;
+      return `${startFormatted} - ${this.formatDate(String(this.selection.endDate))}`;
     }
     return startFormatted;
   }
@@ -45,7 +51,7 @@ export class CheckoutComponent implements OnInit {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
-      year: 'numeric'
+      year: 'numeric',
     });
   }
 
@@ -61,50 +67,67 @@ export class CheckoutComponent implements OnInit {
     return this.selection?.price || 0;
   }
 
-  selectPayment(method: 'card' | 'paypal') {
-    this.selectedPayment = method;
-  }
-
   canProceed(): boolean {
-    return !!this.selection && !!this.selectedPayment;
+    return !!(
+      this.selection?.spaceId &&
+      this.selection.plan &&
+      this.selection.date &&
+      this.getPrice() > 0
+    );
   }
 
-  back() {
+  back(): void {
     this.location.back();
   }
 
-  payNow() {
-    if (!this.canProceed() || !this.selection) return;
+  confirmBooking(): void {
+    if (!this.canProceed() || !this.selection || this.loading) return;
+
+    const dates = Array.isArray(this.selection.date)
+      ? this.selection.date
+      : this.selection.date
+        ? [this.selection.date]
+        : [];
+    const firstDate = dates[0];
+    if (!firstDate) {
+      alert('Booking dates are missing. Please return to the date step.');
+      return;
+    }
 
     this.loading = true;
+
+    const startDateStr = typeof firstDate === 'string' ? firstDate : new Date(firstDate).toISOString().slice(0, 10);
+    const endDateStr = this.selection.endDate
+      ? (typeof this.selection.endDate === 'string' ? this.selection.endDate : new Date(this.selection.endDate).toISOString().slice(0, 10))
+      : dates[1]
+        ? (typeof dates[1] === 'string' ? dates[1] : new Date(dates[1]).toISOString().slice(0, 10))
+        : undefined;
 
     const request = {
       spaceId: this.selection.spaceId,
       plan: this.selection.plan,
-      date: this.selection.date,
-      endDate: this.selection.endDate,
-      startTime: this.selection.startTime !== undefined ? this.selection.startTime : 9,
-      endTime: this.selection.endTime !== undefined ? this.selection.endTime : 17,
-      quantity: this.selection.reservedUnits || 1,
-      paymentMethod: 'PAY_AT_VENUE'
+      date: startDateStr,
+      endDate: endDateStr,
+      startTime: this.selection.startTime ?? 9,
+      endTime: this.selection.endTime ?? 17,
+      quantity: this.selection.reservedUnits ?? 1,
+      paymentMethod: 'PAY_AT_VENUE',
     };
 
     this.bookingService.createBooking(request).subscribe({
       next: (response) => {
+        this.bookingReference = response.reference || '';
         this.success = true;
         this.loading = false;
         this.bookingService.reset();
-        localStorage.removeItem('bookingSelection');
-
-        setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, 2000);
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.loading = false;
-        const errorMsg = err.error?.message || 'Failed to place booking. Please try again.';
-        alert(errorMsg);
-      }
+        const errorMessage =
+          err.error?.message || 'Failed to place booking. Please try again.';
+        alert(errorMessage);
+      },
     });
   }
 }

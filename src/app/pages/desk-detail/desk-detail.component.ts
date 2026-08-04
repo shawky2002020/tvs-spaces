@@ -1,37 +1,58 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Space, SPACES } from '../../shared/constants/space.model';
-import { AppRoutingModule } from '../../app-routing-module';
-import { CommonModule } from '@angular/common';
+import { BookingService } from '../../features/booking/services/booking.service';
+import { BookingPlan, Space } from '../../shared/constants/space.model';
 
 @Component({
   selector: 'app-desk-detail',
   templateUrl: './desk-detail.component.html',
   standalone: true,
   styleUrls: ['./desk-detail.component.scss'],
-  imports: [RouterModule,CommonModule],
+  imports: [RouterModule, CommonModule],
 })
 export class DeskDetailComponent implements OnInit {
-  space: Space | undefined;
-  selectedPlan: string = '';
+  space?: Space;
+  loading = true;
+  error = '';
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly bookingService: BookingService
+  ) {}
 
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('type');
-    this.space = SPACES.find((s) => s.type === 'desk' && s.slug === slug);
-
-    if (!this.space) {
-      this.router.navigate(['/not-found']);
+    if (!slug) {
+      this.router.navigate(['/']);
+      return;
     }
+
+    this.bookingService.getSpaceBySlug(slug).subscribe({
+      next: (space) => {
+        if (space.type !== 'desk') {
+          this.router.navigate(['/']);
+          return;
+        }
+        this.space = space;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.loading = false;
+        this.error = err.error?.message || 'Desk not found.';
+      },
+    });
   }
-  selectPlan(plan: string, price: number) {
-    this.selectedPlan = plan;
-    setTimeout(() => {
-      const el = document.getElementById('enquiry-section');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 0);
+
+  selectPlan(plan: BookingPlan): void {
+    if (!this.space) return;
+
+    this.bookingService.setSelection({
+      spaceId: this.space.id,
+      space: this.space,
+      plan,
+    });
+    this.router.navigate(['/dashboard/booking/dates']);
   }
 }
