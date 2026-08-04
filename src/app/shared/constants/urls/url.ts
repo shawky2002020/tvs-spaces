@@ -27,4 +27,8 @@ export const BOOKING_URLS = {
   UNAVAILABLE_DATES: (spaceId: string, year: number, month: number) => `${API_URL}bookings/${spaceId}/unavailable-dates/${year}/${month}`,
 };
 
+export const DASHBOARD_URLS = {
+  STATS: `${API_URL}dashboard/stats`,
+};
+
 

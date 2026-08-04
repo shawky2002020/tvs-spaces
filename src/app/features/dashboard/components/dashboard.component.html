@@ -42,8 +42,9 @@
             <td>
               <span class="status-badge" [ngClass]="{
                 'status-completed': booking.status === 'Completed',
-                'status-active': booking.status === 'Active',
-                'status-upcoming': booking.status === 'Upcoming'
+                'status-active': booking.status === 'Active' || booking.status === 'CONFIRMED',
+                'status-upcoming': booking.status === 'Upcoming',
+                'status-cancelled': booking.status === 'CANCELLED'
               }">{{ booking.status }}</span>
             </td>
             <!-- <td>

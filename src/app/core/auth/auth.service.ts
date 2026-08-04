@@ -66,7 +66,16 @@ export class AuthService {
   }
 
   logout(): void {
+    this.http.post(AUTH_URLS.LOGOUT, {}, { withCredentials: true }).subscribe({
+      next: () => this.clearLocalSession(),
+      error: () => this.clearLocalSession()
+    });
+  }
+
+  private clearLocalSession() {
     this.accessToken = null;
+    this.UserSubject.next(null);
+    localStorage.removeItem(USERKEY);
     this.router.navigate(['/auth/login']);
   }
 

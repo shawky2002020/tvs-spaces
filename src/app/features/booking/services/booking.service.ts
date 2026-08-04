@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { BOOKING_URLS } from '../../../shared/constants/urls/url';
+import { BOOKING_URLS, DASHBOARD_URLS } from '../../../shared/constants/urls/url';
 import { BookingSelection, Space, BookingPlan } from '../../../shared/constants/space.model';
 
 @Injectable({ providedIn: 'root' })
@@ -44,6 +44,21 @@ export class BookingService {
   // Get space by ID
   getSpaceById(id: string): Observable<Space> {
     return this.http.get<Space>(BOOKING_URLS.SPACE_BY_ID(id));
+  }
+
+  // Get dashboard stats
+  getDashboardStats(): Observable<any> {
+    return this.http.get(DASHBOARD_URLS.STATS);
+  }
+
+  // Get current user bookings
+  getMyBookings(): Observable<any[]> {
+    return this.http.get<any[]>(`${BOOKING_URLS.BASE}/me`);
+  }
+
+  // Cancel a booking
+  cancelBooking(bookingId: number): Observable<any> {
+    return this.http.patch(`${BOOKING_URLS.BASE}/${bookingId}/cancel`, {});
   }
 
   // --- Local selection cache for UI state only ---

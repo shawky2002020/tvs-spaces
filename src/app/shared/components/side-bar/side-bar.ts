@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -15,18 +16,13 @@ export class SideBar implements OnInit {
   menuItems = [
     { path: '/dashboard', icon: 'home', label: 'Dashboard' },
     { path: '/dashboard/profile', icon: 'user', label: 'Profile' },
-
     { path: '/dashboard/booking', label: 'Spaces', icon: 'door-open' },
-
-    { path: '/kitchen', label: 'Kitchen', icon: 'utensils' },
-    // { path: '/dashboard/payments', icon: 'credit-card', label: 'Payments' },
-    // { path: '/dashboard/support', icon: 'life-ring', label: 'Support' },
     { path: '/dashboard/facilities', label: 'Facilities', icon: 'info-circle' },
   ];
 
   isMobileMenuOpen: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.router.events
@@ -41,7 +37,6 @@ export class SideBar implements OnInit {
   }
 
   logout(): void {
-    // Implement logout functionality
-    this.router.navigate(['/']);
+    this.authService.logout();
   }
 }
