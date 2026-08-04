@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Space, SPACES } from '../../../../shared/constants/space.model';
+import { Space } from '../../../../shared/constants/space.model';
 import { SpaceCardComponent } from '../../../../shared/components/space-card/space-card.component';
 import { DeskDetailComponent } from "../../../../pages/desk-detail/desk-detail.component";
 import { BookingService } from '../../services/booking.service';
@@ -18,7 +18,7 @@ export class ResourceSelectorComponent {
   router = inject(Router);
   route = inject(ActivatedRoute);
 
-  spaces: Space[] = SPACES;
+  spaces: Space[] = [];
   selectedSpaceId: string | null = null;
 
   get rooms(): Space[] {
@@ -29,10 +29,18 @@ export class ResourceSelectorComponent {
   }
 
   ngOnInit() {
-    const sel = this.bookingService.getSelection();
-    if (sel.spaceId) {
-      this.selectedSpaceId = sel.spaceId;
-    }
+    this.bookingService.getAllSpaces().subscribe({
+      next: (data) => {
+        this.spaces = data;
+        const sel = this.bookingService.getSelection();
+        if (sel.spaceId) {
+          this.selectedSpaceId = sel.spaceId;
+        }
+      },
+      error: (err) => {
+        console.error('Failed to load spaces from backend', err);
+      }
+    });
   }
 
   selectResource(id: string) {

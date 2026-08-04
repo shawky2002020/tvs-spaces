@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { BookingSelection, SPACES } from '../../../../shared/constants/space.model';
+import { BookingSelection } from '../../../../shared/constants/space.model';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { BookingService } from '../../services/booking.service';
 
@@ -49,9 +49,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   getResourceName(): string {
-    if (!this.selection?.spaceId) return 'Space';
-    const space = SPACES.find(s => s.id === this.selection?.spaceId);
-    return space ? space.name : 'Space';
+    return this.selection?.space?.name || 'Space';
   }
 
   generateBookingId(): string {
@@ -75,22 +73,48 @@ export class CheckoutComponent implements OnInit {
   }
 
   payNow() {
-    if (!this.canProceed()) return;
-    
+    if (!this.canProceed() || !this.selection) return;
+
     this.loading = true;
-    
-    // Simulate payment processing
-    setTimeout(() => {
-      this.success = true;
-      this.loading = false;
-      
-      if (this.selection) {
-        // this.bookingService.confirmBooking(this.selection);
+
+    let dateVal: Date;
+    let endDateVal: Date | undefined;
+
+    if (Array.isArray(this.selection.date)) {
+      dateVal = new Date(this.selection.date[0]);
+      endDateVal = new Date(this.selection.date[1]);
+    } else {
+      dateVal = new Date(this.selection.date as Date);
+      endDateVal = undefined;
+    }
+
+    const request = {
+      spaceId: this.selection.spaceId,
+      plan: this.selection.plan,
+      date: dateVal.toISOString().slice(0, 10),
+      endDate: endDateVal ? endDateVal.toISOString().slice(0, 10) : undefined,
+      startTime: this.selection.startTime || 9,
+      endTime: this.selection.endTime || 17,
+      quantity: this.selection.reservedUnits || 1,
+      paymentMethod: 'PAY_AT_VENUE'
+    };
+
+    this.bookingService.createBooking(request).subscribe({
+      next: (response) => {
+        this.success = true;
+        this.loading = false;
+        this.bookingService.reset();
+        localStorage.removeItem('bookingSelection');
+
+        setTimeout(() => {
+          this.router.navigate(['/dashboard']);
+        }, 2000);
+      },
+      error: (err) => {
+        this.loading = false;
+        const errorMsg = err.error?.message || 'Failed to place booking. Please try again.';
+        alert(errorMsg);
       }
-      
-      setTimeout(() => {
-        this.router.navigate(['/dashboard/bookings']);
-      }, 2000);
-    }, 1500);
+    });
   }
 }

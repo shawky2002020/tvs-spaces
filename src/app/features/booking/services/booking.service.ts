@@ -70,10 +70,26 @@ export class BookingService {
     return this.selection;
   }
   getSelection(): BookingSelection {
-    return (
-      this.selection ??
-      JSON.parse(localStorage.getItem('bookingSelection') || '{}')
-    );
+    if (this.selection && Object.keys(this.selection).length > 0) {
+      return this.selection;
+    }
+    const stored = localStorage.getItem('bookingSelection');
+    if (!stored) return {};
+
+    try {
+      const parsed = JSON.parse(stored);
+      if (parsed.date) {
+        if (Array.isArray(parsed.date)) {
+          parsed.date = parsed.date.map((d: any) => new Date(d));
+        } else {
+          parsed.date = new Date(parsed.date);
+        }
+      }
+      this.selection = parsed;
+      return parsed;
+    } catch (e) {
+      return {};
+    }
   }
   setSelection(partial: Partial<BookingSelection>) {
     this.selection = { ...this.selection, ...partial };

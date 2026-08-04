@@ -542,42 +542,77 @@ export class DatePlanPickerComponent implements OnInit, OnChanges, AfterViewInit
       return;
     }
 
-    if (!this.validateBookingPeriod()) {
-      return;
-    }
+    if (!this.date) return;
 
-    this.loading = true;
+    const startDateTime = this.getStartDateTime();
+    const endDateTime = this.getEndDateTime();
 
-    try {
-      this.bookingService.setPlan(this.plan);
-      this.bookingService.setDates(
-        this.getStartDateTime(),
-        this.getEndDateTime()
-      );
-
-      if (this.isHourly) {
-        this.bookingService.setTimes(this.startTime, this.endTime);
-      }
-
-      this.bookingService.setPrice(this.price);
-
-      // Set the quantity in booking service
-      this.bookingService.setSelection({ reservedUnits: this.quantity });
-
-      this.error = '';
-      // this.router.navigate(['../summary'], { relativeTo: this.route });
-    } catch (error) {
+    if (endDateTime <= startDateTime) {
       this.snackBar.open(
-        'Error processing booking. Please try again.',
+        'End date/time must be after start date/time',
         'Close',
         {
           duration: 3000,
           panelClass: ['error-snackbar'],
         }
       );
-    } finally {
-      this.loading = false;
+      return;
     }
+
+    this.loading = true;
+
+    const request = {
+      spaceId: this.space.id,
+      date: this.date.toISOString().slice(0, 10),
+      startTime: this.isHourly ? this.startTime : 9,
+      endTime: this.isHourly ? this.endTime : 17,
+      requestedUnits: this.quantity,
+    };
+
+    this.bookingService.checkAvailability(request).subscribe(
+      (response) => {
+        this.loading = false;
+        if (response.available) {
+          try {
+            this.bookingService.setPlan(this.plan);
+            this.bookingService.setDates(startDateTime, endDateTime);
+
+            if (this.isHourly) {
+              this.bookingService.setTimes(this.startTime, this.endTime);
+            }
+
+            this.bookingService.setPrice(this.price);
+            this.bookingService.setSelection({ reservedUnits: this.quantity });
+
+            this.error = '';
+            this.router.navigate(['../summary'], { relativeTo: this.route });
+          } catch (err) {
+            this.snackBar.open('Error processing booking. Please try again.', 'Close', {
+              duration: 3000,
+              panelClass: ['error-snackbar'],
+            });
+          }
+        } else {
+          this.snackBar.open(
+            this.quantity > 1
+              ? `Not enough units available for the selected period. Please reduce quantity or choose different dates.`
+              : 'The selected period is not available. Please choose different dates/times.',
+            'Close',
+            {
+              duration: 5000,
+              panelClass: ['error-snackbar'],
+            }
+          );
+        }
+      },
+      (error) => {
+        this.loading = false;
+        this.snackBar.open('Error checking availability.', 'Close', {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+        });
+      }
+    );
   }
 
   // Use backend to check availability for the selected period
