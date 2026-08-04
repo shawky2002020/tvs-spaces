@@ -1,61 +1,66 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Space } from '../../../../shared/constants/space.model';
 import { SpaceCardComponent } from '../../../../shared/components/space-card/space-card.component';
-import { DeskDetailComponent } from "../../../../pages/desk-detail/desk-detail.component";
 import { BookingService } from '../../services/booking.service';
 
 @Component({
   selector: 'app-resource-selector',
   standalone: true,
-  imports: [CommonModule, SpaceCardComponent, DeskDetailComponent],
+  imports: [CommonModule, SpaceCardComponent],
   templateUrl: './resource-selector.component.html',
   styleUrls: ['./resource-selector.component.scss'],
 })
-export class ResourceSelectorComponent {
-  bookingService = inject(BookingService);
-  router = inject(Router);
-  route = inject(ActivatedRoute);
+export class ResourceSelectorComponent implements OnInit {
+  private readonly bookingService = inject(BookingService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   spaces: Space[] = [];
   selectedSpaceId: string | null = null;
+  loading = true;
+  error = '';
 
   get rooms(): Space[] {
-    return this.spaces.filter((s) => s.type === 'room');
-  }
-  get desks(): Space[] {
-    return this.spaces.filter((s) => s.type === 'desk');
+    return this.spaces.filter((space) => space.type === 'room');
   }
 
-  ngOnInit() {
+  get desks(): Space[] {
+    return this.spaces.filter((space) => space.type === 'desk');
+  }
+
+  ngOnInit(): void {
     this.bookingService.getAllSpaces().subscribe({
-      next: (data) => {
-        this.spaces = data;
-        const sel = this.bookingService.getSelection();
-        if (sel.spaceId) {
-          this.selectedSpaceId = sel.spaceId;
-        }
+      next: (spaces) => {
+        this.spaces = spaces;
+        this.selectedSpaceId = this.bookingService.getSelection().spaceId ?? null;
+        this.loading = false;
       },
       error: (err) => {
-        console.error('Failed to load spaces from backend', err);
-      }
+        this.loading = false;
+        this.error = err.error?.message || 'Unable to load workspaces.';
+      },
     });
   }
 
-  selectResource(id: string) {
+  selectResource(id: string): void {
     this.selectedSpaceId = id;
   }
 
-  next() {
-    if (!this.selectedSpaceId) return;
-    this.bookingService.setSelection({ spaceId: this.selectedSpaceId });
-    const space = this.spaces.find((s) => s.id === this.selectedSpaceId);
-    if (space) {
-      this.bookingService.setSelection({ space });
-    }
-    console.log(this.bookingService.getSelection());
+  next(): void {
+    if (!this.selectedSpaceId || this.loading) return;
 
+    const space = this.spaces.find((candidate) => candidate.id === this.selectedSpaceId);
+    if (!space) {
+      this.error = 'The selected workspace is no longer available.';
+      return;
+    }
+
+    this.bookingService.setSelection({
+      spaceId: space.id,
+      space,
+    });
     this.router.navigate(['dates'], { relativeTo: this.route });
   }
 }
