@@ -48,6 +48,7 @@ export class DashboardComponent implements OnInit {
     this.bookingService.getMyBookings().subscribe({
       next: (data) => {
         this.recentBookings = data.map(b => ({
+          dbId: b.id,
           id: b.reference,
           space: b.spaceName,
           date: new Date(b.startAt).toLocaleDateString(),
@@ -57,5 +58,19 @@ export class DashboardComponent implements OnInit {
       },
       error: (err) => console.error('Error loading user bookings', err)
     });
+  }
+
+  cancelBooking(dbId: number) {
+    if (confirm('Are you sure you want to cancel this booking?')) {
+      this.bookingService.cancelBooking(dbId).subscribe({
+        next: () => {
+          this.loadStats();
+          this.loadBookings();
+        },
+        error: (err) => {
+          alert('Failed to cancel booking.');
+        }
+      });
+    }
   }
 }

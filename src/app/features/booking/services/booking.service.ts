@@ -65,10 +65,12 @@ export class BookingService {
   setPlan(plan: string) {
     this.selection.plan = plan as BookingPlan;
   }
-  setDates(start: Date, end: Date) {
+  setDates(start: string, end?: string) {
     this.selection.date = start;
-    if (start && end && start !== end) {
-      this.selection.date = [start, end];
+    if (end) {
+      this.selection.endDate = end;
+    } else {
+      delete this.selection.endDate;
     }
   }
   setTimes(startTime: number, endTime: number) {
@@ -93,13 +95,6 @@ export class BookingService {
 
     try {
       const parsed = JSON.parse(stored);
-      if (parsed.date) {
-        if (Array.isArray(parsed.date)) {
-          parsed.date = parsed.date.map((d: any) => new Date(d));
-        } else {
-          parsed.date = new Date(parsed.date);
-        }
-      }
       this.selection = parsed;
       return parsed;
     } catch (e) {

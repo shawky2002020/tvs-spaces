@@ -34,14 +34,13 @@ export type BookingPlan = 'Hourly' | 'Daily' | 'Half-day' | 'Monthly';
 export interface BookingSelection {
   spaceId?: string;
   plan?: BookingPlan;
-  date?: Date | [Date, Date];
-  startDate?: Date | [Date, Date];
-  endDate?: Date | [Date, Date];
+  date?: string; // YYYY-MM-DD
+  endDate?: string; // YYYY-MM-DD
   startTime?: number;
   endTime?: number;
   price?: number;
   space?: Space;
-  reservedUnits?: number; // Added field for quantity selection
+  reservedUnits?: number;
 }
 
 export interface Space {

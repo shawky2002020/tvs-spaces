@@ -21,26 +21,27 @@ export class CheckoutComponent implements OnInit {
   loading = false;
   success = false;
   selectedPayment: 'card' | 'paypal' = 'card';
+  bookingId: string = '';
 
   ngOnInit() {
     this.selection = this.bookingService.getSelection();
     if (!this.selection || !this.selection.spaceId) {
       this.router.navigate(['/book/select']);
     }
+    this.bookingId = this.generateBookingId();
   }
 
   displayDate(): string {
     if (!this.selection?.date) return '';
-    if (Array.isArray(this.selection.date)) {
-      return this.selection.date
-        .map((d: any) => this.formatDate(d))
-        .join(' - ');
+    const startFormatted = this.formatDate(this.selection.date);
+    if (this.selection.endDate && this.selection.endDate !== this.selection.date) {
+      return `${startFormatted} - ${this.formatDate(this.selection.endDate)}`;
     }
-    return this.formatDate(this.selection.date as Date);
+    return startFormatted;
   }
 
-  formatDate(date: Date): string {
-    return new Date(date).toLocaleDateString('en-US', {
+  formatDate(dateStr: string): string {
+    return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
@@ -52,7 +53,7 @@ export class CheckoutComponent implements OnInit {
     return this.selection?.space?.name || 'Space';
   }
 
-  generateBookingId(): string {
+  private generateBookingId(): string {
     return Math.random().toString(36).substring(2, 10).toUpperCase();
   }
 
@@ -77,24 +78,13 @@ export class CheckoutComponent implements OnInit {
 
     this.loading = true;
 
-    let dateVal: Date;
-    let endDateVal: Date | undefined;
-
-    if (Array.isArray(this.selection.date)) {
-      dateVal = new Date(this.selection.date[0]);
-      endDateVal = new Date(this.selection.date[1]);
-    } else {
-      dateVal = new Date(this.selection.date as Date);
-      endDateVal = undefined;
-    }
-
     const request = {
       spaceId: this.selection.spaceId,
       plan: this.selection.plan,
-      date: dateVal.toISOString().slice(0, 10),
-      endDate: endDateVal ? endDateVal.toISOString().slice(0, 10) : undefined,
-      startTime: this.selection.startTime || 9,
-      endTime: this.selection.endTime || 17,
+      date: this.selection.date,
+      endDate: this.selection.endDate,
+      startTime: this.selection.startTime !== undefined ? this.selection.startTime : 9,
+      endTime: this.selection.endTime !== undefined ? this.selection.endTime : 17,
       quantity: this.selection.reservedUnits || 1,
       paymentMethod: 'PAY_AT_VENUE'
     };

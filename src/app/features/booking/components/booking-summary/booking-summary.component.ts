@@ -28,12 +28,20 @@ export class BookingSummaryComponent implements OnInit {
 
   displayDate(): string {
     if (!this.selection?.date) return '';
-    if (Array.isArray(this.selection.date)) {
-      return this.selection.date
-        .map((d: any) => d.toLocaleDateString())
-        .join(' - ');
+    const startFormatted = this.formatDateString(this.selection.date);
+    if (this.selection.endDate && this.selection.endDate !== this.selection.date) {
+      return `${startFormatted} - ${this.formatDateString(this.selection.endDate)}`;
     }
-    return (this.selection.date as Date).toLocaleDateString();
+    return startFormatted;
+  }
+
+  formatDateString(dateStr: string): string {
+    return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
   }
   back() {
     this.router.navigate(['../dates'], {

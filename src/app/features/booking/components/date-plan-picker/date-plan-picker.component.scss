@@ -1,629 +1,461 @@
-@import 'main';
+.date-plan-picker-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  font-family: 'Inter', sans-serif;
+  color: #2d3748;
 
-// --- Professional Date/Hour Grid Styles ---
-.date-grid-section {
-  margin: 2rem 0;
-  background: #fff;
-  border-radius: 1rem;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-  padding: 2rem;
-  .month-nav {
+  // Step Progress Header
+  .progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    padding: 0 1rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #e2e8f0;
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+
+    .step {
+      background: #fff;
+      padding: 0.5rem 1.2rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #718096;
+      border: 2px solid #e2e8f0;
+      z-index: 2;
+      transition: all 0.3s ease;
+
+      &.active {
+        color: #3182ce;
+        border-color: #3182ce;
+        box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+      }
+    }
+  }
+
+  // Space Summary Card
+  .space-summary-card {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: #f7fafc;
+    border-radius: 12px;
+    border: 1px solid #edf2f7;
+    margin-bottom: 2rem;
+
+    .space-thumbnail {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .space-details {
+      h2 {
+        margin: 0 0 0.4rem 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #1a202c;
+      }
+
+      .space-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        font-size: 0.9rem;
+        color: #718096;
+
+        .badge {
+          background: #ebf8ff;
+          color: #2b6cb0;
+          padding: 0.2rem 0.6rem;
+          border-radius: 4px;
+          font-weight: 600;
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+
+  // Config Form sections
+  .config-grid {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 2rem;
-    margin-bottom: 1.5rem;
-    .btn {
-      background: #f5f5f5;
-      border: none;
-      border-radius: 0.5rem;
-      padding: 0.5rem 1.5rem;
-      font-weight: 500;
-      color: #333;
-      cursor: pointer;
-      transition: background 0.2s;
-      &:hover, &:focus {
-        background: #e0e0e0;
-        outline: none;
-      }
+    margin-bottom: 2.5rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: 1fr 1fr;
     }
-    .month-label {
-      font-size: 1.2rem;
+  }
+
+  .form-section {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #edf2f7;
+
+    h3 {
+      margin: 0 0 1.2rem 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #2d3748;
+    }
+
+    .full-width {
+      width: 100%;
+    }
+  }
+
+  // Custom Plan toggles
+  .plan-toggle-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+
+    .plan-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem 0.5rem;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
       font-weight: 600;
-      color: #1976d2;
-      letter-spacing: 0.05em;
+      font-size: 0.9rem;
+      color: #4a5568;
+      cursor: pointer;
+      transition: all 0.25s ease;
+
+      i {
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        background: #f1f5f9;
+        border-color: #cbd5e1;
+      }
+
+      &.active {
+        background: #ebf8ff;
+        border-color: #3182ce;
+        color: #2b6cb0;
+      }
     }
   }
-  label {
-    display: block;
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    color: #333;
+
+  // Hourly selection layouts
+  .time-select-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
-  .date-hour-grid {
-    display: block;
-    overflow-x: auto;
-    background: #fafbfc;
-    border-radius: 0.75rem;
-    box-shadow: 0 1px 8px rgba(0,0,0,0.04);
-    padding: 1rem 0.5rem;
-    .grid-header {
+
+  // Half Day button group
+  .half-day-toggle-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .half-day-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1rem;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #4a5568;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: all 0.25s ease;
+
+      .time-hint {
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #718096;
+        margin-top: 0.2rem;
+      }
+
+      &:hover {
+        background: #f1f5f9;
+        border-color: #cbd5e1;
+      }
+
+      &.active {
+        background: #ebf8ff;
+        border-color: #3182ce;
+        color: #2b6cb0;
+
+        .time-hint {
+          color: #2b6cb0;
+        }
+      }
+    }
+  }
+
+  // Status & Price summary card
+  .status-price-card {
+    position: relative;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 2rem;
+    min-height: 80px;
+
+    .loading-overlay {
       display: flex;
       align-items: center;
-      .grid-cell {
-        min-width: 70px;
-        padding: 0.5rem 0.25rem;
-        text-align: center;
-        font-size: 1rem;
+      justify-content: center;
+      gap: 1rem;
+      color: #3182ce;
+      font-weight: 600;
+
+      .spinner {
+        width: 24px;
+        height: 24px;
+        border: 3px solid rgba(49, 130, 206, 0.1);
+        border-radius: 50%;
+        border-top-color: #3182ce;
+        animation: spin 0.8s linear infinite;
+      }
+    }
+
+    .error-message {
+      color: #e53e3e;
+      background: #fff5f5;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #fed7d7;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .price-breakdown-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.95rem;
+
+        span {
+          color: #718096;
+        }
+
+        strong {
+          color: #2d3748;
+        }
+      }
+
+      .divider {
+        border: 0;
+        border-top: 1px solid #e2e8f0;
+        margin: 0.5rem 0;
+      }
+
+      .total-row {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #1a202c;
+
+        .total-price {
+          color: #2b6cb0;
+        }
+      }
+    }
+  }
+
+  // 7-day grid guide styles
+  .date-grid-section {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #edf2f7;
+
+    h3 {
+      margin: 0 0 1.5rem 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .month-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+
+      .nav-btn {
+        background: #f7fafc;
+        border: 1px solid #e2e8f0;
+        color: #4a5568;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
         font-weight: 600;
-        color: #1976d2;
-        background: #e3f2fd;
-        border-radius: 0.5rem 0.5rem 0 0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: #edf2f7;
+          border-color: #cbd5e1;
+        }
       }
-      .header-cell {
-        border-bottom: 2px solid #1976d2;
+
+      .month-label {
+        font-weight: 700;
+        font-size: 1.1rem;
       }
     }
-    .grid-row {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.25rem;
-      .day-cell {
-        min-width: 70px;
-        padding: 0.5rem 0.25rem;
-        text-align: center;
-        font-size: 1rem;
-        font-weight: 500;
-        color: #333;
-        background: #f5f5f5;
-        border-radius: 0 0 0.5rem 0.5rem;
+
+    .date-hour-grid {
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+
+      .grid-header {
+        display: flex;
+        background: #f7fafc;
+        border-bottom: 1px solid #e2e8f0;
       }
-      .slot-cell {
-        min-width: 70px;
-        height: 40px;
+
+      .grid-row {
+        display: flex;
+        border-bottom: 1px solid #edf2f7;
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+      .grid-cell {
+        min-width: 60px;
+        flex: 1;
+        padding: 0.8rem 0.5rem;
+        text-align: center;
+        font-size: 0.85rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.1rem;
-        border-radius: 0.5rem;
-        margin: 0 2px;
-        cursor: pointer;
-        border: 1px solid transparent;
-        transition: background 0.2s, border 0.2s, box-shadow 0.2s;
-        outline: none;
-        &.available {
-          background: #e8f5e9;
-          color: #388e3c;
-          border: 1px solid #c8e6c9;
-          &:hover, &:focus {
-            background: #c8e6c9;
-            box-shadow: 0 0 0 2px #388e3c33;
-          }
+
+        &.header-cell {
+          font-weight: 600;
+          color: #4a5568;
         }
-        &.unavailable {
-          background: #ffebee;
-          color: #c62828;
+
+        &.day-cell {
+          min-width: 80px;
+          font-weight: 600;
+          background: #f8fafc;
+          border-right: 1px solid #e2e8f0;
+        }
+
+        &.slot-cell {
           cursor: not-allowed;
-          border: 1px solid #ffcdd2;
-          opacity: 0.7;
-        }
-        &.selected {
-          background: #1976d2;
-          color: #fff;
-          border: 2px solid #1976d2;
-          box-shadow: 0 0 0 2px #1976d2aa;
-        }
-        span {
-          font-size: 1.2rem;
-          font-weight: 700;
-        }
-      }
-    }
-  }
-}
+          transition: all 0.2s ease;
 
-.date-plan-picker {
-  max-width: 700px;
-  padding: $spacing-lg;
-  margin: $spacing-xl auto;
-  background: $white-color;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-lg;
-  font-family: $font-family-base;
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 6px;
-    background: linear-gradient(90deg, $primary-color, $secondary-color, $accent-color);
-  }
-
-  .space-info {
-    margin-bottom: $spacing-lg;
-    text-align: center;
-    padding-bottom: $spacing-md;
-    border-bottom: 1px solid $white-80;
-    animation: fadeIn $timing-normal $easing-default forwards;
-
-    h1 {
-      margin: 0 0 $spacing-xs 0;
-      color: $black-80;
-      font-size: $font-size-xl;
-      font-weight: $font-weight-bold;
-      font-family: $font-family-heading;
-    }
-
-    .meta {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: $spacing-sm;
-      color: $black-60;
-      font-size: $font-size-xs;
-
-      .type {
-        text-transform: capitalize;
-        font-weight: $font-weight-medium;
-        color: $primary-color;
-        background: rgba($primary-color, 0.1);
-        padding: $spacing-xs $spacing-md;
-        border-radius: $border-radius-pill;
-      }
-    }
-  }
-
-  label {
-    display: block;
-    margin-bottom: $spacing-sm;
-    font-weight: $font-weight-medium;
-    color: $black-80;
-    font-size: $font-size-sm;
-  }
-  
-  .plan-section {
-    margin-bottom: $spacing-lg;
-    animation: fadeIn $timing-fast $easing-default forwards;
-    animation-delay: 0.1s;
-
-    .plan-label {
-      font-family: $font-family-heading;
-      color: $primary-color;
-      font-size: $font-size-md;
-      margin-bottom: $spacing-md;
-    }
-
-    mat-radio-group {
-      display: flex;
-      gap: $spacing-lg;
-      flex-wrap: wrap;
-
-      @media (max-width: 480px) {
-        flex-direction: column;
-        gap: $spacing-sm;
-      }
-
-      .mat-radio-button {
-        ::ng-deep .mat-radio-label-content {
-          padding-left: $spacing-sm;
-          font-weight: $font-weight-medium;
-          color: $black-80;
-        }
-
-        &.mat-radio-checked {
-          ::ng-deep .mat-radio-outer-circle {
-            border-color: $primary-color;
+          &.available {
+            color: #38a169;
+            background: #f0fff4;
           }
 
-          ::ng-deep .mat-radio-inner-circle {
-            background-color: $primary-color;
+          &.unavailable {
+            color: #e53e3e;
+            background: #fff5f5;
+          }
+
+          &.selected {
+            background: #ebf8ff;
+            outline: 2px solid #3182ce;
+            z-index: 10;
           }
         }
       }
     }
   }
 
-  .date-section {
-    margin-bottom: $spacing-lg;
-    animation: fadeIn $timing-fast $easing-default forwards;
-    animation-delay: 0.2s;
-
-    label {
-      font-family: $font-family-heading;
-      color: $primary-color;
-      font-size: $font-size-md;
-      margin-bottom: $spacing-md;
-    }
-
-    mat-form-field {
-      width: 100%;
-      margin-bottom: $spacing-md;
-
-      ::ng-deep {
-        .mat-form-field-wrapper {
-          padding-bottom: 0;
-        }
-
-        .mat-form-field-outline {
-          border-radius: $border-radius-md;
-        }
-
-        .mat-form-field-flex {
-          background: $white-60;
-          border-radius: $border-radius-md;
-          padding: 0 $spacing-sm;
-        }
-
-        .mat-form-field-outline-thick {
-          color: $primary-color;
-        }
-
-        .mat-input-element {
-          color: $black-80;
-          font-weight: $font-weight-medium;
-        }
-
-        .mat-datepicker-toggle {
-          color: $black-60;
-
-          &:hover {
-            color: $primary-color;
-          }
-        }
-      }
-
-      &:focus-within {
-        ::ng-deep .mat-form-field-outline-thick {
-          color: $primary-color;
-        }
-      }
-    }
-
-    // Custom month picker styling
-    .month-picker {
-      ::ng-deep {
-        .mat-calendar-period-button {
-          background-color: $primary-color !important;
-          color: $white-color !important;
-          border-radius: $border-radius-sm;
-          margin: $spacing-sm;
-
-          &:hover {
-            background-color: darken($primary-color, 10%) !important;
-          }
-        }
-
-        .mat-calendar-body-selected {
-          background-color: $primary-color !important;
-          color: $white-color !important;
-        }
-
-        .mat-calendar-body-today:not(.mat-calendar-body-selected) {
-          border-color: $primary-color !important;
-        }
-      }
-    }
-  }
-
-  .time-section {
-    margin-bottom: $spacing-lg;
-    padding: $spacing-md;
-    background: $white-60;
-    border-radius: $border-radius-md;
-    border: 1px solid $white-80;
-    animation: fadeIn $timing-fast $easing-default forwards;
-    animation-delay: .3s;
-    opacity: 0;
+  // Footer Navigation buttons
+  .action-footer {
     display: flex;
-    flex-flow: row nowrap;
-    gap: 12px;
-    .start,.end{
-      width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #edf2f7;
+
+    .btn-back {
       display: flex;
-      flex-flow: column wrap;
       align-items: center;
-      justify-content: center;
-    }
-
-    label {
-      display: flex;
-      font-weight: $font-weight-medium;
-      color: $primary-color;
-      font-size: $font-size-sm;
-      font-family: $font-family-heading;
-      @include flex-center;
-      text-align: center;
-    }
-
-    input[type="time"] {
-      padding: $spacing-sm;
-      border: 2px solid $white-80;
-      border-radius: $border-radius-md;
-      font-size: $font-size-sm;
-      background: $white-color;
-      transition: all $transition-base;
-      color: $black-80;
-
-      &:focus {
-        outline: none;
-        border-color: $primary-color;
-        box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
-      }
+      gap: 0.5rem;
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      color: #475569;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
 
       &:hover {
-        border-color: $light-color;
-      }
-    }
-  }
-
-  .price-summary {
-    margin: $spacing-lg 0;
-    padding: $spacing-md;
-    background: linear-gradient(135deg, rgba($primary-color, 0.05), rgba($secondary-color, 0.05));
-    color: $black-80;
-    border-radius: $border-radius-md;
-    text-align: center;
-    border: 1px solid $white-80;
-    animation: fadeIn $timing-fast $easing-default forwards;
-    animation-delay: 0.4s;
-
-    span {
-      font-size: $font-size-md;
-      font-weight: $font-weight-medium;
-    }
-
-    strong {
-      font-size: $font-size-lg;
-      font-weight: $font-weight-bold;
-      color: $primary-color;
-      margin-left: $spacing-xs;
-    }
-  }
-
-  .actions {
-    display: flex;
-    gap: $spacing-md;
-    justify-content: flex-end;
-    margin-top: $spacing-lg;
-    padding-top: $spacing-md;
-    border-top: 1px solid $white-80;
-    animation: fadeIn $timing-fast $easing-default forwards;
-    animation-delay: 0.5s;
-
-    @media (max-width: 480px) {
-      flex-direction: column;
-    }
-
-    button {
-      min-width: 120px;
-      padding: $spacing-sm $spacing-md;
-      border-radius: $border-radius-md;
-      font-weight: $font-weight-medium;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: all $transition-base;
-
-      
-    }
-  }
-
-  .error {
-    margin-top: $spacing-md;
-    padding: $spacing-sm $spacing-md;
-    background: rgba($error-color, 0.1);
-    color: $error-color;
-    border: 1px solid rgba($error-color, 0.2);
-    border-radius: $border-radius-md;
-    font-weight: $font-weight-medium;
-    text-align: center;
-    animation: shake 0.5s $easing-default;
-
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
-  }
-
-  // Responsive design
-  @media (max-width: 768px) {
-    padding: $spacing-md;
-    margin: $spacing-md;
-
-    .space-info {
-      h1 {
-        font-size: $font-size-lg;
+        background: #f8fafc;
+        border-color: #94a3b8;
       }
     }
 
-    .price-summary {
-      span {
-        font-size: $font-size-sm;
+    .btn-continue {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #3182ce;
+      border: none;
+      color: #fff;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover:not(:disabled) {
+        background: #2b6cb0;
+        box-shadow: 0 4px 12px rgba(49, 130, 206, 0.2);
       }
 
-      strong {
-        font-size: $font-size-md;
-      }
-    }
-  }
-
-  @media (max-width: 480px) {
-    padding: $spacing-sm;
-
-    .space-info {
-      .meta {
-        flex-direction: column;
-        gap: $spacing-xs;
-      }
-    }
-
-    .actions {
-      button {
-        min-width: 100%;
-      }
-    }
-  }
-}
-
-// Global datepicker theming
-::ng-deep {
-  .mat-datepicker-content {
-    .mat-calendar {
-      border-radius: $border-radius-md;
-      box-shadow: $shadow-lg;
-      background: $white-color !important;
-      height: fit-content !important;
-      z-index: $z-index-sticky;
-    }
-    .mat-calendar-body-disabled{
-      .mat-calendar-body-cell-content{
-        background-color: rgba($error-color,.7) !important;
-        cursor: not-allowed;
-        border-radius: 50%;
-        color: $white-80 !important;
-        position: relative;
-      }
-      .mat-calendar-body-cell-content::after{
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 4px;
-        background-color: rgba($error-color,.9) !important;
-        transform: translate(-50%, -50%) rotate(45deg);
-        font-size: 16px;
-        font-weight: bold;
-        color: $error-color;
-        opacity: 0.8;
-        z-index: 1;
-      }
-    }
-
-    .mat-calendar-body-selected {
-      background-color: $primary-color !important;
-      color: $white-color !important;
-    }
-
-    .mat-calendar-body-today:not(.mat-calendar-body-selected) {
-      border-color: $primary-color !important;
-    }
-
-    .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover {
-      background-color: rgba($primary-color, 0.1) !important;
-      border-radius: 50%;
-    }
-
-    .mat-calendar-period-button {
-      background-color: $primary-color !important;
-      color: $white-color !important;
-      border-radius: $border-radius-sm;
-      margin: $spacing-sm;
-
-      &:hover {
-        background-color: darken($primary-color, 10%) !important;
-      }
-    }
-  }
-}
-
-.date-section {
-  ::ng-deep {
-    // Unavailable dates styling
-    .unavailable-date {
-      .mat-calendar-body-cell-content {
-        position: relative;
-        background-color: rgba($error-color, 0.1) !important;
-        color: $error-color !important;
-        text-decoration: line-through;
-        cursor: not-allowed;
-
-        &::after {
-          content: "×";
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          font-size: 16px;
-          font-weight: bold;
-          color: $error-color;
-          opacity: 0.8;
-        }
-      }
-
-      &:hover .mat-calendar-body-cell-content {
-        background-color: rgba($error-color, 0.2) !important;
-      }
-    }
-
-    // Past dates styling
-    .mat-calendar-body-disabled {
-      .mat-calendar-body-cell-content {
-        background-color: $white-80 !important;
-        color: $black-40 !important;
+      &:disabled {
+        background: #cbd5e1;
+        color: #94a3b8;
         cursor: not-allowed;
       }
     }
-
-    // Today's date styling
-    .mat-calendar-body-today:not(.mat-calendar-body-selected) {
-      border-color: $primary-color !important;
-    }
-
-    // Selected date styling
-    .mat-calendar-body-selected {
-      background-color: $primary-color !important;
-      color: $white-color !important;
-
-      // Override for unavailable but selected (shouldn't happen, but just in case)
-      &.unavailable-date {
-        background-color: $error-color !important;
-        color: $white-color !important;
-
-        &::after {
-          content: "×";
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          font-size: 16px;
-          font-weight: bold;
-          color: $white-color;
-        }
-      }
-    }
   }
 }
 
-.unavailable-hour {
-  color: black !important;
-  background: $light-color !important;
-  text-decoration: line-through;
-}
-
-.quantity-section {
-  margin-bottom: 1.5rem;
-  
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-  
-  mat-form-field {
-    width: 100%;
-    max-width: 200px;
-  }
-}
-
-.price-breakdown {
-  display: block;
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.6);
-  margin-top: 0.25rem;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

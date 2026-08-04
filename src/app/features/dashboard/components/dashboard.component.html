@@ -30,7 +30,7 @@
             <th>Date</th>
             <th>Time</th>
             <th>Status</th>
-            <!-- <th>Actions</th> -->
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -47,11 +47,11 @@
                 'status-cancelled': booking.status === 'CANCELLED'
               }">{{ booking.status }}</span>
             </td>
-            <!-- <td>
-              <button class="action-btn">
-                <i class="fas fa-eye"></i>
+            <td>
+              <button class="btn btn-danger btn-sm" *ngIf="booking.status === 'CONFIRMED'" (click)="cancelBooking(booking.dbId)">
+                Cancel
               </button>
-            </td> -->
+            </td>
           </tr>
         </tbody>
       </table>
