@@ -39,6 +39,10 @@ export class BookingService {
     return this.http.get<Space>(BOOKING_URLS.SPACE_BY_ID(id));
   }
 
+  getSpaceBySlug(slug: string): Observable<Space> {
+    return this.http.get<Space>(BOOKING_URLS.SPACE_BY_SLUG(slug));
+  }
+
   getDashboardStats(): Observable<any> {
     return this.http.get(DASHBOARD_URLS.STATS);
   }
