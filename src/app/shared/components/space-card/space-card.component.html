@@ -1,5 +1,8 @@
 <div class="space-card" [class.featured]="space.featured">
   <div *ngIf="space.featured" class="space-badge">Popular</div>
+  <div class="space-image-banner">
+    <img [src]="space.imageUrl" [alt]="space.name">
+  </div>
   <div class="space-content">
     <h3 class="handwritten">{{ space.name }}</h3>
     <p>{{ space.description }}</p>
@@ -9,9 +12,5 @@
         {{ amenity.name }}
       </li>
     </ul>
-  </div>
-
-  <div class="space-image polaroid">
-    <img [src]="space.imageUrl" [alt]="space.name">
   </div>
 </div>

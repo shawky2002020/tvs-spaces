@@ -3,26 +3,46 @@
 
 // Room Detail Page Styles
 .detail-page {
-  padding-top: calc(60px + $spacing-xl);
-  padding-bottom: $spacing-xl;
+  padding-top: 0;
+  background-color: #f8fafc;
   min-height: 100vh;
 }
 
 // Breadcrumbs
+.breadcrumbs-container {
+  background-color: #0b111e;
+  padding: 1.5rem 0 0.5rem 0;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.4);
+  
+  a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+    
+    &:hover {
+      color: $primary-color;
+    }
+  }
+}
 
 // Header Section
 .detail-header {
   position: relative;
-  margin-bottom: $spacing-xl;
+  background: linear-gradient(to bottom, #0b111e 0%, #172544 100%);
+  padding: 1rem 0 3rem 0;
+  margin-bottom: 2rem;
+  color: #fff;
 
   .handwritten {
-    color: $primary-color;
+    color: #fff;
     margin-bottom: $spacing-sm;
+    font-size: 3rem;
   }
 
   .description {
-    color: $black-60;
-    font-size: $font-size-md;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.125rem;
     margin-bottom: $spacing-md;
     line-height: 1.6;
     margin-left: 12px;
@@ -35,8 +55,8 @@
     align-items: center;
     gap: $spacing-xs;
     padding: $spacing-xs $spacing-sm;
-    background-color: rgba($primary-color, 0.1);
-    color: $primary-color;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #38bdf8;
     border-radius: $border-radius-pill;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;

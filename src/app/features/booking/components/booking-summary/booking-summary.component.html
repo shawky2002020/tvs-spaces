@@ -22,7 +22,7 @@
       
       <div class="summary-item" *ngIf="selection.plan === 'Hourly'">
         <div class="item-label">Time</div>
-        <div class="item-value">{{ selection.startTime }}:00 - {{ selection.endTime }}:00</div>
+        <div class="item-value">{{ formatHour(selection.startTime) }} - {{ formatHour(selection.endTime) }}</div>
       </div>
       
       <div class="summary-item total">
@@ -38,6 +38,21 @@
       <button class="btn btn-primary" (click)="proceedToCheckout()">
         Proceed to Checkout <i class="fas fa-arrow-right"></i>
       </button>
+    </div>
+  </div>
+
+  <div class="summary-info-badges">
+    <div class="badge-item">
+      <i class="fas fa-shield-alt"></i>
+      <span>Secure Reservation</span>
+    </div>
+    <div class="badge-item">
+      <i class="fas fa-check-circle"></i>
+      <span>Instant Confirmation</span>
+    </div>
+    <div class="badge-item">
+      <i class="fas fa-calendar-alt"></i>
+      <span>Easy Rescheduling</span>
     </div>
   </div>
 </div>

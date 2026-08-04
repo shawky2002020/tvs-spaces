@@ -2,86 +2,135 @@
 
 .profile-wrapper {
   width: 92%;
-  max-width: 480px;
+  max-width: 520px;
   background: $white-color;
   border-radius: $border-radius-lg;
   box-shadow: $shadow-lg;
-  padding: $spacing-lg $spacing-md;
-  margin: $spacing-lg auto;
+  padding: 2.5rem 2rem;
+  margin: 3rem auto;
+  box-sizing: border-box;
 
   @media (max-width: 480px) {
-    padding: $spacing-md $spacing-sm;
-    margin: $spacing-md auto;
+    padding: 1.5rem 1.25rem;
+    margin: 1.5rem auto;
   }
+}
+
+.profile-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 15%) 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 16px rgba($primary-color, 0.2);
 }
 
 .profile-title {
   font-family: $font-family-heading;
-  font-size: $font-size-xl;
+  font-size: 1.75rem;
   color: $primary-color;
-  font-weight: $font-weight-bold;
-  margin-bottom: $spacing-lg;
-  text-align: center;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.profile-role-badge {
+  display: inline-block;
+  background: rgba($primary-color, 0.1);
+  color: $primary-color;
+  padding: 0.25rem 0.85rem;
+  border-radius: $border-radius-pill;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .profile-form {
   display: flex;
   flex-direction: column;
-  gap: $spacing-md;
+  gap: 1.25rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
   gap: $spacing-xs;
-  margin: 12px 0;
-  label{
-    font-family: sec2;
-    font-size: $font-size-lg;
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
   }
 }
 
 input, select {
-  padding: $spacing-md;
-  border: 1px solid $grey-color;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba($grey-color, 0.3);
   border-radius: $border-radius-md;
   font-size: $font-size-base;
   font-family: $font-family-base;
-  transition: border-color $transition-base;
-}
+  transition: all $transition-base;
+  background: #f8fafc;
 
-input:focus, select:focus {
-  outline: none;
-  border-color: $primary-color;
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    background: #ffffff;
+  }
 }
 
 .form-actions {
   display: flex;
-  gap: $spacing-md;
-  margin-top: $spacing-md;
-  justify-content: flex-start;
-  button{
-    width: 100%;
+  gap: 1rem;
+  margin-top: 1.5rem;
+
+  button {
+    flex: 1;
+    padding: 0.75rem;
+    font-weight: 600;
   }
 }
-
-
 
 .profile-view {
   display: flex;
   flex-direction: column;
-  gap: $spacing-md;
-  margin-top: $spacing-lg;
+  gap: 1rem;
 }
 
 .profile-row {
   display: flex;
   justify-content: space-between;
-  font-size: $font-size-base;
-  color: $grey-color;
-}
+  align-items: center;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba($grey-color, 0.1);
+  font-size: 1rem;
 
-.label {
-  color: $primary-color;
-  font-weight: $font-weight-medium;
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  .label {
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .value {
+    color: #1e293b;
+    font-weight: 600;
+  }
 }

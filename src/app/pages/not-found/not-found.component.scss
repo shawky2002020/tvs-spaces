@@ -1,60 +1,75 @@
+@import "main";
+
 .not-found-container {
-  min-height: 80dvh;
+  min-height: 85dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1rem;
+  padding: calc(60px + 3rem) 1rem 4rem 1rem;
+  background: linear-gradient(135deg, #0a0f1d 0%, #1e293b 100%);
+  box-sizing: border-box;
 }
 
 .not-found-card {
   text-align: center;
-  background: #ffffff;
-  padding: 3rem 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e2e8f0;
+  background: rgba(30, 41, 59, 0.75);
+  backdrop-filter: blur(16px);
+  padding: 4rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   max-width: 480px;
   width: 100%;
+  box-sizing: border-box;
 
   .error-code {
-    font-size: 5rem;
+    font-size: 6rem;
     font-weight: 800;
     line-height: 1;
-    color: var(--color-primary-accent);
-    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #38bdf8 0%, #0369a1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    letter-spacing: -2px;
   }
 
   h1 {
-    font-size: 1.75rem;
+    font-size: 2rem;
     font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 0.5rem;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    font-family: $font-family-heading;
   }
 
   p {
-    font-size: 0.95rem;
-    color: #64748b;
-    margin-bottom: 2rem;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
   }
 
   .btn-home {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: var(--color-primary-accent);
+    padding: 0.85rem 2rem;
+    background: linear-gradient(135deg, #0b7c8c 0%, #08606d 100%);
     color: #ffffff;
     font-weight: 600;
     border-radius: 8px;
     text-decoration: none;
-    transition: background 0.2s ease, transform 0.1s ease;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(11, 124, 140, 0.35);
 
     &:hover {
-      background: var(--color-primary-hover);
+      background: linear-gradient(135deg, #0e95a9 0%, #0b7c8c 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(11, 124, 140, 0.5);
     }
 
     &:active {
-      transform: scale(0.98);
+      transform: translateY(0) scale(0.98);
     }
   }
 }

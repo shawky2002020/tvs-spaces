@@ -1,82 +1,95 @@
 <div class="profile-wrapper fade-in--slow">
-  <h2 class="profile-title">My Profile</h2>
-  <form
-    [formGroup]="profileForm"
-    class="profile-form fade-in--slow"
-    *ngIf="editMode"
-    (ngSubmit)="saveProfile()"
-  >
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input id="username" formControlName="username" type="text" />
+  <div class="profile-card-header">
+    <div class="profile-avatar">
+      {{ user.username ? (user.username.substring(0, 2) | uppercase) : 'U' }}
     </div>
+    <h2 class="profile-title">{{ user.username }}</h2>
+    <span class="profile-role-badge">TVS Member</span>
+  </div>
 
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input id="email" formControlName="email" type="email" />
-    </div>
+  <div class="profile-card-body">
+    <form
+      [formGroup]="profileForm"
+      class="profile-form fade-in--slow"
+      *ngIf="editMode"
+      (ngSubmit)="saveProfile()"
+    >
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input id="username" formControlName="username" type="text" />
+      </div>
 
-    <div class="form-group">
-      <label for="password">New Password</label>
-      <input
-        id="password"
-        formControlName="password"
-        type="password"
-        autocomplete="new-password"
-        placeholder="Leave blank to keep current password"
-      />
-    </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" />
+      </div>
 
-    <div class="form-group" *ngIf="profileForm.get('password')?.value">
-      <label for="currentPassword">Current Password</label>
-      <input
-        id="currentPassword"
-        formControlName="currentPassword"
-        type="password"
-        autocomplete="current-password"
-        placeholder="Required to change password"
-      />
-    </div>
+      <div class="form-group">
+        <label for="password">New Password</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          autocomplete="new-password"
+          placeholder="Leave blank to keep current password"
+        />
+      </div>
 
-    <div class="form-group">
-      <label for="type">Type</label>
-      <select id="type" formControlName="type">
-        <option value="student">Student</option>
-        <option value="freelancer">Freelancer</option>
-        <option value="entrepreneur">Entrepreneur</option>
-        <option value="remote-worker">Remote Worker</option>
-        <option value="startup">Startup</option>
-        <option value="other">Other</option>
-      </select>
-    </div>
+      <div class="form-group" *ngIf="profileForm.get('password')?.value">
+        <label for="currentPassword">Current Password</label>
+        <input
+          id="currentPassword"
+          formControlName="currentPassword"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Required to change password"
+        />
+      </div>
 
-    <div class="form-actions">
-      <button class="btn btn-outline" type="button" (click)="cancelEdit()" [disabled]="saving">
-        Cancel
-      </button>
-      <button class="btn btn-primary" type="submit" [disabled]="saving">
-        {{ saving ? 'Saving...' : 'Save' }}
-      </button>
-    </div>
-  </form>
+      <div class="form-group">
+        <label for="type">Type</label>
+        <select id="type" formControlName="type">
+          <option value="student">Student</option>
+          <option value="freelancer">Freelancer</option>
+          <option value="entrepreneur">Entrepreneur</option>
+          <option value="remote-worker">Remote Worker</option>
+          <option value="startup">Startup</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
 
-  <div class="profile-view fade-in--slow" *ngIf="!editMode">
-    <div class="profile-row">
-      <span class="label">Username:</span> <span>{{ user.username }}</span>
-    </div>
-    <div class="profile-row">
-      <span class="label">Email:</span> <span>{{ user.email }}</span>
-    </div>
-    <div class="profile-row">
-      <span class="label">Password:</span> <span>******</span>
-    </div>
-    <div class="profile-row">
-      <span class="label">Type:</span> <span>{{ user.type | titlecase }}</span>
-    </div>
-    <div class="form-actions">
-      <button class="btn btn-primary" (click)="enableEdit()">
-        Edit Profile
-      </button>
+      <div class="form-actions">
+        <button class="btn btn-outline" type="button" (click)="cancelEdit()" [disabled]="saving">
+          Cancel
+        </button>
+        <button class="btn btn-primary" type="submit" [disabled]="saving">
+          {{ saving ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+
+    <div class="profile-view fade-in--slow" *ngIf="!editMode">
+      <div class="profile-row">
+        <span class="label">Username:</span>
+        <span class="value">{{ user.username }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="label">Email:</span>
+        <span class="value">{{ user.email }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="label">Password:</span>
+        <span class="value">******</span>
+      </div>
+      <div class="profile-row">
+        <span class="label">Type:</span>
+        <span class="value">{{ user.type | titlecase }}</span>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" (click)="enableEdit()">
+          Edit Profile
+        </button>
+      </div>
     </div>
   </div>
 </div>

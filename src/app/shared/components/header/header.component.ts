@@ -10,7 +10,7 @@ import {
   inject,
 } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
 
 interface NavItem {
@@ -29,10 +29,15 @@ interface NavItem {
 export class HeaderComponent implements AfterViewInit, OnDestroy {
   private readonly auth = inject(AuthService);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly router = inject(Router);
 
   @ViewChild('sentinel') sentinel?: ElementRef<HTMLElement>;
   @ViewChild('panel') panel?: ElementRef<HTMLElement>;
   @ViewChild('toggle') toggle?: ElementRef<HTMLButtonElement>;
+
+  isAuthPage(): boolean {
+    return this.router.url.startsWith('/auth');
+  }
 
   readonly user$ = this.auth.User$;
 

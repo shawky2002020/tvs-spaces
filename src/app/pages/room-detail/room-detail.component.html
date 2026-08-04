@@ -2,10 +2,12 @@
 <p class="error" *ngIf="error" role="alert">{{ error }}</p>
 
 <div class="detail-page" *ngIf="space as currentSpace">
-  <div class="breadcrumbs">
-    <a routerLink="/" class="breadcrumb-link">Home</a> &gt;
-    <a routerLink="/" fragment="spaces">Spaces</a> &gt;
-    <span>{{ currentSpace.name }}</span>
+  <div class="breadcrumbs-container">
+    <div class="container breadcrumbs">
+      <a routerLink="/" class="breadcrumb-link">Home</a> &gt;
+      <a routerLink="/" fragment="spaces">Spaces</a> &gt;
+      <span>{{ currentSpace.name }}</span>
+    </div>
   </div>
 
   <header class="detail-header">
@@ -13,7 +15,9 @@
       <h1 class="handwritten">{{ currentSpace.name }}</h1>
       <p class="description">{{ currentSpace.description }}</p>
       <div class="capacity" *ngIf="currentSpace.capacity">
-        <i class="fas fa-users"></i> Capacity: {{ currentSpace.capacity }} room unit
+        <i class="fas fa-users"></i>
+        <ng-container *ngIf="currentSpace.id === 'team-room'">Private room (2-4 people)</ng-container>
+        <ng-container *ngIf="currentSpace.id === 'big-meeting-room'">Private room (10+ people)</ng-container>
       </div>
       <figure class="header-image">
         <img [src]="currentSpace.imageUrl" [alt]="currentSpace.name" />

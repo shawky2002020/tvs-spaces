@@ -24,7 +24,7 @@
           </div>
           <div class="summary-row" *ngIf="selection.plan === 'Hourly'">
             <span>Time</span>
-            <span class="value">{{ selection.startTime }} - {{ selection.endTime }}</span>
+            <span class="value">{{ formatHour(selection.startTime) }} - {{ formatHour(selection.endTime) }}</span>
           </div>
           <div class="summary-row total">
             <span>Total due at venue</span>

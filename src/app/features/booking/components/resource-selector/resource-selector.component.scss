@@ -67,18 +67,20 @@
     animation: none;
   }
 
-  @media (max-width: 900px) {
-    .booking-step {
-      max-width: 100%;
-      padding: 1.5rem 0.5rem;
-    }
+  @media (max-width: 992px) {
     .space-list {
-      flex-direction: column;
+      grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
     }
-    app-space-card {
-      min-width: 0;
-      max-width: 100%;
+  }
+
+  @media (max-width: 680px) {
+    .space-list {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .booking-step {
+      padding: 1.5rem 1rem;
     }
   }
 }

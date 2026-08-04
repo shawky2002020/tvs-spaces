@@ -12,6 +12,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SpaceCardComponent } from './shared/components/space-card/space-card.component';
 import { DeskDetailComponent } from './pages/desk-detail/desk-detail.component';
 import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CommonModule } from '@angular/common';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthLayoutComponent } from './layouts/auth-layout/components/auth-layout.component';
@@ -42,6 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SpaceCardComponent,
     DeskDetailComponent,
     RoomDetailComponent,
+    NotFoundComponent,
     
     TranslateModule.forRoot({
       defaultLanguage: 'ar',

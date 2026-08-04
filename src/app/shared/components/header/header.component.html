@@ -24,16 +24,18 @@
       </ul>
     </nav>
 
-    <div class="actions">
-      @if (user$ | async; as user) {
-        <span class="actions__who">{{ user.username }}</span>
-        <a class="actions__primary" routerLink="/dashboard">Your bookings</a>
-        <button type="button" class="actions__ghost" (click)="logout()">Sign out</button>
-      } @else {
-        <a class="actions__ghost" routerLink="/auth/login">Sign in</a>
-        <a class="actions__primary" routerLink="/auth/register">Create account</a>
-      }
-    </div>
+    @if (!isAuthPage()) {
+      <div class="actions">
+        @if (user$ | async; as user) {
+          <span class="actions__who">{{ user.username }}</span>
+          <a class="actions__primary" routerLink="/dashboard">Your bookings</a>
+          <button type="button" class="actions__ghost" (click)="logout()">Sign out</button>
+        } @else {
+          <a class="actions__ghost" routerLink="/auth/login">Sign in</a>
+          <a class="actions__primary" routerLink="/auth/register">Create account</a>
+        }
+      </div>
+    }
 
     <button
       #toggle

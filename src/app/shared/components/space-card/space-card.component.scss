@@ -1,7 +1,8 @@
 @import "main.scss";
 
 .space-card {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   border-radius: $border-radius-md;
@@ -9,9 +10,29 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   transition: all $transition-base;
   position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  padding: 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  padding: 0;
   transition: all 0.3s ease-in-out;
+}
+
+.space-image-banner {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+}
+
+.space-card:hover .space-image-banner img {
+  transform: scale(1.05);
 }
 
 .space-badge {
@@ -32,6 +53,7 @@
 .space-content {
   display: flex;
   flex-direction: column;
+  padding: 1.25rem 1.5rem 1.5rem;
 
   h3.handwritten {
     font-family: sec2; // You'll need to import this font
@@ -90,23 +112,6 @@
   }
 }
 
-.space-image.polaroid {
-  position: relative;
-  background-color: $white-color;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 120px;
-  height: 120px;
-  border-radius: 12px;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 2px;
-    display: block;
-  }
-}
 
 // Responsive styles
 @media (max-width: 768px) {

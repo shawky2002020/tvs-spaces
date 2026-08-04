@@ -26,22 +26,28 @@ export class AuthLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.User;
+    this.updateTitle();
+    
     this.router.events
       .pipe(
-        filter((event) => event instanceof NavigationEnd),
-        map(() => this.activatedRoute),
-        map((route) => {
-          while (route.firstChild) route = route.firstChild;
-          return route;
-        }),
-        filter((route) => route.outlet === 'primary'),
-        mergeMap((route) => route.data)
+        filter((event) => event instanceof NavigationEnd)
       )
-      .subscribe((data) => {
-        this.pageTitle =
-          data['title'] || this.getPageTitleFromUrl(this.router.url);
-        this.titleService.setTitle(`TVS Spaces - ${this.pageTitle}`);
+      .subscribe(() => {
+        this.updateTitle();
       });
+  }
+
+  updateTitle(): void {
+    let route = this.activatedRoute;
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    const data = route.snapshot.data;
+    // Check if there is a custom page title in the route data, otherwise fallback to URL segment parsing
+    const title = data['title'] || this.getPageTitleFromUrl(this.router.url);
+    // Strip trailing ' | TVS Spaces' if it exists in router title definition
+    this.pageTitle = title.replace(/\s*\|\s*TVS\s*Spaces/i, '');
+    this.titleService.setTitle(`TVS Spaces - ${this.pageTitle}`);
   }
 
   getPageTitleFromUrl(url: string): string {
