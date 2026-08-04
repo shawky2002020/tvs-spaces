@@ -141,6 +141,7 @@ export class DatePlanPickerComponent implements OnInit, OnChanges {
 
   setPlan(plan: BookingPlan) {
     this.plan = plan;
+    // Always clear dates when plan changes so picker starts fresh
     this.pickerDate = null;
     this.pickerEndDate = null;
     this.date = null;
@@ -156,6 +157,7 @@ export class DatePlanPickerComponent implements OnInit, OnChanges {
       this.startTime = 9;
       this.endTime = 13;
     } else {
+      // Daily / Monthly — clear times too
       this.startTime = 9;
       this.endTime = 18;
     }

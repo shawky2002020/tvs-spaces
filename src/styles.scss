@@ -1,25 +1,55 @@
 @import 'main';
-/* Apply only to mat-select with panelClass="custom-dropdown" */
-/* The dropdown panel (overlay) */
-/* Panel background */
-.mat-mdc-select-panel.custom-dropdown {
-  background-color: $primary-color !important;
-  color: #f8fafc !important;
+/* Modern, premium theme for all Angular Material select dropdown panels */
+.mat-mdc-select-panel {
+  background-color: #ffffff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+  padding: 6px 0 !important;
+  border: 1px solid #edf2f7 !important;
 }
 
-/* Option text */
+/* Option text and layout */
 .mat-mdc-option {
-  color: #f8fafc !important;
+  color: #2d3748 !important; /* Premium dark slate text */
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.95rem !important;
+  min-height: 44px !important;
+  padding: 0 16px !important;
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+
+  /* Hover state */
+  &:hover:not(.mdc-list-item--disabled) {
+    background-color: #f7fafc !important; /* Subtle gray background */
+    color: #1a202c !important;
+  }
+
+  /* Keyboard focus / active state */
+  &.mat-mdc-option-active, &.mdc-list-item--activated {
+    background-color: #edf2f7 !important;
+    color: #1a202c !important;
+  }
+
+  /* Selected state */
+  &.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+    background-color: rgba(59, 89, 137, 0.08) !important; /* Soft tint of $primary-color (#3B5989) */
+    color: #3B5989 !important; /* $primary-color */
+    font-weight: 600 !important;
+
+    /* Styling checkmark in Material select options */
+    .mat-pseudo-checkbox-checked {
+      color: #3B5989 !important;
+    }
+
+    &:hover {
+      background-color: rgba(59, 89, 137, 0.12) !important;
+    }
+  }
+
+  /* Disabled state */
+  &.mdc-list-item--disabled {
+    color: #a0aec0 !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+  }
 }
 
-/* Hovered option */
-.mat-mdc-option:hover {
-  background-color: #334155 !important;
-  color: #ffffff !important;
-}
-
-/* Selected option */
-.mat-mdc-option.mdc-list-item--selected {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
-}
