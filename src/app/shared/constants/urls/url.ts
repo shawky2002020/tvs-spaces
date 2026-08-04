@@ -1,5 +1,6 @@
-const BASE_URL = 'http://localhost:8080';
-const API_URL = `${BASE_URL}/api/`;
+import { environment } from '../../../../environments/environment';
+
+const API_URL = environment.apiUrl.endsWith('/') ? environment.apiUrl : `${environment.apiUrl}/`;
 
 // Authentication URLs
 export const AUTH_URLS = {
