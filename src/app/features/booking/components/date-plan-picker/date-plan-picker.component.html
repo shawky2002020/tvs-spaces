@@ -15,29 +15,9 @@
       aria-label="Select booking plan"
     >
       <mat-radio-button value="Hourly">Hourly</mat-radio-button>
-      <!-- <mat-radio-button value="Half-day">Half Day</mat-radio-button> -->
       <mat-radio-button value="Daily">Daily</mat-radio-button>
-      <!-- <mat-radio-button value="Monthly">Monthly</mat-radio-button> -->
     </mat-radio-group>
   </div>
-
-  <!-- Quantity Selection -->
-  <!-- <div class="quantity-section slide-in--left-slow" *ngIf="space.capacity && space.capacity > 1">
-    <label>Select Quantity:</label>
-    <mat-form-field appearance="fill">
-      <mat-label>Number of {{ space.type === 'desk' ? 'desks' : 'rooms' }}</mat-label>
-      <input 
-        matInput 
-        type="number" 
-        [(ngModel)]="quantity" 
-        min="1" 
-        [max]="space.capacity" 
-        (change)="onQuantityChange()"
-        aria-label="Select quantity"
-      >
-      <mat-hint *ngIf="space.capacity">Available: {{ space.capacity }}</mat-hint>
-    </mat-form-field>
-  </div> -->
 
   <div class="date-grid-section">
     <div class="month-nav">
@@ -45,7 +25,7 @@
       <span class="month-label">{{ year }} - {{ month + 1 | number:'2.0' }}</span>
       <button class="btn" (click)="nextDays()">Next 7 Days &#8594;</button>
     </div>
-    <label>Select Date & Hour:</label>
+    <label>{{ isHourly ? 'Select Date & Hour' : 'Select a Day' }}:</label>
     <div class="date-hour-grid">
       <div class="grid-header">
         <div class="grid-cell header-cell">Day</div>
@@ -59,7 +39,8 @@
           [ngClass]="{
             available: slot.available,
             unavailable: !slot.available,
-            selected: date && row.date.getTime() === date.getTime() && startTime === slot.hour
+            selected: date && row.date.getTime() === date.getTime() &&
+              (isDaily || startTime === slot.hour)
           }"
           (click)="slot.available ? selectSlot(row.date, slot.hour) : null"
         >
@@ -68,33 +49,31 @@
       </div>
     </div>
   </div>
+
   <div class="error" *ngIf="error" role="alert">{{ error }}</div>
 
   <div class="price-summary" *ngIf="price > 0 && !error">
-    <span
-      >Total Price: <strong>{{ price | number : "1.0-2" }} EGP</strong></span
-    >
-    <span *ngIf="price > 0 && !error" class="price-breakdown">
-      ( {{ bookedHours }} hours × {{ getPackagePrice() }} EGP)
-      <br />
-      Package : {{ pricingPackage }}
+    <span>Total Price: <strong>{{ price | number : '1.0-2' }} EGP</strong></span>
+    <span class="price-breakdown" *ngIf="isHourly">
+      {{ bookedHours }} hour × {{ getPackagePrice() | number : '1.0-2' }} EGP
     </span>
-    <span> </span>
+    <span class="price-breakdown" *ngIf="isDaily">
+      Daily package × {{ quantity }}
+    </span>
+    <span>Package: {{ pricingPackage }}</span>
   </div>
 
   <div class="actions">
-    <button class="btn-secondary btn" (click)="back()" aria-label="Go back">
+    <button class="btn-secondary btn" (click)="back()" aria-label="Go back" [disabled]="loading">
       Back
     </button>
     <button
       class="btn-primary btn"
       (click)="next()"
-      [disabled]="
-        !date || (isDaily && !endDate) || (isHourly && (!startTime || !endTime))
-      "
+      [disabled]="!isFormValid || !!error || loading"
       aria-label="Proceed to next step"
     >
-      Next
+      {{ loading ? 'Checking...' : 'Next' }}
     </button>
   </div>
 </div>
