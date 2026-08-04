@@ -32,7 +32,7 @@ test('registers, restores session, books, cancels, and logs out', async ({ page 
   const sharedDesk = page.locator('app-space-card').filter({ hasText: 'Shared Desk' });
   await expect(sharedDesk).toBeVisible();
   await sharedDesk.click();
-  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Next', exact: true }).click();
   await page.waitForURL('**/dashboard/booking/dates');
 
   // Choose a future-day slot so booking creation cannot fail as a past time.
@@ -42,7 +42,7 @@ test('registers, restores session, books, cancels, and logs out', async ({ page 
   await availableSlot.click();
 
   await expect(page.locator('.price-summary')).toBeVisible();
-  const dateNext = page.getByRole('button', { name: 'Next' });
+  const dateNext = page.getByRole('button', { name: 'Proceed to next step' });
   await expect(dateNext).toBeEnabled();
   await dateNext.click();
 
