@@ -72,12 +72,20 @@ export class CheckoutComponent implements OnInit {
   confirmBooking(): void {
     if (!this.canProceed() || !this.selection || this.loading) return;
 
-    this.loading = true;
-
     const dates = Array.isArray(this.selection.date)
       ? this.selection.date
-      : [this.selection.date];
-    const startDate = new Date(dates[0]);
+      : this.selection.date
+        ? [this.selection.date]
+        : [];
+    const firstDate = dates[0];
+    if (!firstDate) {
+      alert('Booking dates are missing. Please return to the date step.');
+      return;
+    }
+
+    this.loading = true;
+
+    const startDate = new Date(firstDate);
     const endDate = dates[1] ? new Date(dates[1]) : undefined;
 
     const request = {
