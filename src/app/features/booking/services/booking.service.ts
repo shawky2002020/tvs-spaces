@@ -1,119 +1,114 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BOOKING_URLS, DASHBOARD_URLS } from '../../../shared/constants/urls/url';
-import { BookingSelection, Space, BookingPlan } from '../../../shared/constants/space.model';
+import { BookingPlan, BookingSelection, Space } from '../../../shared/constants/space.model';
 
 @Injectable({ providedIn: 'root' })
 export class BookingService {
+  private static readonly STORAGE_KEY = 'bookingSelection';
   private selection: BookingSelection = {};
 
   constructor(private http: HttpClient) {}
 
-
-  // Check availability
-  checkAvailability(request: any): Observable<any> {
+  checkAvailability(request: unknown): Observable<any> {
     return this.http.post(BOOKING_URLS.AVAILABILITY, request);
   }
 
-  // Get available time slots for a specific date
   getAvailabilityGrid(spaceId: string, date: string): Observable<any> {
     return this.http.get(BOOKING_URLS.AVAILABILITY_GRID(spaceId, date));
   }
 
-  // Get unavailable dates for a space in a month
   getUnavailableDates(spaceId: string, year: number, month: number): Observable<any> {
     return this.http.get(BOOKING_URLS.UNAVAILABLE_DATES(spaceId, year, month));
   }
 
-  // Calculate price
-  calculatePrice(request: any): Observable<any> {
+  calculatePrice(request: unknown): Observable<any> {
     return this.http.post(BOOKING_URLS.CALCULATE_PRICE, request);
   }
 
-  // Create booking
-  createBooking(request: any): Observable<any> {
+  createBooking(request: unknown): Observable<any> {
     return this.http.post(BOOKING_URLS.CREATE, request);
   }
 
-  // Get all spaces
   getAllSpaces(): Observable<Space[]> {
     return this.http.get<Space[]>(BOOKING_URLS.SPACES);
   }
 
-  // Get space by ID
   getSpaceById(id: string): Observable<Space> {
     return this.http.get<Space>(BOOKING_URLS.SPACE_BY_ID(id));
   }
 
-  // Get dashboard stats
   getDashboardStats(): Observable<any> {
     return this.http.get(DASHBOARD_URLS.STATS);
   }
 
-  // Get current user bookings
   getMyBookings(): Observable<any[]> {
     return this.http.get<any[]>(`${BOOKING_URLS.BASE}/me`);
   }
 
-  // Cancel a booking
   cancelBooking(bookingId: number): Observable<any> {
     return this.http.patch(`${BOOKING_URLS.BASE}/${bookingId}/cancel`, {});
   }
 
-  // --- Local selection cache for UI state only ---
-  setPlan(plan: string) {
-    this.selection.plan = plan as BookingPlan;
+  setPlan(plan: string): void {
+    this.setSelection({ plan: plan as BookingPlan });
   }
-  setDates(start: Date, end: Date) {
-    this.selection.date = start;
-    if (start && end && start !== end) {
-      this.selection.date = [start, end];
-    }
+
+  setDates(start: Date, end: Date): void {
+    this.setSelection({ date: start.getTime() === end.getTime() ? start : [start, end] });
   }
-  setTimes(startTime: number, endTime: number) {
-    this.selection.startTime = startTime;
-    this.selection.endTime = endTime;
+
+  setTimes(startTime: number, endTime: number): void {
+    this.setSelection({ startTime, endTime });
   }
-  setPrice(price: number) {
-    this.selection.price = price;
+
+  setPrice(price: number): void {
+    this.setSelection({ price });
   }
-  getPrice() {
-    return this.selection.price;
+
+  getPrice(): number | undefined {
+    return this.getSelection().price;
   }
-  getBookingDetails() {
-    return this.selection;
+
+  getBookingDetails(): BookingSelection {
+    return this.getSelection();
   }
+
   getSelection(): BookingSelection {
-    if (this.selection && Object.keys(this.selection).length > 0) {
+    if (Object.keys(this.selection).length > 0) {
       return this.selection;
     }
-    const stored = localStorage.getItem('bookingSelection');
+
+    const stored = localStorage.getItem(BookingService.STORAGE_KEY);
     if (!stored) return {};
 
     try {
-      const parsed = JSON.parse(stored);
+      const parsed = JSON.parse(stored) as BookingSelection;
       if (parsed.date) {
-        if (Array.isArray(parsed.date)) {
-          parsed.date = parsed.date.map((d: any) => new Date(d));
-        } else {
-          parsed.date = new Date(parsed.date);
-        }
+        parsed.date = Array.isArray(parsed.date)
+          ? parsed.date.map((date) => new Date(date)) as [Date, Date]
+          : new Date(parsed.date);
       }
       this.selection = parsed;
-      return parsed;
-    } catch (e) {
+      return this.selection;
+    } catch {
+      localStorage.removeItem(BookingService.STORAGE_KEY);
       return {};
     }
   }
-  setSelection(partial: Partial<BookingSelection>) {
-    this.selection = { ...this.selection, ...partial };
-    localStorage.setItem('bookingSelection', JSON.stringify(this.selection));
+
+  setSelection(partial: Partial<BookingSelection>): void {
+    this.selection = { ...this.getSelection(), ...partial };
+    localStorage.setItem(BookingService.STORAGE_KEY, JSON.stringify(this.selection));
   }
-  reset() {
+
+  reset(): void {
     this.selection = {};
+    localStorage.removeItem(BookingService.STORAGE_KEY);
   }
-  setQuantity(quantity: number) {
-    this.selection.reservedUnits = quantity;
+
+  setQuantity(quantity: number): void {
+    this.setSelection({ reservedUnits: quantity });
   }
 }
