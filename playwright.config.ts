@@ -16,6 +16,12 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
+  webServer: process.env['E2E_BASE_URL'] ? undefined : {
+    command: 'npm start',
+    url: 'http://localhost:4200',
+    reuseExistingServer: !process.env['CI'],
+    timeout: 120 * 1000,
+  },
   projects: [
     {
       name: 'chromium',

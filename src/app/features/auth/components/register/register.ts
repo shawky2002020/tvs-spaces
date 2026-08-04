@@ -107,11 +107,10 @@ export class Register {
     }
     this.authService.signup(user).subscribe({
       next: () => {
-        alert('registered successfully');
+        // Navigation to /dashboard is handled automatically by AuthService.tap()
       },
-      error:(err:ApiError)=> {
-        
-        alert(err.error.message);
+      error: (err: ApiError) => {
+        this.registerForm.setErrors({ apiError: err.error?.message || 'Registration failed' });
       },
     });
   }

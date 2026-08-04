@@ -35,15 +35,11 @@ export class Login {
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe({
       next: () => {
-        alert('Logged in successfully');
+        // Navigation to /dashboard is handled automatically by AuthService.tap()
       },
-      error:(err:ApiError) =>{
-        console.log(err.error.message);
-        alert(err.error.message)
-        
+      error: (err: ApiError) => {
+        this.loginForm.setErrors({ apiError: err.error?.message || 'Login failed' });
       },
     });
-    // Handle login logic here
-    // Example: console.log(this.loginForm.value);
   }
 }

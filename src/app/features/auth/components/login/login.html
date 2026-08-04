@@ -25,6 +25,9 @@
 					<span *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters.</span>
 				</div>
 			</div>
+			<div class="error" *ngIf="submitted && loginForm.errors?.['apiError']">
+				<span>{{ loginForm.errors?.['apiError'] }}</span>
+			</div>
 			<div class="auth-actions">
 				<button type="submit" class="btn btn-primary">Login</button>
 			</div>
