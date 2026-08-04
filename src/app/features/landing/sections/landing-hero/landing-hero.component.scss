@@ -1,0 +1,334 @@
+@import 'landing-shared';
+
+:host {
+  display: block;
+}
+
+.hero {
+  position: relative;
+  background: var(--tvs-surface-dark);
+  color: var(--tvs-text-on-dark);
+  padding-block-start: clamp(2.5rem, 1rem + 4vw, 4.5rem);
+  padding-block-end: 0;
+  overflow: hidden;
+}
+
+.hero__grid {
+  @include tvs-shell;
+  position: relative;
+  display: grid;
+  gap: var(--tvs-7) var(--tvs-6);
+  align-items: center;
+
+  // A faint plan grid drawn on the shell, so its nine columns land on the same
+  // positions as the nine hour ticks in the rule below. Structure, not texture.
+  // Hidden on phones, where nine lines across 390px is just noise.
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline: var(--tvs-gutter);
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+      to right,
+      rgba(223, 232, 239, 0.06) 0 1px,
+      transparent 1px calc(100% / 9)
+    );
+
+    @include tvs-down($tvs-bp-md) {
+      display: none;
+    }
+  }
+
+  @include tvs-up($tvs-bp-md) {
+    grid-template-columns: minmax(0, 1.06fr) minmax(0, 1fr);
+    gap: var(--tvs-6);
+  }
+
+  @include tvs-up($tvs-bp-lg) {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+    gap: var(--tvs-8);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Lede
+// -----------------------------------------------------------------------------
+.hero__heading {
+  margin: 0;
+  font: var(--tvs-display);
+  letter-spacing: var(--tvs-track-display);
+  color: #ffffff;
+  text-wrap: balance;
+
+  br {
+    display: none;
+
+    @include tvs-up(520px) {
+      display: inline;
+    }
+  }
+}
+
+.hero__sub {
+  margin: var(--tvs-5) 0 0;
+  max-inline-size: 48ch;
+  font: var(--tvs-body-lg);
+  color: var(--tvs-text-on-dark-muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--tvs-4) var(--tvs-5);
+  margin-block-start: var(--tvs-6);
+}
+
+.hero__cta {
+  @include tvs-action-on-dark;
+}
+
+.hero__inline {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  color: var(--tvs-text-on-dark);
+  font: var(--tvs-button);
+  text-decoration: none;
+  border-block-end: 1px solid rgba(223, 232, 239, 0.4);
+  transition: border-color var(--tvs-fast) var(--tvs-ease);
+
+  &:hover {
+    border-color: var(--tvs-cyan);
+  }
+
+  &:focus-visible {
+    @include tvs-focus-ring(true);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Plate composition
+// -----------------------------------------------------------------------------
+// Plates on a drawing sheet: three real photographs of the floor, aligned to a
+// shared grid rather than scattered. The wide plate reads as the plan view and
+// the two squares as details taken from it.
+.hero__plates {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--tvs-2);
+}
+
+.hero__plate {
+  border-radius: var(--tvs-r-plate);
+  overflow: hidden;
+  box-shadow: var(--tvs-shadow-lift);
+}
+
+.hero__plate--floor {
+  grid-column: 1 / -1;
+}
+
+// The two detail plates are the same width as the columns they sit under, so
+// the composition stays legible instead of becoming three floating thumbnails.
+.hero__plate--room {
+  grid-column: 1 / 7;
+}
+
+.hero__plate--desk {
+  grid-column: 7 / 13;
+}
+
+// Below the medium breakpoint only the wide plan plate shows: two thumbnails at
+// phone width would be decoration, not information.
+@include tvs-down($tvs-bp-md) {
+  .hero__plate--room,
+  .hero__plate--desk {
+    display: none;
+  }
+}
+
+@include tvs-up($tvs-bp-lg) {
+  .hero__plates {
+    // The details step in from the plan edge, which is the offset that makes
+    // the arrangement read as composed rather than stacked.
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .hero__plate--room {
+    grid-column: 3 / 8;
+  }
+
+  .hero__plate--desk {
+    grid-column: 8 / 13;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// The day rule
+// -----------------------------------------------------------------------------
+.rule {
+  @include tvs-shell;
+  position: relative;
+  margin-block-start: var(--tvs-7);
+  padding-block: var(--tvs-6) var(--tvs-7);
+  border-block-start: var(--tvs-rule-on-dark);
+}
+
+.rule__heading {
+  margin: 0 0 var(--tvs-5);
+  font: var(--tvs-card-title);
+  letter-spacing: var(--tvs-track-heading);
+  color: var(--tvs-text-on-dark);
+}
+
+.rule__axis {
+  position: relative;
+  block-size: 22px;
+  margin-block-end: var(--tvs-3);
+}
+
+.rule__tick {
+  position: absolute;
+  inset-block-start: 0;
+  inline-size: 1px;
+  block-size: 7px;
+  background: rgba(223, 232, 239, 0.28);
+
+  &--major {
+    block-size: 11px;
+    background: rgba(223, 232, 239, 0.5);
+  }
+
+  // The final tick would otherwise be clipped by the container edge.
+  &:last-child {
+    transform: translateX(-1px);
+  }
+}
+
+.rule__tick-label {
+  position: absolute;
+  inset-block-start: 13px;
+  inset-inline-start: 0;
+  transform: translateX(-50%);
+  font: var(--tvs-time);
+  @include tvs-numeric;
+  color: var(--tvs-text-on-dark-muted);
+  letter-spacing: 0.02em;
+
+  .rule__tick:first-child & {
+    transform: none;
+  }
+
+  .rule__tick:last-child & {
+    transform: translateX(-100%);
+  }
+}
+
+.rule__plans {
+  display: grid;
+  gap: var(--tvs-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rule__button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--tvs-2);
+  inline-size: 100%;
+  min-block-size: 48px;
+  padding: var(--tvs-3) var(--tvs-4);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--tvs-r-control);
+  color: inherit;
+  text-align: start;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color var(--tvs-fast) var(--tvs-ease),
+    border-color var(--tvs-fast) var(--tvs-ease);
+
+  &:hover {
+    background: rgba(223, 232, 239, 0.06);
+  }
+
+  &:focus-visible {
+    @include tvs-focus-ring(true);
+  }
+
+  &.is-selected {
+    background: rgba(0, 223, 228, 0.08);
+    border-color: rgba(0, 223, 228, 0.45);
+  }
+
+  @include tvs-up($tvs-bp-md) {
+    grid-template-columns: 12rem minmax(0, 1fr) 12.5rem;
+    align-items: center;
+    gap: var(--tvs-5);
+  }
+}
+
+.rule__label {
+  font: var(--tvs-button);
+  color: #ffffff;
+}
+
+.rule__window {
+  font: var(--tvs-small);
+  @include tvs-numeric;
+  color: var(--tvs-text-on-dark-muted);
+
+  @include tvs-up($tvs-bp-md) {
+    order: 3;
+    text-align: end;
+  }
+}
+
+.rule__track {
+  position: relative;
+  display: block;
+  block-size: 10px;
+  border-radius: 2px;
+  background: rgba(223, 232, 239, 0.1);
+
+  @include tvs-up($tvs-bp-md) {
+    order: 2;
+  }
+}
+
+.rule__block {
+  display: block;
+  block-size: 100%;
+  min-inline-size: 10px;
+  border-radius: 2px;
+  // Cyan means one thing on this page: a block of time that is taken.
+  background: var(--tvs-cyan);
+  transition: opacity var(--tvs-base) var(--tvs-ease);
+  opacity: 0.72;
+
+  .rule__button:hover &,
+  .rule__button.is-selected & {
+    opacity: 1;
+  }
+}
+
+// The state line is what makes the control's effect legible to screen readers
+// and to anyone who cannot see the colour change.
+.rule__state {
+  font: var(--tvs-meta);
+  color: var(--tvs-text-on-dark-muted);
+
+  @include tvs-up($tvs-bp-md) {
+    order: 4;
+    grid-column: 1 / -1;
+  }
+
+  .rule__button.is-selected & {
+    color: var(--tvs-cyan);
+  }
+}
+
+@include tvs-reveal-rules;

@@ -1,0 +1,137 @@
+@import 'landing-mixins';
+
+// =============================================================================
+// TVS Spaces landing page - design tokens
+// =============================================================================
+// Scoped to `.tvs` so the landing page never leaks into, or inherits from, the
+// two older global token systems (`$vars` in abstracts/_variables.scss and the
+// `--color-*` block in styles.scss).
+//
+// Concept: "the working day, 09 to 18". The palette is the existing TVS brand,
+// re-proportioned so that structure is ink, surfaces are cool paper, and the
+// bright cyan carries exactly one meaning: a reserved or selected block of time.
+// =============================================================================
+
+.tvs {
+  // ---------------------------------------------------------------------------
+  // Ink - the deep blue brand hue (#3B5989) extended into a full neutral ramp.
+  // Everything structural is drawn from this so the greys are never neutral-dead.
+  // ---------------------------------------------------------------------------
+  --tvs-ink-900: #0e1626; // page-level dark surfaces, hero, day rule
+  --tvs-ink-800: #16233a;
+  --tvs-ink-700: #24354f;
+  --tvs-ink-600: #3b5989; // brand primary
+  --tvs-ink-500: #5b7099; // 4.8:1 on paper - smallest text allowed
+  --tvs-ink-400: #8695b4; // large text and icons only
+  --tvs-ink-300: #b4bfd3; // rules and dividers
+  --tvs-ink-200: #dfe8ef; // brand light
+  --tvs-ink-100: #eef3f7;
+  --tvs-ink-050: #f7fafc;
+  --tvs-paper: #fbfcfd;
+
+  // Teal - the brand secondary. #2D839E is only 4.25:1 on paper, so small text
+  // uses the darkened step and the raw brand value is reserved for large type,
+  // icons and borders.
+  --tvs-teal: #2d839e;
+  --tvs-teal-ink: #226b83; // 5.9:1 on paper
+  --tvs-teal-soft: #e4f1f5;
+
+  // Cyan - reserved state only. 1.6:1 on paper (never text on light) but
+  // 10.4:1 on ink-900, so it always appears as a block or mark on dark.
+  --tvs-cyan: #00dfe4;
+  --tvs-cyan-dim: #27aac9; // brand info, for the same role on light surfaces
+
+  --tvs-focus: var(--tvs-cyan);
+  --tvs-focus-on-light: #0b7c8c;
+
+  // Semantic
+  --tvs-available: #10b981;
+  --tvs-attention: #b45309;
+  --tvs-error: #b42318;
+
+  // ---------------------------------------------------------------------------
+  // Surfaces
+  // ---------------------------------------------------------------------------
+  --tvs-surface: var(--tvs-paper);
+  --tvs-surface-sunken: var(--tvs-ink-050);
+  --tvs-surface-raised: #ffffff;
+  --tvs-surface-dark: var(--tvs-ink-900);
+
+  --tvs-text: var(--tvs-ink-900);
+  --tvs-text-muted: var(--tvs-ink-500);
+  --tvs-text-on-dark: #eef3f7;
+  --tvs-text-on-dark-muted: #9fb0c9; // 6.4:1 on ink-900
+
+  // ---------------------------------------------------------------------------
+  // Typography. One family. Weight and size carry hierarchy, never colour alone.
+  // ---------------------------------------------------------------------------
+  --tvs-font: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+
+  // Sized so each sentence of the two-line hero headline stays on one line at
+  // every breakpoint, rather than sized for maximum impact and then wrapping.
+  --tvs-display: 400 clamp(2.125rem, 1.15rem + 2.7vw, 3.375rem) / 1.05 var(--tvs-font);
+  --tvs-hero: 500 clamp(2.5rem, 1.5rem + 4.2vw, 4.5rem) / 1.02 var(--tvs-font);
+  --tvs-page-heading: 500 clamp(2rem, 1.4rem + 2.6vw, 3.25rem) / 1.06 var(--tvs-font);
+  --tvs-section-heading: 500 clamp(1.625rem, 1.25rem + 1.6vw, 2.5rem) / 1.1 var(--tvs-font);
+  --tvs-card-title: 500 clamp(1.0625rem, 0.98rem + 0.4vw, 1.3125rem) / 1.2 var(--tvs-font);
+  --tvs-body-lg: 400 clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem) / 1.6 var(--tvs-font);
+  --tvs-body: 400 1rem / 1.62 var(--tvs-font);
+  --tvs-small: 400 0.875rem / 1.55 var(--tvs-font);
+  --tvs-meta: 500 0.8125rem / 1.4 var(--tvs-font);
+  --tvs-label: 600 0.6875rem / 1.2 var(--tvs-font);
+  --tvs-nav: 500 0.9375rem / 1 var(--tvs-font);
+  --tvs-button: 600 0.9375rem / 1 var(--tvs-font);
+  --tvs-price: 600 clamp(1.375rem, 1.15rem + 0.9vw, 1.875rem) / 1 var(--tvs-font);
+  --tvs-time: 600 0.875rem / 1 var(--tvs-font);
+
+  --tvs-track-display: -0.035em; // craft floor: never past -0.04em
+  --tvs-track-heading: -0.022em;
+  --tvs-track-label: 0.09em;
+
+  --tvs-measure: 64ch;
+  --tvs-measure-tight: 46ch;
+
+  // ---------------------------------------------------------------------------
+  // Space - 4px base, named by role rather than t-shirt size
+  // ---------------------------------------------------------------------------
+  --tvs-1: 0.25rem;
+  --tvs-2: 0.5rem;
+  --tvs-3: 0.75rem;
+  --tvs-4: 1rem;
+  --tvs-5: 1.5rem;
+  --tvs-6: 2rem;
+  --tvs-7: 3rem;
+  --tvs-8: 4rem;
+  --tvs-9: 6rem;
+  --tvs-10: 8rem;
+
+  --tvs-section-y: clamp(3rem, 1.75rem + 5.5vw, 7rem);
+  --tvs-gutter: clamp(1.25rem, 0.5rem + 3vw, 4rem);
+  --tvs-page-max: 1320px;
+  --tvs-page-narrow: 900px;
+
+  // ---------------------------------------------------------------------------
+  // Shape. One radius system: 14px plates, 8px controls, pill for small chips.
+  // Elevation is declared once per element: a border OR a shadow, never both.
+  // ---------------------------------------------------------------------------
+  --tvs-r-plate: 14px;
+  --tvs-r-control: 8px;
+  --tvs-r-chip: 999px;
+
+  --tvs-rule: 1px solid var(--tvs-ink-200);
+  --tvs-rule-strong: 1px solid var(--tvs-ink-300);
+  --tvs-rule-on-dark: 1px solid rgba(223, 232, 239, 0.16);
+
+  // Shadows are tinted to the ink hue and always carry an offset plus a blur.
+  --tvs-shadow-plate: 0 2px 4px rgba(14, 22, 38, 0.04), 0 12px 28px -12px rgba(14, 22, 38, 0.16);
+  --tvs-shadow-lift: 0 4px 8px rgba(14, 22, 38, 0.06), 0 24px 48px -20px rgba(14, 22, 38, 0.26);
+  --tvs-shadow-bar: 0 1px 0 rgba(14, 22, 38, 0.06), 0 8px 24px -16px rgba(14, 22, 38, 0.3);
+
+  // ---------------------------------------------------------------------------
+  // Motion. One authored moment (section entry), everything else is state feedback.
+  // ---------------------------------------------------------------------------
+  --tvs-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --tvs-fast: 140ms;
+  --tvs-base: 240ms;
+  --tvs-slow: 460ms;
+}

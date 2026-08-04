@@ -1,0 +1,158 @@
+@import 'landing-shared';
+
+:host {
+  display: block;
+}
+
+.trust {
+  @include tvs-section;
+  background: var(--tvs-surface);
+}
+
+.trust__shell {
+  @include tvs-shell;
+}
+
+.trust__head {
+  @include tvs-dimension-rule;
+  display: grid;
+  gap: var(--tvs-4);
+  margin-block-end: var(--tvs-7);
+}
+
+.trust__heading {
+  margin: 0;
+  font: var(--tvs-section-heading);
+  letter-spacing: var(--tvs-track-heading);
+  color: var(--tvs-text);
+  text-wrap: balance;
+}
+
+.trust__intro {
+  margin: 0;
+  max-inline-size: var(--tvs-measure);
+  font: var(--tvs-body);
+  color: var(--tvs-text-muted);
+}
+
+.trust__points {
+  display: grid;
+  gap: var(--tvs-6) var(--tvs-6);
+  margin: 0 0 var(--tvs-7);
+  padding: 0;
+  list-style: none;
+
+  @include tvs-up($tvs-bp-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include tvs-up($tvs-bp-lg) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+// No container: each point is held by a rule and space alone.
+.point {
+  padding-block-start: var(--tvs-4);
+  border-block-start: 2px solid var(--tvs-ink-600);
+}
+
+.point__title {
+  margin: 0 0 var(--tvs-2);
+  font: var(--tvs-card-title);
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  letter-spacing: var(--tvs-track-heading);
+  color: var(--tvs-text);
+  text-wrap: balance;
+}
+
+.point__detail {
+  margin: 0;
+  max-inline-size: 46ch;
+  font: var(--tvs-small);
+  color: var(--tvs-text-muted);
+}
+
+// A band rather than a lone panel: at desktop the three facts sit side by side
+// and close the section across its full width.
+.trust__address {
+  display: grid;
+  gap: var(--tvs-4);
+  padding: var(--tvs-6);
+  background: var(--tvs-surface-sunken);
+  border-radius: var(--tvs-r-plate);
+
+  @include tvs-up($tvs-bp-md) {
+    grid-template-columns: 10rem minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--tvs-6);
+    align-items: start;
+  }
+}
+
+.trust__address-title {
+  margin: 0;
+  font: var(--tvs-card-title);
+  font-size: 1.0625rem;
+  color: var(--tvs-text);
+}
+
+.trust__address-body {
+  font: var(--tvs-body);
+  font-style: normal;
+  color: var(--tvs-text);
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    border-block-end: 1px solid var(--tvs-ink-300);
+
+    &:hover {
+      border-color: var(--tvs-ink-900);
+    }
+
+    &:focus-visible {
+      @include tvs-focus-ring(false);
+    }
+  }
+}
+
+.trust__hours {
+  margin: 0;
+  font: var(--tvs-small);
+  @include tvs-numeric;
+  color: var(--tvs-text-muted);
+}
+
+.trust__address-col {
+  display: grid;
+  gap: var(--tvs-2);
+}
+
+.trust__contact {
+  display: grid;
+  justify-items: start;
+  gap: var(--tvs-1);
+  margin: 0;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+    font: var(--tvs-small);
+    @include tvs-numeric;
+    color: var(--tvs-ink-600);
+    text-decoration: none;
+    border-block-end: 1px solid var(--tvs-ink-300);
+
+    &:hover {
+      color: var(--tvs-ink-900);
+      border-color: var(--tvs-ink-900);
+    }
+
+    &:focus-visible {
+      @include tvs-focus-ring(false);
+    }
+  }
+}
+
+@include tvs-reveal-rules;

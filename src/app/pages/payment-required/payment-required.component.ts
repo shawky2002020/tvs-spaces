@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-payment-required',
   template: `
-    <div class="payment-required">
+    <!-- Routed outside the layouts, so it declares its own main landmark. -->
+    <main class="payment-required">
       <h2>🚫 Access Suspended!</h2>
       <p>
         This site is currently <strong>working from home</strong><br/>
@@ -11,7 +12,7 @@ import { Component } from '@angular/core';
         Translation in plain English: <strong>NO 💸 = NO WEBSITE </strong><br/>
 
       </p>
-    </div>
+    </main>
   `,
   styles: [`
     .payment-required {

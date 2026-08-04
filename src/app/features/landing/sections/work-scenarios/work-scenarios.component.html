@@ -1,0 +1,45 @@
+@if (scenarios.length) {
+  <section class="scenarios" aria-labelledby="scenarios-heading">
+    <div class="scenarios__shell">
+      <header class="scenarios__head">
+        <h2 id="scenarios-heading" class="scenarios__heading">Start from the work, not the floor plan</h2>
+        <p class="scenarios__intro">
+          Each of these is a real space with a published rate. Pick the line that sounds like your
+          day and it takes you straight to that space.
+        </p>
+      </header>
+
+      <ol class="scenarios__list">
+        @for (scenario of scenarios; track scenario.space.id; let i = $index) {
+          <li class="scenario" [tvsReveal]="50 * i">
+            <div class="scenario__need">
+              <h3 class="scenario__title">{{ scenario.need }}</h3>
+              <p class="scenario__detail">{{ scenario.detail }}</p>
+            </div>
+
+            <div class="scenario__match">
+              <p class="scenario__space">{{ scenario.space.name }}</p>
+              <p class="scenario__capacity">{{ scenario.space.capacityLabel }}</p>
+              <p class="scenario__rate">
+                <span class="scenario__plan">{{ scenario.rate.label }}</span>
+                <span class="scenario__amount">{{ scenario.rate.amount }}</span>
+                <span class="scenario__unit">{{ currency }} {{ scenario.rate.unit }}</span>
+              </p>
+            </div>
+
+            <a
+              class="scenario__action"
+              [routerLink]="scenario.space.detailRoute"
+              [attr.aria-label]="'Book the ' + scenario.space.name"
+            >
+              <span>Book the {{ scenario.space.name }}</span>
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M2 8h11M9 4l4 4-4 4" />
+              </svg>
+            </a>
+          </li>
+        }
+      </ol>
+    </div>
+  </section>
+}

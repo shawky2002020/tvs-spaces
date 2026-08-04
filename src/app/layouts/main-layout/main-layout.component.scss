@@ -1,4 +1,32 @@
 @import "main.scss";
-main{
+
+main {
   min-height: 100svh;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// Skip link: hidden until focused, then anchored to the top-left of the page.
+.skip-link {
+  position: absolute;
+  inset-inline-start: 1rem;
+  inset-block-start: -100%;
+  z-index: 1060;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 1rem;
+  background: #fbfcfd;
+  color: #0e1626;
+  border-radius: 8px;
+  font: 600 0.9375rem/1 'Geist Variable', Arial, sans-serif;
+  text-decoration: none;
+
+  &:focus-visible {
+    inset-block-start: 0.75rem;
+    outline: 3px solid #0b7c8c;
+    outline-offset: 2px;
+  }
 }

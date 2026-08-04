@@ -1,0 +1,23 @@
+@if (state$ | async; as state) {
+  <div class="tvs">
+    <tvs-landing-hero [selectedPlan]="selectedPlan" (planPicked)="onPlanPicked($event)" />
+
+    <tvs-featured-spaces
+      [state]="state"
+      [selectedPlan]="selectedPlan"
+      (retry)="retry()"
+    />
+
+    <tvs-work-scenarios [state]="state" />
+
+    <tvs-booking-process />
+
+    <tvs-time-based-booking [state]="state" />
+
+    <tvs-space-preview [state]="state" />
+
+    <tvs-trust-section />
+
+    <tvs-final-cta [spaceCount]="state.spaces.length" />
+  </div>
+}

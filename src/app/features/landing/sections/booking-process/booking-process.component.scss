@@ -1,0 +1,102 @@
+@import 'landing-shared';
+
+:host {
+  display: block;
+}
+
+.process {
+  @include tvs-section;
+  background: var(--tvs-surface);
+  scroll-margin-block-start: 88px;
+}
+
+.process__shell {
+  @include tvs-shell;
+}
+
+.process__head {
+  @include tvs-dimension-rule;
+  display: grid;
+  gap: var(--tvs-4);
+  margin-block-end: var(--tvs-7);
+}
+
+.process__heading {
+  margin: 0;
+  font: var(--tvs-section-heading);
+  letter-spacing: var(--tvs-track-heading);
+  color: var(--tvs-text);
+  text-wrap: balance;
+}
+
+.process__intro {
+  margin: 0;
+  max-inline-size: var(--tvs-measure);
+  font: var(--tvs-body);
+  color: var(--tvs-text-muted);
+}
+
+.process__track {
+  display: grid;
+  gap: var(--tvs-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include tvs-up($tvs-bp-md) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--tvs-5);
+  }
+}
+
+.step {
+  position: relative;
+  display: grid;
+  gap: var(--tvs-3);
+  padding-block-start: var(--tvs-5);
+  align-content: start;
+
+  // The connecting line. Drawn on each step so it survives wrapping, and it is
+  // the rule the marker sits on rather than a decorative divider.
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    inline-size: 100%;
+    block-size: 1px;
+    background: var(--tvs-ink-300);
+  }
+}
+
+.step__marker {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  inline-size: 30px;
+  block-size: 30px;
+  border-radius: 50%;
+  background: var(--tvs-ink-900);
+  color: #ffffff;
+  font: var(--tvs-time);
+  @include tvs-numeric;
+}
+
+.step__action {
+  margin: var(--tvs-3) 0 0;
+  font: var(--tvs-card-title);
+  letter-spacing: var(--tvs-track-heading);
+  color: var(--tvs-text);
+}
+
+.step__detail {
+  margin: 0;
+  max-inline-size: 42ch;
+  font: var(--tvs-small);
+  color: var(--tvs-text-muted);
+}
+
+@include tvs-reveal-rules;

@@ -1,0 +1,40 @@
+@import 'landing-shared';
+
+:host {
+  display: block;
+}
+
+.close {
+  padding-block: clamp(4rem, 2.5rem + 7vw, 8rem);
+  background: var(--tvs-surface-dark);
+  color: var(--tvs-text-on-dark);
+}
+
+.close__shell {
+  @include tvs-shell;
+  max-inline-size: min(var(--tvs-page-max), 62rem);
+  display: grid;
+  gap: var(--tvs-5);
+  justify-items: start;
+}
+
+.close__heading {
+  margin: 0;
+  font: var(--tvs-page-heading);
+  letter-spacing: var(--tvs-track-heading);
+  color: #ffffff;
+  text-wrap: balance;
+  max-inline-size: 20ch;
+}
+
+.close__body {
+  margin: 0;
+  max-inline-size: var(--tvs-measure);
+  font: var(--tvs-body-lg);
+  color: var(--tvs-text-on-dark-muted);
+}
+
+.close__cta {
+  @include tvs-action-on-dark;
+  margin-block-start: var(--tvs-2);
+}

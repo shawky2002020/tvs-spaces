@@ -1,0 +1,107 @@
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero__grid">
+    <div class="hero__lede">
+      <h1 id="hero-heading" class="hero__heading">
+        A desk for an hour.<br />
+        A room for the day.
+      </h1>
+
+      <p class="hero__sub">
+        Desks and meeting rooms in Heliopolis, open {{ opening }} to {{ closing }}. Choose your
+        hours, see the price, then reserve.
+      </p>
+
+      <div class="hero__actions">
+        <a class="hero__cta" routerLink="/" fragment="spaces">See spaces and prices</a>
+        <a class="hero__inline" routerLink="/" fragment="how-booking-works">How booking works</a>
+      </div>
+    </div>
+
+    <!--
+      Spatial composition rather than a single hero photo: a wide plate of the
+      floor, a room plate, and a desk detail, offset against each other the way
+      plates sit on a drawing sheet.
+    -->
+    <div class="hero__plates">
+      <div class="hero__plate hero__plate--floor">
+        <tvs-image
+          src="assets/imgs/spaces/pc-station0.jpg"
+          alt="Rows of workstations with monitors beside the window wall at TVS Spaces"
+          ratio="wide"
+          [priority]="true"
+          sizes="(min-width: 1180px) 46vw, (min-width: 900px) 54vw, 92vw"
+          position="50% 55%"
+        />
+      </div>
+
+      <div class="hero__plate hero__plate--room" [tvsReveal]="120">
+        <tvs-image
+          src="assets/imgs/spaces/meeting2.jpg"
+          alt="The meeting room, with a glass table, mesh chairs and acoustic wall panels"
+          ratio="square"
+          sizes="(min-width: 1180px) 20vw, 40vw"
+        />
+      </div>
+
+      <div class="hero__plate hero__plate--desk" [tvsReveal]="200">
+        <tvs-image
+          src="assets/imgs/spaces/shared2.jpg"
+          alt="A shared desk with a blue privacy divider, beside the window"
+          ratio="square"
+          sizes="(min-width: 1180px) 16vw, 34vw"
+          position="40% 50%"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!--
+    The day rule. Blocks are drawn to scale against the real opening hours and
+    each one is a control that re-weights the catalogue below, so nothing here
+    is decorative.
+  -->
+  <div class="rule" role="group" aria-labelledby="rule-heading">
+    <h2 id="rule-heading" class="rule__heading">Three ways to book the same day</h2>
+
+    <div class="rule__axis" aria-hidden="true">
+      @for (tick of hourTicks; track tick.hour) {
+        <span
+          class="rule__tick"
+          [class.rule__tick--major]="tick.major"
+          [style.left.%]="tick.position"
+        >
+          @if (tick.major) {
+            <span class="rule__tick-label">{{ tick.label }}</span>
+          }
+        </span>
+      }
+    </div>
+
+    <ul class="rule__plans">
+      @for (block of planBlocks; track block.plan) {
+        <li class="rule__plan">
+          <button
+            type="button"
+            class="rule__button"
+            [class.is-selected]="selectedPlan === block.plan"
+            [attr.aria-pressed]="selectedPlan === block.plan"
+            (click)="pick(block.plan)"
+          >
+            <span class="rule__label">{{ block.label }}</span>
+            <span class="rule__window">{{ block.window }}</span>
+            <span class="rule__track">
+              <span
+                class="rule__block"
+                [style.inline-size.%]="block.span"
+                [style.margin-inline-start.%]="block.offset"
+              ></span>
+            </span>
+            <span class="rule__state">
+              {{ selectedPlan === block.plan ? 'Showing this rate below' : 'Show this rate below' }}
+            </span>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

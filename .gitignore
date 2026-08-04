@@ -42,3 +42,9 @@ testem.log
 .DS_Store
 Thumbs.db
 .vercel
+
+# Playwright run artifacts (traces, videos, HTML report)
+/test-results
+/playwright-report
+/blob-report
+/playwright/.cache

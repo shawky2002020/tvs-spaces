@@ -1,0 +1,92 @@
+@if (rows.length) {
+  <section class="time" id="time" aria-labelledby="time-heading">
+    <div class="time__shell">
+      <header class="time__head">
+        <h2 id="time-heading" class="time__heading">An hour is charged by the hour. A day is charged once.</h2>
+        <div class="time__intro">
+          <p>
+            Three ways to hold a space, and they do not work the same way. Hourly multiplies the rate
+            by the hours you book. A half day and a full day are each a single flat charge, whatever
+            hours you use inside the window.
+          </p>
+          @if (dayBeatsHoursCount) {
+            <p>
+              That is why
+              {{ dayBeatsHoursCount === rows.length ? 'on every space here' : 'on ' + dayBeatsHoursCount + ' of these ' + rows.length + ' spaces' }},
+              a full day costs less than {{ exampleHours }} hours. If you know you are staying, book
+              the day.
+            </p>
+          }
+        </div>
+      </header>
+
+      <dl class="windows">
+        <div class="window">
+          <dt>By the hour</dt>
+          <dd>Any hours between {{ opening }} and {{ closing }}, charged per hour</dd>
+        </div>
+        <div class="window">
+          <dt>Half day</dt>
+          <dd>{{ halfDayHours }} hours, {{ opening }} to {{ halfDayEnd }} unless you pick another window</dd>
+        </div>
+        <div class="window">
+          <dt>Full day</dt>
+          <dd>{{ opening }} to {{ closing }}, one charge per day</dd>
+        </div>
+      </dl>
+
+      <div
+        class="time__scroller"
+        role="region"
+        aria-labelledby="time-table-caption"
+        tabindex="0"
+        [tvsReveal]="0"
+      >
+        <table class="costs">
+          <caption id="time-table-caption">
+            What each space costs on each plan. The {{ exampleHours }} hour column is the published
+            hourly rate multiplied by {{ exampleHours }}, as an example of a short visit. All prices
+            in {{ currency }}.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Space</th>
+              <th scope="col">{{ exampleHours }} hours</th>
+              <th scope="col">Half day</th>
+              <th scope="col">Full day</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of rows; track row.id) {
+              <tr>
+                <th scope="row">
+                  <a [routerLink]="row.route">{{ row.name }}</a>
+                  <span class="costs__kind">{{ row.kind }}</span>
+                </th>
+                <td>
+                  <span class="costs__amount">{{ row.exampleTotal }}</span>
+                  <span class="costs__note">{{ row.hourlyRate }} per hour</span>
+                </td>
+                <td>
+                  <span class="costs__amount">{{ row.halfDay }}</span>
+                  <span class="costs__note">flat, {{ halfDayHours }} hours</span>
+                </td>
+                <td [class.is-best]="row.dayBeatsHours">
+                  <span class="costs__amount">{{ row.fullDay }}</span>
+                  <span class="costs__note">
+                    {{ row.dayBeatsHours ? 'flat, and cheaper than ' + exampleHours + ' hours' : 'flat, whole day' }}
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="time__foot">
+        These are the published rates. The total you are asked to confirm is calculated on the
+        server from the exact hours you choose.
+      </p>
+    </div>
+  </section>
+}

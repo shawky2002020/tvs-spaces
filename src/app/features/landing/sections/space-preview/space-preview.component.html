@@ -1,0 +1,72 @@
+@if (space) {
+  <section class="preview" aria-labelledby="preview-heading">
+    <div class="preview__media">
+      <tvs-image
+        [src]="space.imageUrl"
+        [alt]="'The ' + space.name + ' at TVS Spaces, set up for a meeting'"
+        ratio="plate"
+        sizes="(min-width: 900px) 52vw, 100vw"
+      />
+
+      @if (gallery.length) {
+        <ul class="preview__strip">
+          @for (frame of gallery; track frame; let i = $index) {
+            <li>
+              <tvs-image
+                [src]="frame"
+                [alt]="'The ' + space.name + ', view ' + (i + 2)"
+                ratio="square"
+                sizes="18vw"
+              />
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="preview__rail" [tvsReveal]="0">
+      <h2 id="preview-heading" class="preview__heading">{{ space.name }}</h2>
+      <p class="preview__desc">{{ space.description }}</p>
+
+      <dl class="preview__facts">
+        <div>
+          <dt>Booked as</dt>
+          <dd>{{ space.capacityLabel }}</dd>
+        </div>
+        <div>
+          <dt>Open</dt>
+          <dd class="preview__numeric">{{ hours }}, every booking sits inside this window</dd>
+        </div>
+        @if (space.amenities.length) {
+          <div>
+            <dt>In the room</dt>
+            <dd>
+              <ul class="preview__amenities">
+                @for (amenity of space.amenities; track amenity.name) {
+                  <li>
+                    <i class="fas fa-{{ amenity.icon }}" aria-hidden="true"></i>
+                    <span>{{ amenity.name }}</span>
+                  </li>
+                }
+              </ul>
+            </dd>
+          </div>
+        }
+      </dl>
+
+      <ul class="preview__rates">
+        @for (rate of space.rates; track rate.plan) {
+          <li>
+            <span class="preview__rate-plan">{{ rate.label }}</span>
+            <span class="preview__rate-amount">{{ rate.amount }}</span>
+            <span class="preview__rate-unit">{{ currency }} {{ rate.unit }}</span>
+          </li>
+        }
+      </ul>
+
+      <a class="preview__cta" [routerLink]="space.detailRoute">
+        Check dates for the {{ space.name }}
+      </a>
+    </div>
+  </section>
+}

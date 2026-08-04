@@ -1,3 +1,6 @@
-<main>
-  <router-outlet></router-outlet>
-</main>
+<!--
+  No <main> here. Each layout declares its own, and wrapping the outlet in a
+  second <main> nested them, which is invalid and pushed the site header and
+  footer inside the main landmark instead of leaving them as siblings.
+-->
+<router-outlet></router-outlet>

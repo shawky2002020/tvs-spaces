@@ -1,0 +1,227 @@
+@import 'landing-shared';
+
+:host {
+  display: block;
+  block-size: 100%;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  background: var(--tvs-surface-raised);
+  border: var(--tvs-rule);
+  border-radius: var(--tvs-r-plate);
+  overflow: hidden;
+  transition: border-color var(--tvs-base) var(--tvs-ease),
+    transform var(--tvs-base) var(--tvs-ease);
+
+  &:hover {
+    border-color: var(--tvs-ink-400);
+    transform: translateY(-2px);
+  }
+
+  // Focus lands on the inner link; the ring is drawn on the whole plate so the
+  // keyboard target matches the click target.
+  &:has(.card__link:focus-visible) {
+    @include tvs-focus-ring(false);
+    border-color: var(--tvs-ink-600);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover {
+    transform: none;
+  }
+}
+
+.card__plate {
+  border-radius: 0;
+
+  // On phones the card is full width, so a 4:3 plate costs a third of the
+  // viewport before any information appears. A banner crop keeps the price and
+  // capacity closer to the top of each card.
+  @include tvs-down($tvs-bp-sm) {
+    --tvs-plate-ratio: 16 / 9;
+  }
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tvs-3);
+  flex: 1;
+  padding: var(--tvs-5);
+}
+
+.card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--tvs-3);
+}
+
+.card__title {
+  margin: 0;
+  font: var(--tvs-card-title);
+  letter-spacing: var(--tvs-track-heading);
+  color: var(--tvs-text);
+}
+
+.card__link {
+  color: inherit;
+  text-decoration: none;
+
+  // Stretches the link over the whole card without nesting interactive elements.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.card__kind {
+  margin: 0;
+  flex-shrink: 0;
+  font: var(--tvs-meta);
+  color: var(--tvs-teal-ink);
+}
+
+.card__capacity {
+  margin: 0;
+  font: var(--tvs-small);
+  color: var(--tvs-text-muted);
+}
+
+.card__amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tvs-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    @include tvs-chip;
+  }
+
+  i {
+    color: var(--tvs-teal-ink);
+    font-size: 0.8125rem;
+  }
+}
+
+.card__amenities-more {
+  background: transparent;
+  color: var(--tvs-text-muted);
+  padding-inline: 0;
+}
+
+// The rate rail. Three real prices, each carrying its unit, so a flat half-day
+// charge is never mistaken for an hourly one. Rows rather than columns: at four
+// cards across, three price columns inside a card leave no room to read them.
+.card__rates {
+  display: grid;
+  gap: 1px;
+  background: var(--tvs-ink-200);
+  border: 1px solid var(--tvs-ink-200);
+  border-radius: var(--tvs-r-control);
+  overflow: hidden;
+  // `auto` pushes the rail to the bottom of the card so prices line up across
+  // the row even when one title wraps to two lines.
+  margin-block-start: auto;
+}
+
+.card__rate {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--tvs-2) var(--tvs-3);
+  padding: var(--tvs-3) var(--tvs-4);
+  background: var(--tvs-surface-raised);
+
+  dt {
+    font: var(--tvs-meta);
+    color: var(--tvs-text-muted);
+  }
+
+  dd {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: var(--tvs-2);
+    justify-content: flex-end;
+  }
+
+  // Selection is an inversion, not a colour swap, so it reads without colour.
+  &.is-selected {
+    background: var(--tvs-ink-900);
+
+    dt {
+      color: var(--tvs-cyan);
+    }
+
+    .card__amount {
+      color: #ffffff;
+    }
+
+    .card__unit {
+      color: var(--tvs-text-on-dark-muted);
+    }
+  }
+}
+
+.card__amount {
+  font: var(--tvs-price);
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  letter-spacing: -0.02em;
+  @include tvs-numeric;
+  color: var(--tvs-text);
+}
+
+.card__unit {
+  font-size: 0.6875rem;
+  line-height: 1.25;
+  font-weight: 500;
+  color: var(--tvs-text-muted);
+  white-space: nowrap;
+}
+
+.card__action {
+  display: flex;
+  align-items: center;
+  gap: var(--tvs-2);
+  margin: var(--tvs-4) 0 0;
+  font: var(--tvs-button);
+  color: var(--tvs-ink-600);
+
+  svg {
+    inline-size: 16px;
+    block-size: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform var(--tvs-base) var(--tvs-ease);
+  }
+
+  .card:hover & svg {
+    transform: translateX(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card__action svg {
+    transition: none;
+  }
+
+  .card:hover .card__action svg {
+    transform: none;
+  }
+}

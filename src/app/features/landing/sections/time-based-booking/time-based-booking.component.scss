@@ -1,0 +1,185 @@
+@import 'landing-shared';
+
+:host {
+  display: block;
+}
+
+.time {
+  @include tvs-section;
+  background: var(--tvs-surface-dark);
+  color: var(--tvs-text-on-dark);
+}
+
+.time__shell {
+  @include tvs-shell;
+}
+
+// Heading and body stack. A big headline on the left with a small explainer
+// floating in a right column is the templated section-header move; one column
+// with a controlled measure reads better and matches every other section here.
+.time__head {
+  @include tvs-dimension-rule(rgba(223, 232, 239, 0.24));
+  display: grid;
+  gap: var(--tvs-4);
+  margin-block-end: var(--tvs-6);
+}
+
+.time__heading {
+  margin: 0;
+  max-inline-size: 22ch;
+  font: var(--tvs-section-heading);
+  letter-spacing: var(--tvs-track-heading);
+  color: #ffffff;
+  text-wrap: balance;
+}
+
+.time__intro {
+  display: grid;
+  gap: var(--tvs-4);
+
+  p {
+    margin: 0;
+    max-inline-size: var(--tvs-measure);
+    font: var(--tvs-body);
+    color: var(--tvs-text-on-dark-muted);
+  }
+}
+
+// The three windows, stated once as definitions.
+.windows {
+  display: grid;
+  gap: var(--tvs-3);
+  margin: 0 0 var(--tvs-6);
+
+  @include tvs-up($tvs-bp-sm) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--tvs-5);
+  }
+}
+
+.window {
+  padding-block-start: var(--tvs-3);
+  border-block-start: 2px solid var(--tvs-cyan);
+
+  dt {
+    font: var(--tvs-button);
+    color: #ffffff;
+  }
+
+  dd {
+    margin: var(--tvs-1) 0 0;
+    font: var(--tvs-small);
+    @include tvs-numeric;
+    color: var(--tvs-text-on-dark-muted);
+  }
+}
+
+// Wide content scrolls inside its own container, never the page body.
+.time__scroller {
+  overflow-x: auto;
+  border: var(--tvs-rule-on-dark);
+  border-radius: var(--tvs-r-plate);
+
+  &:focus-visible {
+    @include tvs-focus-ring(true);
+  }
+}
+
+.costs {
+  inline-size: 100%;
+  min-inline-size: 620px;
+  border-collapse: collapse;
+  text-align: start;
+
+  caption {
+    padding: var(--tvs-5) var(--tvs-5) var(--tvs-4);
+    text-align: start;
+    font: var(--tvs-small);
+    color: var(--tvs-text-on-dark-muted);
+    max-inline-size: 74ch;
+  }
+
+  th,
+  td {
+    padding: var(--tvs-4) var(--tvs-5);
+    text-align: start;
+    vertical-align: baseline;
+  }
+
+  thead th {
+    font: var(--tvs-meta);
+    font-weight: 600;
+    letter-spacing: var(--tvs-track-label);
+    text-transform: uppercase;
+    color: var(--tvs-text-on-dark-muted);
+    border-block-end: 1px solid rgba(223, 232, 239, 0.28);
+    white-space: nowrap;
+  }
+
+  tbody tr + tr {
+    border-block-start: 1px solid rgba(223, 232, 239, 0.12);
+  }
+
+  tbody th {
+    font: var(--tvs-button);
+    color: #ffffff;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      border-block-end: 1px solid rgba(223, 232, 239, 0.36);
+
+      &:hover {
+        border-color: var(--tvs-cyan);
+      }
+
+      &:focus-visible {
+        @include tvs-focus-ring(true);
+      }
+    }
+  }
+}
+
+.costs__kind {
+  display: block;
+  margin-block-start: 2px;
+  font: var(--tvs-meta);
+  font-weight: 400;
+  color: var(--tvs-text-on-dark-muted);
+}
+
+.costs__amount {
+  display: block;
+  font: var(--tvs-price);
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem);
+  @include tvs-numeric;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.costs__note {
+  display: block;
+  margin-block-start: 2px;
+  font: var(--tvs-meta);
+  font-weight: 400;
+  color: var(--tvs-text-on-dark-muted);
+}
+
+// The cheaper-than-hours case is marked with a rule and a word, never colour
+// on its own.
+.is-best {
+  box-shadow: inset 2px 0 0 var(--tvs-cyan);
+
+  .costs__note {
+    color: var(--tvs-cyan);
+  }
+}
+
+.time__foot {
+  margin: var(--tvs-5) 0 0;
+  max-inline-size: var(--tvs-measure);
+  font: var(--tvs-small);
+  color: var(--tvs-text-on-dark-muted);
+}
+
+@include tvs-reveal-rules;

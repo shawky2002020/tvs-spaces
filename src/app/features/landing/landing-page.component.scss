@@ -1,0 +1,15 @@
+@import 'landing-tokens';
+
+:host {
+  display: block;
+}
+
+// `.tvs` carries the token layer defined in _landing-tokens.scss, so nothing on
+// this page inherits from the two older global systems.
+.tvs {
+  font-family: var(--tvs-font);
+  color: var(--tvs-text);
+  background: var(--tvs-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

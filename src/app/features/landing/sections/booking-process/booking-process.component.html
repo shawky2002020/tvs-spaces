@@ -1,0 +1,25 @@
+<section class="process" id="how-booking-works" aria-labelledby="process-heading" tabindex="-1">
+  <div class="process__shell">
+    <header class="process__head">
+      <h2 id="process-heading" class="process__heading">From open page to confirmed booking</h2>
+      <p class="process__intro">
+        Four steps, in this order. Nothing is charged and nothing is held until the last one.
+      </p>
+    </header>
+
+    <!--
+      The numbers are load-bearing here: this is a sequence, and the order is
+      the information. The connecting rule is the same dimension line the rest
+      of the page uses.
+    -->
+    <ol class="process__track">
+      @for (step of steps; track step.action; let i = $index) {
+        <li class="step" [tvsReveal]="70 * i">
+          <span class="step__marker" aria-hidden="true">{{ i + 1 }}</span>
+          <h3 class="step__action">{{ step.action }}</h3>
+          <p class="step__detail">{{ step.detail }}</p>
+        </li>
+      }
+    </ol>
+  </div>
+</section>

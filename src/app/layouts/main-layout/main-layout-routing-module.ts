@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DeskDetailComponent } from '../../pages/desk-detail/desk-detail.component';
-import { HomeComponent } from '../../pages/home/home.component';
 import { MainLayoutComponent } from './main-layout.component';
 
 const routes: Routes = [
@@ -9,7 +7,13 @@ const routes: Routes = [
     path: '',
     component: MainLayoutComponent, // 👈 your layout with header + router-outlet
     children: [
-      { path: '', component: HomeComponent },
+      {
+        path: '',
+        loadComponent: () =>
+          import('../../features/landing/landing-page.component').then(
+            (m) => m.LandingPageComponent
+          ),
+      },
       {
         path: 'rooms/:type',
         loadComponent: () =>

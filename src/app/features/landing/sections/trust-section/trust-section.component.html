@@ -1,0 +1,35 @@
+<section class="trust" aria-labelledby="trust-heading">
+  <div class="trust__shell">
+    <header class="trust__head">
+      <h2 id="trust-heading" class="trust__heading">What you can count on before you book</h2>
+      <p class="trust__intro">
+        No ratings, no counters, no logos. These are the rules the booking system actually runs on.
+      </p>
+    </header>
+
+    <ul class="trust__points">
+      @for (point of points; track point.title; let i = $index) {
+        <li class="point" [tvsReveal]="40 * i">
+          <h3 class="point__title">{{ point.title }}</h3>
+          <p class="point__detail">{{ point.detail }}</p>
+        </li>
+      }
+    </ul>
+
+    <div class="trust__address">
+      <h3 class="trust__address-title">Where it is</h3>
+      <div class="trust__address-col">
+        <address class="trust__address-body">
+          <a href="https://maps.app.goo.gl/8TNft7sHgBKcCM9D9" rel="noopener">
+            Office 9, 94 Fareed Smeika<br />Heliopolis, Cairo
+          </a>
+        </address>
+        <p class="trust__hours">Open {{ opening }} to {{ closing }}</p>
+      </div>
+      <p class="trust__contact">
+        <a href="tel:+201055066838">+20 105 506 6838</a>
+        <a href="mailto:support&#64;tvsspaces.com">support&#64;tvsspaces.com</a>
+      </p>
+    </div>
+  </div>
+</section>

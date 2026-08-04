@@ -1,0 +1,189 @@
+// Shared landing-page primitives. Imported by section stylesheets so the CTA,
+// plate, chip and reveal treatments are written once.
+//
+// Imports mixins only, never `landing-tokens`: the token block is CSS output and
+// belongs to the page shell alone, otherwise every section would ship its own
+// copy of it. Custom properties inherit down the DOM, so sections just read them.
+@import 'landing-mixins';
+
+// -----------------------------------------------------------------------------
+// Actions
+// -----------------------------------------------------------------------------
+@mixin tvs-action-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tvs-2);
+  min-block-size: 48px; // touch target floor
+  padding-inline: var(--tvs-5);
+  padding-block: var(--tvs-3);
+  border: 1px solid transparent;
+  border-radius: var(--tvs-r-control);
+  font: var(--tvs-button);
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap; // CTA labels are short enough to never wrap
+  cursor: pointer;
+  transition: background-color var(--tvs-fast) var(--tvs-ease),
+    border-color var(--tvs-fast) var(--tvs-ease),
+    color var(--tvs-fast) var(--tvs-ease),
+    transform var(--tvs-fast) var(--tvs-ease);
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+// Primary: ink fill, white label. 16.4:1.
+@mixin tvs-action-primary {
+  @include tvs-action-base;
+  background: var(--tvs-ink-900);
+  color: #ffffff;
+
+  &:hover {
+    background: var(--tvs-ink-700);
+  }
+
+  &:focus-visible {
+    @include tvs-focus-ring(false);
+  }
+}
+
+// Secondary on light: ink label on paper with a drawn edge. 15:1.
+@mixin tvs-action-secondary {
+  @include tvs-action-base;
+  background: transparent;
+  color: var(--tvs-ink-900);
+  border-color: var(--tvs-ink-300);
+
+  &:hover {
+    background: var(--tvs-ink-050);
+    border-color: var(--tvs-ink-600);
+  }
+
+  &:focus-visible {
+    @include tvs-focus-ring(false);
+  }
+}
+
+// Primary on dark: paper fill, ink label. 16.4:1.
+@mixin tvs-action-on-dark {
+  @include tvs-action-base;
+  background: var(--tvs-paper);
+  color: var(--tvs-ink-900);
+
+  &:hover {
+    background: #ffffff;
+  }
+
+  &:focus-visible {
+    @include tvs-focus-ring(true);
+  }
+}
+
+// Secondary on dark: paper label on ink with a drawn edge. 13.6:1.
+@mixin tvs-action-ghost-on-dark {
+  @include tvs-action-base;
+  background: transparent;
+  color: var(--tvs-text-on-dark);
+  border-color: rgba(223, 232, 239, 0.34);
+
+  &:hover {
+    background: rgba(223, 232, 239, 0.1);
+    border-color: rgba(223, 232, 239, 0.6);
+  }
+
+  &:focus-visible {
+    @include tvs-focus-ring(true);
+  }
+}
+
+// Text action with a drawn underline, for in-flow links.
+@mixin tvs-action-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tvs-2);
+  min-block-size: 44px;
+  color: var(--tvs-ink-600);
+  font: var(--tvs-button);
+  text-decoration: none;
+  border-block-end: 1px solid var(--tvs-ink-300);
+  transition: color var(--tvs-fast) var(--tvs-ease),
+    border-color var(--tvs-fast) var(--tvs-ease);
+
+  &:hover {
+    color: var(--tvs-ink-900);
+    border-color: var(--tvs-ink-900);
+  }
+
+  &:focus-visible {
+    @include tvs-focus-ring(false);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Surfaces
+// -----------------------------------------------------------------------------
+// Elevation is declared once: this uses a border, never a border *and* a shadow.
+@mixin tvs-plate {
+  background: var(--tvs-surface-raised);
+  border: var(--tvs-rule);
+  border-radius: var(--tvs-r-plate);
+  overflow: hidden;
+}
+
+@mixin tvs-section {
+  padding-block: var(--tvs-section-y);
+}
+
+// -----------------------------------------------------------------------------
+// Small parts
+// -----------------------------------------------------------------------------
+@mixin tvs-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tvs-2);
+  padding-inline: var(--tvs-3);
+  padding-block: var(--tvs-1);
+  border-radius: var(--tvs-r-chip);
+  background: var(--tvs-ink-100);
+  color: var(--tvs-ink-700);
+  font: var(--tvs-meta);
+}
+
+@mixin tvs-numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+// -----------------------------------------------------------------------------
+// Section entry motion
+// -----------------------------------------------------------------------------
+// The armed class is only applied by RevealDirective when motion is allowed, so
+// the resting state below is what renders without JavaScript or with reduced
+// motion. Transform and opacity only; no layout properties animate.
+@mixin tvs-reveal-rules {
+  .tvs-reveal-armed {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+    transition: opacity var(--tvs-slow) var(--tvs-ease) var(--tvs-reveal-delay, 0ms),
+      transform var(--tvs-slow) var(--tvs-ease) var(--tvs-reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .tvs-reveal-in {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tvs-reveal-armed,
+    .tvs-reveal-in {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}

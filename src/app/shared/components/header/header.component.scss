@@ -1,149 +1,389 @@
-@import "abstracts/variables";
-@import "abstracts/component";
-/* Header Styles */
-.header {
+@import 'landing-mixins';
+
+// The header lives outside the landing page shell, so it declares the handful
+// of tokens it needs rather than inheriting from `.tvs`.
+:host {
+  --hdr-ink: #0e1626;
+  --hdr-ink-700: #24354f;
+  --hdr-paper: #eef3f7;
+  --hdr-muted: #9fb0c9;
+  --hdr-cyan: #00dfe4;
+  --hdr-font: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial,
+    sans-serif;
+
+  display: block;
+}
+
+.header-sentinel {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: $black-80;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid $light-color;
-  z-index: $z-index-fixed;
-  transition: all $transition-base;
-  padding: 0 24px;
+  inset-block-start: 0;
+  inline-size: 1px;
+  block-size: 1px;
+  pointer-events: none;
 }
 
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $spacing-md 0;
-}
+// -----------------------------------------------------------------------------
+// Bar
+// -----------------------------------------------------------------------------
+.site-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1030;
+  background: var(--hdr-ink);
+  // The bar starts flush with the hero, which is the same ink, then gains an
+  // edge once the page scrolls. No colour change, just a boundary.
+  border-block-end: 1px solid transparent;
+  transition: border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1);
 
-.logo {
-  width: 150px;
-  height: auto;
-}
-.logo-img {
-  width: 100%;
-  height: auto;
-}
-
-.nav {
-  display: flex;
-  gap: $spacing-lg;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: $white-20;
-  font-weight: $font-weight-medium;
-  padding: $spacing-sm 0;
-  position: relative;
-  transition: all $transition-base;
-  font-family: $font-family-heading;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: $white-80;
-}
-
-.nav-link.active::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: $white-40;
-}
-
-.header-actions {
-  display: flex;
-  gap: $spacing-md;
-  align-items: center;
-}
-
-.mobile-menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: $white-color;
-  cursor: pointer;
-  background: $primary-color;
-  border-radius: 4px;
-  padding: 4px;
-}
-
-/* Mobile Menu */
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: $white-color;
-  z-index: $z-index-modal;
-  transform: translateX(-100%);
-  transition: transform $transition-base;
-}
-
-.mobile-menu.active {
-  transform: translateX(0);
-}
-
-.mobile-menu-content {
-  padding: $spacing-lg;
-}
-
-.mobile-menu-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: $spacing-lg;
-}
-
-.mobile-menu-close {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: $white-color;
-  cursor: pointer;
-  background: $primary-color;
-  border-radius: 4px;
-  padding: 4px;
-}
-
-.mobile-nav {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-  margin-bottom: $spacing-lg;
-}
-
-.mobile-nav-link {
-  text-decoration: none;
-  color: $black-60;
-  font-weight: $font-weight-medium;
-  padding: $spacing-md 0;
-  border-bottom: 1px solid $light-color;
-}
-
-.mobile-menu-actions {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-}
-
-@media screen and (max-width: 968px) {
-  .nav , .header-actions {
-    display: none;
+  &.is-pinned {
+    border-block-end-color: rgba(223, 232, 239, 0.14);
+    box-shadow: 0 1px 0 rgba(14, 22, 38, 0.4), 0 10px 30px -22px rgba(0, 0, 0, 0.9);
   }
-  .mobile-menu-toggle {
+}
+
+.site-header__bar {
+  inline-size: 100%;
+  max-inline-size: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 0.5rem + 3vw, 4rem);
+  // Capped well under the 80px ceiling so the bar never dominates.
+  block-size: 68px;
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2.5rem);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+
+  &:focus-visible {
+    @include tvs-focus-ring(true);
+  }
+}
+
+.brand__mark {
+  block-size: 30px;
+  inline-size: auto;
+  display: block;
+}
+
+// -----------------------------------------------------------------------------
+// Desktop nav
+// -----------------------------------------------------------------------------
+.nav {
+  display: none;
+  margin-inline-end: auto;
+
+  @include tvs-up($tvs-bp-md) {
     display: block;
   }
-  
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 1.6vw, 1.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  block-size: 44px;
+  padding-inline: 2px;
+  font: 500 0.9375rem/1 var(--hdr-font);
+  color: var(--hdr-paper);
+  text-decoration: none;
+
+  // Hover and active are drawn as an underline on the bar's own baseline, not
+  // as a colour-only change.
+  &::after {
+    content: '';
+    position: absolute;
+    inset-block-end: 14px;
+    inset-inline: 0;
+    block-size: 1px;
+    background: var(--hdr-cyan);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+  }
+
+  &:focus-visible {
+    @include tvs-focus-ring(true);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__link::after {
+    transition: none;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Actions
+// -----------------------------------------------------------------------------
+.actions {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+  margin-inline-start: auto;
+
+  @include tvs-up($tvs-bp-md) {
+    display: flex;
+  }
+}
+
+.actions__who {
+  font: 500 0.875rem/1 var(--hdr-font);
+  color: var(--hdr-muted);
+  max-inline-size: 12ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin bar-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 40px;
+  padding-inline: 1rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font: 600 0.9375rem/1 var(--hdr-font);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 140ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 140ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:focus-visible {
+    @include tvs-focus-ring(true);
+  }
+}
+
+// Paper fill on ink: 16.4:1.
+.actions__primary {
+  @include bar-action;
+  background: #fbfcfd;
+  color: #0e1626;
+
+  &:hover {
+    background: #ffffff;
+  }
+}
+
+// Paper label on ink: 13.6:1.
+.actions__ghost {
+  @include bar-action;
+  background: transparent;
+  color: var(--hdr-paper);
+  border-color: rgba(223, 232, 239, 0.3);
+
+  &:hover {
+    border-color: rgba(223, 232, 239, 0.6);
+    background: rgba(223, 232, 239, 0.08);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Burger
+// -----------------------------------------------------------------------------
+.burger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  padding-inline: 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(223, 232, 239, 0.3);
+  border-radius: 8px;
+  color: var(--hdr-paper);
+  font: 600 0.875rem/1 var(--hdr-font);
+  cursor: pointer;
+
+  &:focus-visible {
+    @include tvs-focus-ring(true);
+  }
+
+  @include tvs-up($tvs-bp-md) {
+    display: none;
+  }
+}
+
+.burger__bars {
+  position: relative;
+  inline-size: 16px;
+  block-size: 10px;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    block-size: 1.5px;
+    background: currentColor;
+  }
+
+  &::before {
+    inset-block-start: 0;
+  }
+
+  &::after {
+    inset-block-end: 0;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Mobile sheet
+// -----------------------------------------------------------------------------
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1040;
+  background: rgba(14, 22, 38, 0.62);
+}
+
+.sheet {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-end: 0;
+  z-index: 1050;
+  inline-size: min(340px, 88vw);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.25rem;
+  background: var(--hdr-ink);
+  color: var(--hdr-paper);
+  border-inline-start: 1px solid rgba(223, 232, 239, 0.14);
+  transform: translateX(100%);
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  // No `visibility` toggle: a transitioned `visibility` is still computed as
+  // hidden on the frame the panel opens, and a hidden element refuses focus.
+  // The `inert` attribute already removes the closed panel from the tab order,
+  // the accessibility tree and pointer events, which is what we actually want.
+  &[inert] {
+    pointer-events: none;
+  }
+
+  &.is-open {
+    transform: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  @include tvs-up($tvs-bp-md) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet {
+    transition: none;
+  }
+}
+
+.sheet__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-block-size: 44px;
+}
+
+.sheet__title {
+  font: 600 0.875rem/1 var(--hdr-font);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--hdr-muted);
+}
+
+.sheet__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 44px;
+  block-size: 44px;
+  background: transparent;
+  border: 1px solid rgba(223, 232, 239, 0.3);
+  border-radius: 8px;
+  color: var(--hdr-paper);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+
+  &:focus-visible {
+    @include tvs-focus-ring(true);
+  }
+}
+
+// Visible label for the icon button, exposed to assistive tech only.
+.sheet__close-label {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.sheet__nav {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    min-block-size: 52px;
+    font: 500 1.125rem/1.2 var(--hdr-font);
+    color: var(--hdr-paper);
+    text-decoration: none;
+    border-block-end: 1px solid rgba(223, 232, 239, 0.12);
+
+    &:focus-visible {
+      @include tvs-focus-ring(true);
+    }
+  }
+}
+
+.sheet__actions {
+  display: grid;
+  gap: 0.75rem;
+  margin-block-start: auto;
+}
+
+.sheet__primary {
+  @include bar-action;
+  min-block-size: 48px;
+  background: #fbfcfd;
+  color: #0e1626;
+}
+
+.sheet__ghost {
+  @include bar-action;
+  min-block-size: 48px;
+  background: transparent;
+  color: var(--hdr-paper);
+  border-color: rgba(223, 232, 239, 0.3);
 }
