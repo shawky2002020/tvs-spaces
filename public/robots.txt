@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /dashboard/*
+
+Sitemap: https://client-three-zeta-29.vercel.app/sitemap.xml

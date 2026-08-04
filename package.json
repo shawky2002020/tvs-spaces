@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "screenshots": "playwright test e2e/capture-all-docs.spec.ts"
   },
   "prettier": {
     "overrides": [

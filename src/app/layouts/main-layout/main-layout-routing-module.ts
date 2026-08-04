@@ -9,6 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        title: 'TVS Spaces | Coworking Desks & Meeting Rooms Heliopolis',
         loadComponent: () =>
           import('../../features/landing/landing-page.component').then(
             (m) => m.LandingPageComponent
@@ -16,6 +17,7 @@ const routes: Routes = [
       },
       {
         path: 'rooms/:type',
+        title: 'Room Details | TVS Spaces Heliopolis',
         loadComponent: () =>
           import('../../pages/room-detail/room-detail.component').then(
             (m) => m.RoomDetailComponent
@@ -23,6 +25,7 @@ const routes: Routes = [
       },
       {
         path: 'desks/:type',
+        title: 'Desk Details | TVS Spaces Heliopolis',
         loadComponent: () =>
           import('../../pages/desk-detail/desk-detail.component').then(
             (m) => m.DeskDetailComponent

@@ -15,6 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'payment-required',
+    title: 'Payment Required | TVS Spaces',
     component: PaymentRequiredComponent,
   },
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
   },
   {
     path: '**',
+    title: '404 Page Not Found | TVS Spaces',
     component: NotFoundComponent,
   },
 ];

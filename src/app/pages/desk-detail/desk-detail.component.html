@@ -71,11 +71,17 @@
     <section class="images-section" *ngIf="currentSpace.additionalImages?.length">
       <h2>More Images</h2>
       <div class="polaroid-gallery">
-        <div class="polaroid" *ngFor="let image of currentSpace.additionalImages">
+        <div class="polaroid" *ngFor="let image of currentSpace.additionalImages" (click)="openPreview(image)">
           <img [src]="image" [alt]="currentSpace.name" />
         </div>
       </div>
     </section>
+
+    <!-- Lightbox Modal -->
+    <div class="image-lightbox" *ngIf="previewImage" (click)="closePreview()">
+      <span class="lightbox-close">&times;</span>
+      <img [src]="previewImage" [alt]="currentSpace.name" (click)="$event.stopPropagation()" />
+    </div>
 
     <section class="policy-section">
       <h2>Usage Policy</h2>

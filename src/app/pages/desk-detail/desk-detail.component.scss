@@ -282,26 +282,89 @@ section {
   width: 0;
   display: none;
 }
+.images-section {
+  margin: 40px 0;
+
+  h2 {
+    color: $black-80;
+    font-family: $font-family-heading;
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-md;
+  }
+}
+
 .polaroid-gallery {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: $spacing-md;
-  overflow-x: auto;
-  padding-bottom: $spacing-sm;
 
   .polaroid {
-    border-radius: 8px;
+    border-radius: 12px;
     background-color: $white-color;
-    padding: $spacing-sm;
-    box-shadow: $shadow-md;
-    min-width: min(320px, 80vw);
-    flex-shrink: 0;
+    padding: 8px;
+    box-shadow: $shadow-sm;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transition: transform $transition-base, box-shadow $transition-base;
+    cursor: pointer;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $shadow-md;
+      border-color: $primary-color;
+
+      img {
+        transform: scale(1.04);
+      }
+    }
 
     img {
       width: 100%;
-      aspect-ratio: 1 / 1;
+      height: 140px;
       object-fit: cover;
-      border-radius: 4px;
-      margin-bottom: $spacing-xs;
+      border-radius: 8px;
+      transition: transform $transition-base;
+      display: block;
+    }
+  }
+}
+
+.image-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  cursor: pointer;
+  animation: fadeIn 0.25s ease;
+
+  img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 300;
+    cursor: pointer;
+    line-height: 1;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.2);
     }
   }
 }
@@ -509,10 +572,6 @@ section {
 
   .header-image {
     height: 250px;
-  }
-
-  .polaroid-gallery {
-    grid-template-columns: 1fr 1fr;
   }
 
   .modal-body {
