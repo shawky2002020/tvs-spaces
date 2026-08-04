@@ -87,8 +87,8 @@ export class BookingService {
       const parsed = JSON.parse(stored) as BookingSelection;
       if (parsed.date) {
         parsed.date = Array.isArray(parsed.date)
-          ? parsed.date.map((date) => new Date(date)) as [Date, Date]
-          : new Date(parsed.date);
+          ? parsed.date.map((date) => new Date(String(date))) as [Date, Date]
+          : new Date(String(parsed.date));
       }
       this.selection = parsed;
       return this.selection;
