@@ -1,357 +1,86 @@
-import {
-  Component,
-  Input,
-  inject,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  AfterViewInit,
-} from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  MatDatepickerModule,
-  MatDateSelectionModel,
-} from '@angular/material/datepicker';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatNativeDateModule } from '@angular/material/core'; // ← Add this import
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import {
-  Space,
-  ReservedDates,
-  SPACES,
-  PricingPackage,
-  PricingPackageType,
-} from '../../../../shared/constants/space.model';
-import { SpaceAvailabilityUtils } from '../../../../shared/utils/SpaceAvailabilityUtils';
+import { Space } from '../../../../shared/constants/space.model';
 import { BookingService } from '../../services/booking.service';
 
 @Component({
   selector: 'app-date-plan-picker',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatDatepickerModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatRadioModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatIconModule,
-    MatNativeDateModule,
-    MatSelectModule,
-  ],
+  imports: [CommonModule, FormsModule, MatRadioModule, MatSnackBarModule],
   templateUrl: './date-plan-picker.component.html',
   styleUrls: ['./date-plan-picker.component.scss'],
 })
-export class DatePlanPickerComponent implements OnInit, OnChanges, AfterViewInit {
-  // For 7-day grid navigation
-  gridStartDay: number = new Date().getDate();
-  gridDaysCount: number = 7;
-  daysInMonth: number = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
-  // --- Availability Map (no longer used, now backend-driven) ---
-  availabilityMap: Record<string, Record<number, number>> = {};
+export class DatePlanPickerComponent implements OnInit {
+  space = {} as Space;
+  plan: 'Hourly' | 'Daily' = 'Hourly';
+  quantity = 1;
 
-  space!: Space;
-  selectedId: string | undefined;
-  plan: 'Hourly' | 'Half-day' | 'Daily' | 'Monthly' = 'Hourly';
-  quantity: number = 1; // Default quantity
-  bookedHours = 0;
-  bookedDays = 0;
   date: Date | null = null;
   endDate: Date | null = null;
-  startTime!: number;
-  endTime!: number;
-  price: number = 0;
-  error: string = '';
-  loading: boolean = false;
-  hours: number[] = Array.from({ length: 16 }, (_, i) => i + 9); // [9, 10, 11, ... ]
-  hoursString: string[] = Array.from({ length: 14 }, (_, i) =>
-    (i + 10).toString().concat('AM')
-  ); // ["00", "01", ... "23"]
+  startTime = 0;
+  endTime = 0;
+  price = 0;
+  error = '';
+  loading = false;
 
-  // --- Monthly plan support ---
-  selectedMonth: Date | null = null;
-  selectedDay: Date | null = null;
+  bookedHours = 0;
+  pricingPackage = '';
 
-  pricingPackage!: string;
-
-  constructor(
-    private router: Router,
-    private bookingService: BookingService,
-    private snackBar: MatSnackBar,
-    private location: Location,
-    private route: ActivatedRoute
-  ) {}
-  ngAfterViewInit(): void {
-    // this.styleUnavailableDates();
-  }
-  // Time options for hourly booking
-  timeOptions: string[] = this.generateTimeOptions();
-  unavailableDates: Date[] = [];
-
-  ngOnInit() {
-    this.initializeFromBookingService();
-    this.updateUnavailableDates();
-    this.month = new Date().getMonth();
-    this.year = new Date().getFullYear();
-    this.generateSlotGrid();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['space'] && this.space) {
-      this.updateUnavailableDates();
-      this.generateSlotGrid();
-    }
-  }
-  // --- Date grid for month view ---
-
-  // Generate grid for current month and check availability for each day
-  // --- For grid UI ---
-  month: number = new Date().getMonth();
-  year: number = new Date().getFullYear();
-  hoursGrid: Array<number> = Array.from({ length: 14 }, (_, i) => i + 9); // 9am-18pm
+  readonly hoursGrid: number[] = Array.from({ length: 9 }, (_, index) => index + 9);
   slotGrid: Array<{
     date: Date;
     slots: Array<{ hour: number; available: boolean }>;
   }> = [];
 
-  // Select a slot (date + hour)
-  selectSlot(selectedDate: Date, selectedHour: number) {
-    this.date = selectedDate;
-    this.startTime = selectedHour;
-    this.endTime = selectedHour + 1; // default to 1 hour slot
-    this.onDateChange(selectedDate);
-    this.onTimeChange();
-  }
+  private gridStartDate = this.startOfDay(new Date());
 
-  // Navigation for next/prev 7 days
-  nextDays() {
-    this.daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
-    if (this.gridStartDay + this.gridDaysCount <= this.daysInMonth) {
-      this.gridStartDay += this.gridDaysCount;
-    } else if (this.month < 11) {
-      this.month++;
-      this.gridStartDay = 1;
-      this.year = this.year;
-    } else {
-      this.month = 0;
-      this.year++;
-      this.gridStartDay = 1;
+  constructor(
+    private readonly router: Router,
+    private readonly bookingService: BookingService,
+    private readonly snackBar: MatSnackBar,
+    private readonly route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    const selection = this.bookingService.getSelection();
+    if (!selection.spaceId) {
+      this.router.navigate(['/dashboard/booking']);
+      return;
     }
-    this.generateSlotGrid();
-  }
 
-  prevDays() {
-    if (this.gridStartDay - this.gridDaysCount > 0) {
-      this.gridStartDay -= this.gridDaysCount;
-    } else if (this.month > 0) {
-      this.month--;
-      this.daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
-      this.gridStartDay = this.daysInMonth - (this.daysInMonth % this.gridDaysCount || this.gridDaysCount) + 1;
-    } else {
-      this.month = 11;
-      this.year--;
-      this.daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
-      this.gridStartDay = this.daysInMonth - (this.daysInMonth % this.gridDaysCount || this.gridDaysCount) + 1;
+    if (selection.space) {
+      this.space = selection.space;
+      this.generateSlotGrid();
+      return;
     }
-    this.generateSlotGrid();
-  }
 
-  // Generate grid for current month and check slot availability for each day/hour
-  generateSlotGrid() {
-    if (!this.space || !this.space.id) return;
-    this.daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
-    this.slotGrid = [];
-    const start = this.gridStartDay;
-    console.log('start day',start);
-    
-    const end = Math.min(start + this.gridDaysCount - 1, this.daysInMonth);
-    for (let day = start; day <= end; day++) {
-      const date = new Date(this.year, this.month, day);
-      const now = new Date();
-      now.setHours(0, 0, 0, 0);
-      if (date < now) {
-        const slots = this.hoursGrid.map(hour => ({ hour, available: false }));
-        this.slotGrid.push({ date, slots });
-      } else {
-        // For async population, push placeholder and update later
-        const slots = this.hoursGrid.map(hour => ({ hour, available: false }));
-        this.slotGrid.push({ date, slots });
-        this.bookingService.getAvailabilityGrid(this.space.id, date.toISOString().slice(0, 10)).subscribe(
-          (response) => {
-            const found = this.slotGrid.find(row => row.date.getTime() === date.getTime());
-            if (found) {
-              found.slots = this.hoursGrid.map(hour => {
-                const slot = response.slots?.find((s: any) => s.hour === hour);
-                return { hour, available: slot ? slot.available : false };
-              });
-            }
-          },
-          (error) => {
-            // On error, keep all slots unavailable
-            console.log(error);
-            
-          }
-        );
-      }
-    }
-  }
-
-  get minDay(): Date | null {
-    if (!this.selectedMonth) return null;
-    return new Date(
-      this.selectedMonth.getFullYear(),
-      this.selectedMonth.getMonth(),
-      1
-    );
-  }
-  get maxDay(): Date | null {
-    if (!this.selectedMonth) return null;
-    return new Date(
-      this.selectedMonth.getFullYear(),
-      this.selectedMonth.getMonth() + 1,
-      0
-    );
-  }
-
-  onMonthChange(month: Date | null) {
-    this.selectedMonth = month;
-    this.selectedDay = null;
-    if (month) {
-      // Set date and endDate to first and last day of month
-      this.date = new Date(month.getFullYear(), month.getMonth(), 1);
-      this.endDate = new Date(month.getFullYear(), month.getMonth() + 1, 0);
-      this.calculatePrice();
-    }
-  }
-
-  onDayChange(day: Date | null) {
-    this.selectedDay = day;
-    if (day && this.selectedMonth) {
-      this.date = new Date(day);
-      this.endDate = new Date(day);
-      this.calculatePrice();
-    }
-  }
-
-  onMonthPickerClosed() {
-    // Optionally reset day selection if month changed
-    if (this.selectedMonth && this.selectedDay) {
-      if (
-        this.selectedDay.getMonth() !== this.selectedMonth.getMonth() ||
-        this.selectedDay.getFullYear() !== this.selectedMonth.getFullYear()
-      ) {
-        this.selectedDay = null;
-      }
-    }
-  }
-
-  // Use backend unavailable dates for date picker filtering
-  isDateFree = (d: any): boolean => {
-    if (!d) return false;
-    let date: Date =
-      d instanceof Date
-        ? d
-        : d._isAMomentObject && d._d instanceof Date
-        ? d._d
-        : new Date();
-
-    // Disable past days
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const cleanDate = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate()
-    );
-    if (cleanDate < today) return false;
-
-    // Check if in unavailableDates (populated from backend)
-    const isUnavailable = this.unavailableDates.some((unavailableDate) => {
-      if (!unavailableDate || !(unavailableDate instanceof Date)) return false;
-      const cleanUnavailable = new Date(
-        unavailableDate.getFullYear(),
-        unavailableDate.getMonth(),
-        unavailableDate.getDate()
-      );
-      return cleanUnavailable.getTime() === cleanDate.getTime();
+    this.loading = true;
+    this.bookingService.getSpaceById(selection.spaceId).subscribe({
+      next: (space) => {
+        this.space = space;
+        this.bookingService.setSelection({ space, spaceId: space.id });
+        this.loading = false;
+        this.generateSlotGrid();
+      },
+      error: () => {
+        this.loading = false;
+        this.error = 'Unable to load the selected space.';
+      },
     });
-    return !isUnavailable;
-  };
-
-  // Use backend for hour availability (async)
-  isStartHourAvailable(hour: number): boolean {
-    // This should be replaced with an async check using bookingService.getAvailabilityGrid
-    // For now, always return true (UI should be updated to support async checks)
-    return true;
-  }
-  isEndHourAvailable(hour: number): boolean {
-    // This should be replaced with an async check using bookingService.getAvailabilityGrid
-    // For now, always return true (UI should be updated to support async checks)
-    return true;
   }
 
-  private initializeFromBookingService() {
-    this.selectedId = this.bookingService.getBookingDetails().spaceId;
-    const selspace = SPACES.filter((space) => {
-      return space.id == this.selectedId;
-    })[0];
-    if (selspace) this.space = selspace;
-    else this.space = JSON.parse(localStorage.getItem('space') || '{}');
-
-    this.updateUnavailableDates();
-    localStorage.setItem('space', JSON.stringify(this.space));
+  get year(): number {
+    return this.gridStartDate.getFullYear();
   }
 
-  private updateUnavailableDates() {
-    // Use backend to get unavailable dates for the current month
-    if (!this.space || !this.space.id) return;
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1; // backend expects 1-based month
-    this.bookingService
-      .getUnavailableDates(this.space.id, year, month)
-      .subscribe(
-        (response) => {
-          // Assume response.dates is an array of ISO date strings
-          this.unavailableDates = (response.dates || []).map(
-            (d: string) => new Date(d)
-          );
-        },
-        (error) => {
-          this.unavailableDates = [];
-        }
-      );
+  get month(): number {
+    return this.gridStartDate.getMonth();
   }
 
-  private generateTimeOptions(): string[] {
-    const options: string[] = [];
-    for (let hour = 0; hour < 24; hour++) {
-      for (let minute = 0; minute < 60; minute += 30) {
-        options.push(
-          `${hour.toString().padStart(2, '0')}:${minute
-            .toString()
-            .padStart(2, '0')}`
-        );
-      }
-    }
-    return options;
-  }
-
-  get minDate(): Date {
-    return new Date();
-  }
-
-  //FORM VALIDATIONS
   get isHourly(): boolean {
     return this.plan === 'Hourly';
   }
@@ -360,372 +89,214 @@ export class DatePlanPickerComponent implements OnInit, OnChanges, AfterViewInit
     return this.plan === 'Daily';
   }
 
-  get isMonthly(): boolean {
-    return this.plan === 'Monthly';
+  get isFormValid(): boolean {
+    if (!this.date || this.price <= 0) return false;
+    if (this.isHourly) {
+      return this.startTime >= 9 && this.endTime > this.startTime && this.endTime <= 18;
+    }
+    return !!this.endDate;
   }
 
-  get isFormValid(): boolean {
-    if (!this.date) return false;
+  nextDays(): void {
+    this.gridStartDate = this.addDays(this.gridStartDate, 7);
+    this.generateSlotGrid();
+  }
+
+  prevDays(): void {
+    const candidate = this.addDays(this.gridStartDate, -7);
+    const today = this.startOfDay(new Date());
+    this.gridStartDate = candidate < today ? today : candidate;
+    this.generateSlotGrid();
+  }
+
+  generateSlotGrid(): void {
+    if (!this.space.id) return;
+
+    this.slotGrid = Array.from({ length: 7 }, (_, index) => {
+      const date = this.addDays(this.gridStartDate, index);
+      return {
+        date,
+        slots: this.hoursGrid.map((hour) => ({ hour, available: false })),
+      };
+    });
+
+    for (const row of this.slotGrid) {
+      if (row.date < this.startOfDay(new Date())) continue;
+
+      this.bookingService
+        .getAvailabilityGrid(this.space.id, this.formatApiDate(row.date))
+        .subscribe({
+          next: (response) => {
+            row.slots = this.hoursGrid.map((hour) => {
+              const slot = response.slots?.find(
+                (candidate: { hour: number; available: boolean }) => candidate.hour === hour
+              );
+              return { hour, available: !!slot?.available };
+            });
+          },
+          error: () => {
+            row.slots = this.hoursGrid.map((hour) => ({ hour, available: false }));
+          },
+        });
+    }
+  }
+
+  selectSlot(selectedDate: Date, selectedHour: number): void {
+    this.date = this.startOfDay(selectedDate);
+    this.endDate = this.startOfDay(selectedDate);
 
     if (this.isHourly) {
-      return !!this.startTime && !!this.endTime;
+      this.startTime = selectedHour;
+      this.endTime = selectedHour + 1;
+      this.bookedHours = 1;
+    } else {
+      this.startTime = 9;
+      this.endTime = 18;
+      this.bookedHours = 9;
     }
 
-    if (this.isDaily) {
-      return !!this.endDate && this.endDate >= this.date;
-    }
-
-    if (this.isMonthly) {
-      return true; // Date is already set to first day of month
-    }
-
-    return false;
+    this.error = '';
+    this.calculatePrice();
+    this.validateAvailability();
   }
 
-  onPlanChange() {
+  onPlanChange(): void {
     this.date = null;
     this.endDate = null;
     this.startTime = 0;
     this.endTime = 0;
+    this.bookedHours = 0;
     this.price = 0;
     this.error = '';
-    this.selectedMonth = null;
-    this.selectedDay = null;
-    this.bookedDays = 0;
-    this.bookedHours = 0;
     this.pricingPackage = '';
   }
 
-  onDateChange(selectedDate: Date | null) {
-    this.date = selectedDate;
-    this.error = '';
-
-    if (this.isMonthly && selectedDate) {
-      // Set to first and last day of month for monthly plan
-      const firstDay = new Date(
-        selectedDate.getFullYear(),
-        selectedDate.getMonth(),
-        1
-      );
-      const lastDay = new Date(
-        selectedDate.getFullYear(),
-        selectedDate.getMonth() + 1,
-        0
-      );
-
-      this.date = firstDay;
-      this.endDate = lastDay;
-    } else if (this.isDaily) {
-      // For daily plan, set end date to same as start date initially
-      this.endDate = selectedDate;
-    }
-
-    this.calculatePrice();
-    this.validateAvailability();
-  }
-
-  onEndDateChange(date: Date | null) {
-    this.endDate = date;
-    this.calculatePrice();
-    this.validateAvailability();
-  }
-
-  onTimeChange() {
-    this.calculatePrice();
-    this.validateTimeRange();
-  }
-
-  validateTimeRange() {
-    if (this.isHourly && this.startTime && this.endTime) {
-      // const [startHours, startMinutes] = this.startTime.split(':').map(Number);
-      // const [endHours, endMinutes] = this.endTime.split(':').map(Number);
-      const startHours = this.startTime;
-      const endHours = this.endTime;
-
-      const startTotal = startHours * 60;
-      const endTotal = endHours * 60;
-
-      if (endTotal <= startTotal) {
-        this.error = 'End time must be after start time';
-      } else {
-        this.error = '';
-      }
+  onQuantityChange(): void {
+    this.quantity = Math.max(1, Math.min(this.quantity, this.space.capacity || 1));
+    if (this.date) {
+      this.calculatePrice();
+      this.validateAvailability();
     }
   }
 
-  // Add this method to handle quantity changes
-  onQuantityChange() {
-    if (this.quantity < 1) this.quantity = 1;
-    if (this.space.capacity && this.quantity > this.space.capacity) {
-      this.quantity = this.space.capacity;
-    }
-    this.validateAvailability();
-    this.calculatePrice();
-  }
-
-  // Use backend to check availability for the selected period
-  validateAvailability() {
-    if (!this.date) return;
-
-    if (this.endDate && !this.isDateFree(this.endDate)) {
-      this.error = 'Selected end date is not available';
-      return;
-    }
-
-    if (this.date && this.endDate) {
-      const request = {
-        spaceId: this.space.id,
-        date: this.date.toISOString().slice(0, 10),
-        startTime: this.isHourly ? this.startTime : 9,
-        endTime: this.isHourly ? this.endTime : 17,
-        requestedUnits: this.quantity,
-      };
-      this.bookingService.checkAvailability(request).subscribe(
-        (response) => {
-          if (!response.available) {
-            if (this.quantity > 1) {
-              this.error = `Not enough units available for the selected period. Please reduce quantity or choose different dates.`;
-            } else {
-              this.error = 'Selected period is not available';
-            }
-          } else {
-            this.error = '';
-          }
-        },
-        (error) => {
-          this.error = 'Error checking availability.';
-        }
-      );
-    }
-  }
-
-  // Use backend to calculate price
-  calculatePrice() {
-    if (!this.date || !this.space) {
+  calculatePrice(): void {
+    if (!this.date || !this.space.id || !this.startTime || !this.endTime) {
       this.price = 0;
       return;
     }
 
-    const request = {
-      spaceId: this.space.id,
-      plan: this.plan,
-      date: this.date.toISOString().slice(0, 10),
-      endDate: this.endDate
-        ? this.endDate.toISOString().slice(0, 10)
-        : undefined,
-      startTime: this.isHourly ? this.startTime : 9,
-      endTime: this.isHourly ? this.endTime : 17,
-      quantity: this.quantity,
-    };
-    this.bookingService.calculatePrice(request).subscribe(
-      (response) => {
-        this.price = response.price || 0;
+    this.bookingService.calculatePrice(this.buildRequest()).subscribe({
+      next: (response) => {
+        this.price = Number(response.price) || 0;
+        this.pricingPackage = this.plan;
       },
-      (error) => {
+      error: (err) => {
         this.price = 0;
-      }
-    );
+        this.error = err.error?.message || 'Unable to calculate the booking price.';
+      },
+    });
   }
 
-  // Add getter for Half-day plan
-  get isHalfDay(): boolean {
-    return this.plan === 'Half-day';
+  validateAvailability(): void {
+    if (!this.date || !this.space.id || !this.startTime || !this.endTime) return;
+
+    this.bookingService.checkAvailability({
+      ...this.buildRequest(),
+      requestedUnits: this.quantity,
+    }).subscribe({
+      next: (response) => {
+        this.error = response.available ? '' : 'Selected period is not available.';
+      },
+      error: (err) => {
+        this.error = err.error?.message || 'Unable to check availability.';
+      },
+    });
   }
 
-  // Update next method to include quantity in booking details
-  next() {
-    if (!this.isFormValid || this.error) {
-      this.snackBar.open('Please complete all fields correctly.', 'Close', {
+  next(): void {
+    if (!this.isFormValid || this.error || this.loading || !this.date || !this.endDate) {
+      this.snackBar.open('Please select an available booking period.', 'Close', {
         duration: 3000,
         panelClass: ['error-snackbar'],
       });
       return;
     }
 
-    if (!this.date) return;
-
-    const startDateTime = this.getStartDateTime();
-    const endDateTime = this.getEndDateTime();
-
-    if (endDateTime <= startDateTime) {
-      this.snackBar.open(
-        'End date/time must be after start date/time',
-        'Close',
-        {
-          duration: 3000,
-          panelClass: ['error-snackbar'],
-        }
-      );
-      return;
-    }
-
     this.loading = true;
-
-    const request = {
-      spaceId: this.space.id,
-      date: this.date.toISOString().slice(0, 10),
-      startTime: this.isHourly ? this.startTime : 9,
-      endTime: this.isHourly ? this.endTime : 17,
+    this.bookingService.checkAvailability({
+      ...this.buildRequest(),
       requestedUnits: this.quantity,
-    };
-
-    this.bookingService.checkAvailability(request).subscribe(
-      (response) => {
+    }).subscribe({
+      next: (response) => {
         this.loading = false;
-        if (response.available) {
-          try {
-            this.bookingService.setPlan(this.plan);
-            this.bookingService.setDates(startDateTime, endDateTime);
-
-            if (this.isHourly) {
-              this.bookingService.setTimes(this.startTime, this.endTime);
-            }
-
-            this.bookingService.setPrice(this.price);
-            this.bookingService.setSelection({ reservedUnits: this.quantity });
-
-            this.error = '';
-            this.router.navigate(['../summary'], { relativeTo: this.route });
-          } catch (err) {
-            this.snackBar.open('Error processing booking. Please try again.', 'Close', {
-              duration: 3000,
-              panelClass: ['error-snackbar'],
-            });
-          }
-        } else {
-          this.snackBar.open(
-            this.quantity > 1
-              ? `Not enough units available for the selected period. Please reduce quantity or choose different dates.`
-              : 'The selected period is not available. Please choose different dates/times.',
-            'Close',
-            {
-              duration: 5000,
-              panelClass: ['error-snackbar'],
-            }
-          );
-        }
-      },
-      (error) => {
-        this.loading = false;
-        this.snackBar.open('Error checking availability.', 'Close', {
-          duration: 3000,
-          panelClass: ['error-snackbar'],
-        });
-      }
-    );
-  }
-
-  // Use backend to check availability for the selected period
-  validateBookingPeriod(): boolean {
-    if (!this.date) return false;
-
-    const startDateTime = this.getStartDateTime();
-    const endDateTime = this.getEndDateTime();
-
-    if (endDateTime <= startDateTime) {
-      this.snackBar.open(
-        'End date/time must be after start date/time',
-        'Close',
-        {
-          duration: 3000,
-          panelClass: ['error-snackbar'],
-        }
-      );
-      return false;
-    }
-
-    let valid = true;
-    const request = {
-      spaceId: this.space.id,
-      date: this.date.toISOString().slice(0, 10),
-      startTime: this.isHourly ? this.startTime : 9,
-      endTime: this.isHourly ? this.endTime : 17,
-      requestedUnits: this.quantity,
-    };
-    this.bookingService.checkAvailability(request).subscribe(
-      (response) => {
         if (!response.available) {
-          this.snackBar.open(
-            this.quantity > 1
-              ? `Not enough units available for the selected period. Please reduce quantity or choose different dates.`
-              : 'The selected period is not available. Please choose different dates/times.',
-            'Close',
-            {
-              duration: 5000,
-              panelClass: ['error-snackbar'],
-            }
-          );
-          valid = false;
+          this.error = 'Selected period is no longer available.';
+          return;
         }
-      },
-      (error) => {
-        this.snackBar.open('Error checking availability.', 'Close', {
-          duration: 3000,
-          panelClass: ['error-snackbar'],
+
+        this.bookingService.setSelection({
+          spaceId: this.space.id,
+          space: this.space,
+          plan: this.plan,
+          date: this.date,
+          startTime: this.startTime,
+          endTime: this.endTime,
+          price: this.price,
+          reservedUnits: this.quantity,
         });
-        valid = false;
-      }
-    );
-    return valid;
-  }
-
-  // Helper method to calculate days between two dates
-  private getDaysBetween(startDate: Date, endDate: Date): number {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const diffTime = Math.abs(end.getTime() - start.getTime());
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  }
-
-  back() {
-    this.router.navigate(['../'], { relativeTo: this.route });
-  }
-  getStartDateTime(): Date {
-    if (!this.date) return new Date();
-
-    const date = new Date(this.date);
-    if (this.isHourly && this.startTime) {
-      date.setHours(this.startTime, 0, 0, 0);
-    } else {
-      date.setHours(9, 0, 0, 0);
-    }
-    return date;
-  }
-
-  getEndDateTime(): Date {
-    let endDate = this.endDate || this.date;
-    if (!endDate) return new Date();
-
-    const date = new Date(endDate);
-    if (this.isHourly && this.endTime) {
-      date.setHours(this.endTime, 0, 0, 0);
-    } else {
-      date.setHours(17, 0, 0, 0); // Default to 5 PM
-    }
-    return date;
-  }
-
-  // Helper method to format date for display
-  formatDate(date: Date | null): string {
-    if (!date) return '';
-    return date.toLocaleDateString('en-US', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
+        this.router.navigate(['../summary'], { relativeTo: this.route });
+      },
+      error: (err) => {
+        this.loading = false;
+        this.error = err.error?.message || 'Unable to verify availability.';
+      },
     });
   }
 
+  back(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
   getPackagePrice(): number {
-    if (this.bookedHours >= 1 && this.bookedHours <= 4) {
-      this.pricingPackage = PricingPackageType.hourly;
-      return this.space.pricing.hourly;
-    } else if (this.bookedHours > 4 && this.bookedHours <= 8) {
-      this.pricingPackage = PricingPackageType.halfDay;
-      return this.space.pricing.halfDay;
-    } else if (this.bookedHours > 8) {
-      this.pricingPackage = PricingPackageType.day;
-      return this.space.pricing.day;
-    } else return 0;
+    if (!this.space.pricing) return 0;
+    return this.isHourly ? this.space.pricing.hourly : this.space.pricing.day;
+  }
+
+  private buildRequest(): {
+    spaceId: string;
+    plan: 'Hourly' | 'Daily';
+    date: string;
+    endDate: string;
+    startTime: number;
+    endTime: number;
+    quantity: number;
+  } {
+    const endDate = this.endDate ?? this.date ?? new Date();
+    return {
+      spaceId: this.space.id,
+      plan: this.plan,
+      date: this.formatApiDate(this.date ?? new Date()),
+      endDate: this.formatApiDate(endDate),
+      startTime: this.startTime,
+      endTime: this.endTime,
+      quantity: this.quantity,
+    };
+  }
+
+  private formatApiDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private startOfDay(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
+
+  private addDays(date: Date, days: number): Date {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return this.startOfDay(result);
   }
 }
