@@ -10,19 +10,34 @@
       <label for="username">Username</label>
       <input id="username" formControlName="username" type="text" />
     </div>
+
     <div class="form-group">
       <label for="email">Email</label>
-      <input  id="email" formControlName="email" [disabled]="true" type="email"  />
+      <input id="email" formControlName="email" type="email" />
     </div>
+
     <div class="form-group">
-      <label for="password">Password</label>
+      <label for="password">New Password</label>
       <input
         id="password"
         formControlName="password"
         type="password"
+        autocomplete="new-password"
         placeholder="Leave blank to keep current password"
       />
     </div>
+
+    <div class="form-group" *ngIf="profileForm.get('password')?.value">
+      <label for="currentPassword">Current Password</label>
+      <input
+        id="currentPassword"
+        formControlName="currentPassword"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Required to change password"
+      />
+    </div>
+
     <div class="form-group">
       <label for="type">Type</label>
       <select id="type" formControlName="type">
@@ -34,13 +49,17 @@
         <option value="other">Other</option>
       </select>
     </div>
+
     <div class="form-actions">
-      <button class="btn btn-outline" type="button" (click)="cancelEdit()">
+      <button class="btn btn-outline" type="button" (click)="cancelEdit()" [disabled]="saving">
         Cancel
       </button>
-      <button class="btn btn-primary" type="submit">Save</button>
+      <button class="btn btn-primary" type="submit" [disabled]="saving">
+        {{ saving ? 'Saving...' : 'Save' }}
+      </button>
     </div>
   </form>
+
   <div class="profile-view fade-in--slow" *ngIf="!editMode">
     <div class="profile-row">
       <span class="label">Username:</span> <span>{{ user.username }}</span>
