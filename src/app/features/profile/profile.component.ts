@@ -22,6 +22,7 @@ import { ApiError, UserUpdateRequest } from '../../shared/models/api.model';
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
   editMode = false;
+  saving = false;
   user!: User;
 
   constructor(
@@ -32,63 +33,82 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.User;
-    console.log(this.user);
     this.profileForm = this.fb.group({
-      username: [this.user.username, [Validators.required]],
+      username: [this.user.username, [Validators.required, Validators.minLength(3)]],
       email: [
-        { value: this.user.email , disabled:true},
+        { value: this.user.email, disabled: true },
         [Validators.required, Validators.email],
       ],
       password: ['', [Validators.minLength(8)]],
+      currentPassword: [''],
       type: [this.user.type, [Validators.required]],
     });
   }
 
-  enableEdit() {
+  enableEdit(): void {
     this.editMode = true;
-    this.profileForm.patchValue({
+    this.profileForm.reset({
       username: this.user.username,
       email: this.user.email,
+      password: '',
+      currentPassword: '',
       type: this.user.type,
     });
   }
 
-  saveProfile() {
-    if (this.profileForm.valid) {
-      const updatedUser: UserUpdateRequest = {
-        ...this.user,
-        ...this.profileForm.value,
-        password: this.profileForm.value.password
-          ? this.profileForm.value.password
-          : null,
-      };
-      this.user = {
-        ...this.user,
-        ...this.profileForm.value,
-        password: this.profileForm.value.password
-          ? this.profileForm.value.password
-          : null,
-      };
-      this.userService.updateUser(updatedUser).subscribe({
-        next: (res) => {
-          alert(res.message);
-          this.authService.setUserLocalStorage(this.user);
-          window.location.reload();
-        },
-        error: (err: ApiError) => {
-          alert(err.error.message);
-        },
-      });
-      this.editMode = false;
+  saveProfile(): void {
+    if (this.profileForm.invalid || this.saving) {
+      this.profileForm.markAllAsTouched();
+      return;
     }
+
+    const formValue = this.profileForm.getRawValue();
+    if (formValue.password && !formValue.currentPassword) {
+      alert('Enter your current password before choosing a new password.');
+      return;
+    }
+
+    const updatedUser: UserUpdateRequest = {
+      username: formValue.username,
+      email: formValue.email,
+      type: formValue.type,
+    };
+
+    if (formValue.password) {
+      updatedUser.password = formValue.password;
+      updatedUser.currentPassword = formValue.currentPassword;
+    }
+
+    this.saving = true;
+    this.userService.updateUser(updatedUser).subscribe({
+      next: (res) => {
+        this.user = res.user;
+        this.authService.updateCachedUser(res.user);
+        this.profileForm.patchValue({
+          username: res.user.username,
+          email: res.user.email,
+          password: '',
+          currentPassword: '',
+          type: res.user.type,
+        });
+        this.editMode = false;
+        this.saving = false;
+        alert(res.message);
+      },
+      error: (err: ApiError) => {
+        this.saving = false;
+        alert(err.error?.message || 'Unable to update profile.');
+      },
+    });
   }
 
-  cancelEdit() {
+  cancelEdit(): void {
     this.editMode = false;
     this.profileForm.reset({
       username: this.user.username,
       email: this.user.email,
       password: '',
+      currentPassword: '',
       type: this.user.type,
     });
   }
