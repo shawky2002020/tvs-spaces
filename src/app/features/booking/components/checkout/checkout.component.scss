@@ -252,6 +252,26 @@
       margin-right: $spacing-xs;
     }
   }
+
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+    gap: $spacing-md;
+
+    button {
+      width: 100%;
+      min-width: unset;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-container {
+    padding: $spacing-sm;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 // Success Overlay

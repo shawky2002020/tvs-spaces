@@ -282,23 +282,25 @@ section {
   width: 0;
   display: none;
 }
-// Images Section
 .polaroid-gallery {
   display: flex;
   gap: $spacing-md;
-  overflow: auto hidden;
+  overflow-x: auto;
+  padding-bottom: $spacing-sm;
+
   .polaroid {
     border-radius: 8px;
     background-color: $white-color;
     padding: $spacing-sm;
     box-shadow: $shadow-md;
-    min-width: 400px; // or 400px as you have
-    height: 400px;
+    min-width: min(320px, 80vw);
+    flex-shrink: 0;
 
     img {
-      width: 400px;
-      height: 400px;
+      width: 100%;
+      aspect-ratio: 1 / 1;
       object-fit: cover;
+      border-radius: 4px;
       margin-bottom: $spacing-xs;
     }
   }

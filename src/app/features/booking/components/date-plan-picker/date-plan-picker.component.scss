@@ -426,6 +426,7 @@
     .btn-back {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
       background: #fff;
       border: 1px solid #cbd5e1;
@@ -446,6 +447,7 @@
     .btn-continue {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
       background: #3182ce;
       border: none;
@@ -466,6 +468,52 @@
         background: #cbd5e1;
         color: #94a3b8;
         cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// Media Queries for Mobile Responsiveness
+@media (max-width: 600px) {
+  .date-plan-picker-container {
+    padding: 1.25rem 1rem;
+    margin: 1rem auto;
+    border-radius: 12px;
+
+    .progress-bar {
+      padding: 0;
+      gap: 0.25rem;
+
+      .step {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.75rem;
+      }
+    }
+
+    .space-summary-card {
+      flex-direction: column;
+      text-align: center;
+
+      .space-meta {
+        justify-content: center;
+      }
+    }
+
+    .plan-toggle-group {
+      grid-template-columns: 1fr;
+    }
+
+    .time-select-group {
+      grid-template-columns: 1fr;
+    }
+
+    .action-footer {
+      flex-direction: column-reverse;
+      gap: 1rem;
+
+      .btn-back,
+      .btn-continue {
+        width: 100%;
       }
     }
   }

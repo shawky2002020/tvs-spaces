@@ -189,6 +189,7 @@
 @media (max-width: 992px) {
   .auth-main-content {
     width: 100%;
+    margin-left: 0;
   }
   
   .search-bar {
@@ -198,8 +199,7 @@
 
 @media (max-width: 768px) {
   .dashboard-header {
-    padding: $spacing-sm;
-    flex-wrap: wrap;
+    padding: $spacing-sm $spacing-md;
   }
   
   .search-bar {
@@ -216,5 +216,11 @@
 @media (max-width: 480px) {
   .dashboard-actions {
     gap: $spacing-sm;
+  }
+
+  .user-dropdown {
+    right: -10px;
+    width: calc(100vw - 32px);
+    max-width: 280px;
   }
 }

@@ -1,13 +1,18 @@
 @import '../../assets/styles/abstracts/variables';
 
 .profile-wrapper {
+  width: 92%;
   max-width: 480px;
-  margin: 0 auto;
   background: $white-color;
   border-radius: $border-radius-lg;
   box-shadow: $shadow-lg;
-  padding: $spacing-xl $spacing-lg;
-  margin: $spacing-xl auto;
+  padding: $spacing-lg $spacing-md;
+  margin: $spacing-lg auto;
+
+  @media (max-width: 480px) {
+    padding: $spacing-md $spacing-sm;
+    margin: $spacing-md auto;
+  }
 }
 
 .profile-title {
