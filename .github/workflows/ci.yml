@@ -24,8 +24,10 @@ jobs:
           node-version: '22'
           cache: npm
 
-      - name: Resolve dependencies and generate lockfile
-        run: npm install --no-audit --no-fund
+      - name: Resolve dependencies and generate clean lockfile
+        run: |
+          rm -f package-lock.json
+          npm install --no-audit --no-fund
 
       - name: Upload generated lockfile
         uses: actions/upload-artifact@v4
