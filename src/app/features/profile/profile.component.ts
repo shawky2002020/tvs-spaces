@@ -35,10 +35,7 @@ export class ProfileComponent implements OnInit {
     this.user = this.authService.User;
     this.profileForm = this.fb.group({
       username: [this.user.username, [Validators.required, Validators.minLength(3)]],
-      email: [
-        { value: this.user.email, disabled: true },
-        [Validators.required, Validators.email],
-      ],
+      email: [this.user.email, [Validators.required, Validators.email]],
       password: ['', [Validators.minLength(8)]],
       currentPassword: [''],
       type: [this.user.type, [Validators.required]],
