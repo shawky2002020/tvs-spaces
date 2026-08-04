@@ -3,11 +3,9 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { BookingRoutingModule } from './booking-routing.module';
 
-import { SupersaasBookingComponent } from './supersaas-booking.component';
-
 @NgModule({
-  imports: [CommonModule, SharedModule, BookingRoutingModule,SupersaasBookingComponent],
+  imports: [CommonModule, SharedModule, BookingRoutingModule],
   declarations: [],
-  exports: [SupersaasBookingComponent]
+  exports: []
 })
 export class BookingModule {}
