@@ -4,7 +4,7 @@
 <div class="detail-page" *ngIf="space as currentSpace">
   <div class="breadcrumbs">
     <a routerLink="/" class="breadcrumb-link">Home</a> &gt;
-    <a href="/#desks">Desks</a> &gt;
+    <a routerLink="/" fragment="spaces">Spaces</a> &gt;
     <span>{{ currentSpace.name }}</span>
   </div>
 
