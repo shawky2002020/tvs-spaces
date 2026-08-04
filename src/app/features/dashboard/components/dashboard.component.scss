@@ -132,37 +132,49 @@ h2 {
 }
 
 .status-badge {
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: $border-radius-pill;
-  font-size: $font-size-xxs;
-  font-weight: $font-weight-medium;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  display: inline-block;
 
   &.status-completed {
-    background-color: rgba($success-color, 0.1);
-    color: $success-color;
+    background-color: #d1fae5;
+    color: #065f46;
   }
 
   &.status-active {
-    background-color: rgba($info-color, 0.1);
-    color: $info-color;
+    background-color: #e0f2fe;
+    color: #0369a1;
   }
 
   &.status-upcoming {
-    background-color: rgba($warning-color, 0.1);
-    color: $warning-color;
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  &.status-cancelled {
+    background-color: #fee2e2;
+    color: #991b1b;
   }
 }
 
 .action-btn {
-  background: none;
-  border: none;
-  color: $secondary-color;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: color $transition-base;
+  transition: all 0.15s ease;
 
   &:hover {
-    color: $primary-color;
+    background: #fca5a5;
+    color: #7f1d1d;
   }
 }
 

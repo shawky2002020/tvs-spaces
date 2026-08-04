@@ -9,11 +9,33 @@
 .hero {
   padding: calc(50px + $spacing-xl) 0 $spacing-xl 0;
   background: $hero-grad;
-  min-height: 100vh; /* Reduced from 100vh for more modern feel */
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
+
+  .hero-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+    color: $white-color;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    font-weight: 700;
+    color: $white-color;
+    margin-bottom: 16px;
+  }
   .hero::after {
     content: "";
     position: absolute;
@@ -131,6 +153,55 @@
       rgba($light-color, 0.8),
       transparent 90%
     );
+  }
+}
+
+/* Logo Wall Section */
+.logo-wall {
+  padding: 2.5rem 0;
+  background-color: #0f172a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+
+  .logo-wall-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .logo-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+
+    .logo-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.2s ease, transform 0.2s ease;
+
+      svg {
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+      }
+
+      &:hover {
+        color: #ffffff;
+        transform: translateY(-1px);
+
+        svg {
+          opacity: 1;
+        }
+      }
+    }
   }
 }
 

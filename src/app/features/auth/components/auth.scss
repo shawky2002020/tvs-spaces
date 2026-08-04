@@ -1,15 +1,14 @@
 @import "main.scss";
 
 .auth-wrapper {
-  min-height: 100vh;
+  min-height: 100dvh;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: $spacing-xl;
-  padding: 120px $spacing-md;
+  padding: 100px $spacing-md;
   background: $primary-grad;
-
 }
 
 .auth-motivation {
@@ -17,7 +16,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  max-width: 600px;
+  max-width: 500px;
   margin-right: $spacing-xl;
   @media (max-width: 900px) {
     display: none;
@@ -48,39 +47,31 @@
   position: relative;
   text-shadow: 1px 2px 5px rgba($white-color, .1);
 }
-.highlight::after {
-  background: #000000;
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-}
 
 .motivation-sub {
   font-size: $font-size-md;
-  color: $black-60;
+  color: $black-80;
   margin-bottom: $spacing-lg;
 }
 
 .auth-card {
   background: $hero-grad;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(16px);
   border-radius: $border-radius-lg;
-  box-shadow:0px 3px 10px black;
-  padding: $spacing-lg $spacing-lg;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  padding: 2.5rem 2rem;
   width: 100%;
-  max-width: 400px;
+  max-width: 440px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 
 .auth-title {
   font-family: $font-family-heading;
   font-size: $font-size-xxl;
-  color: $light-color;
+  color: $white-color;
   margin-bottom: $spacing-lg;
   font-weight: $font-weight-bold;
   text-align: center;
@@ -95,24 +86,39 @@
 
 .form-group {
   width: 100%;
+
+  .error {
+    color: #f87171;
+    font-size: 0.8125rem;
+    margin-top: 4px;
+    font-weight: 500;
+  }
 }
 
 input[type="email"],
 input[type="password"],
-input[type="text" ],
-input[type = "select" ]{
+input[type="text"],
+input[type="select"] {
   width: 100%;
-  padding: $spacing-sm $spacing-md;
-  border: 1px solid $light-color;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: $border-radius-md;
-  font-size: $font-size-md;
-  font-family: $font-family-base;
-  transition: border-color $transition-base;
-}
+  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f172a;
+  transition: border-color $transition-base, box-shadow $transition-base;
 
-input:focus {
-  outline: none;
-  border-color: $primary-color;
+  &.invalid {
+    border-color: #ef4444;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+    background: #ffffff;
+  }
 }
 
 .auth-actions {
@@ -120,22 +126,44 @@ input:focus {
   flex-direction: column;
   gap: $spacing-sm;
   margin-top: $spacing-md;
+
+  .btn-primary {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: $border-radius-md;
+    background-color: var(--color-primary-accent);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+
+    &:hover {
+      background-color: var(--color-primary-hover);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
 }
 
 .auth-links {
   margin-top: $spacing-lg;
   text-align: center;
-  font-size: $font-size-md;
-  color: $white-color;
-  a{
-    background: $black-80;
-    padding: 8px;
-    border-radius: 4px;
-    transition: color $transition-base,background $transition-base;
-    margin-left: 4px;
-    &:hover{
-      color: $black-80;
-      background: $light-color;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+
+  a {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: underline;
+    margin-left: 6px;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--color-primary-accent);
     }
   }
 }

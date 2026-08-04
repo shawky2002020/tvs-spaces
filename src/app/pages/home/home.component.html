@@ -1,33 +1,57 @@
 <div class="main-layout">
   <div class="main-content-wrapper">
     <main class="main-content">
-      <!-- Hero Section - Modern, minimal with improved typography -->
+      <!-- Hero Section - Thesis layout with high contrast typography -->
       <section id="home" class="hero">
         <div class="container">
           <div class="hero-content">
             <div class="hero-text">
-              <div>
-                Your Perfect
-                <h1 class="text-accent">Workspace</h1>
-                <br />
-                Designed for productivity
-              </div>
+              <span class="hero-badge">Workspace Reimagined</span>
+              <h1 class="hero-title">Your Next High-Performance <span class="text-accent">Workspace</span></h1>
               <p class="hero-description">
-                Join a thriving community of freelancers, entrepreneurs, and
-                remote workers in our modern co-working spaces.
+                Join a thriving community of freelancers, founders, and remote teams in Cairo's premier workspace.
               </p>
               <div class="hero-actions">
-                <button class="btn btn-primary">Book a Tour</button>
-                <button class="btn btn-outline">View Pricing</button>
+                <a routerLink="/dashboard/booking">
+                  <button class="btn btn-primary">Book a Space</button>
+                </a>
+                <a href="#desks">
+                  <button class="btn btn-outline">Explore Spaces</button>
+                </a>
               </div>
             </div>
             <figure class="hero-img">
-              <img src="assets/imgs/5.jpg" alt="" />
+              <img src="assets/imgs/5.jpg" alt="TVS Spaces Coworking Environment" />
               <figcaption>
                 Quiet minds<br />
                 bold ideas
               </figcaption>
             </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trust Logo Wall Strip -->
+      <section class="logo-wall">
+        <div class="container">
+          <p class="logo-wall-label">TRUSTED BY TEAMS & FREELANCERS AT</p>
+          <div class="logo-grid">
+            <div class="logo-item" title="Vercel">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L24 22H0L12 1Z"/></svg>
+              <span>Vercel</span>
+            </div>
+            <div class="logo-item" title="Stripe">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 23.085 8.085 24 11.969 24c2.641 0 4.842-.644 6.368-1.848 1.583-1.248 2.406-3.116 2.406-5.467 0-4.041-2.434-5.698-6.767-7.535z"/></svg>
+              <span>Stripe</span>
+            </div>
+            <div class="logo-item" title="GitHub">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              <span>GitHub</span>
+            </div>
+            <div class="logo-item" title="Notion">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.047-.326L17.86 1.876c-.42-.326-.98-.467-1.54-.42L3.619 2.576c-.466.046-.56.28-.373.466zM2.8 5.794v15.719c0 .746.42 1.073 1.166.98l16.155-1.026c.746-.047.887-.653.887-1.306V4.768c0-.56-.233-.793-.746-.746L3.687 5.048c-.606.047-.887.233-.887.746zm14.33.606c.373.187.42.466.42 1.026V18.25c-.28.466-.7.56-1.12.56-.373 0-.653-.14-.933-.42l-5.6-7.323v7.09c0 .606-.233.887-.84.887H7.7c-.373 0-.56-.14-.56-.513V7.94c0-.466.187-.793.653-.793.373 0 .653.093.98.513l5.694 7.463V7.94c0-.606.326-.933.84-.933h1.82z"/></svg>
+              <span>Notion</span>
+            </div>
           </div>
         </div>
       </section>

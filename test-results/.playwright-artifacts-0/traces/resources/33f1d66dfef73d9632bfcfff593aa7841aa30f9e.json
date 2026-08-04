@@ -1,0 +1,223 @@
+{
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Personalize your experience",
+    "account": "Account",
+    "language": "Language",
+    "english": "English",
+    "arabic": "Arabic",
+    "language_sync_failed": "Language changed here, but could not sync across devices.",
+    "appearance": "Appearance",
+    "dark_mode": "Dark Mode",
+    "preferences": "Preferences",
+    "notifications": "Notifications",
+    "haptics": "Haptics",
+    "about": "About",
+    "rate_app": "Rate the App",
+    "send_feedback": "Send Feedback",
+    "version": "Version",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "about_us": "About Us",
+    "contact_us": "Contact Us",
+    "refund_policy": "Refund Policy",
+    "membership": "Membership & Pricing",
+    "upgrade_pro": "Upgrade to Pro",
+    "other": "Other Settings",
+    "login": "Login",
+    "logout": "Logout",
+    "coming_soon": "Coming Soon...",
+    "debug_section": "Developer Debug Tools",
+    "debug_blocking": "Trigger Blocking Loader",
+    "debug_non_blocking": "Trigger Non-Blocking Loader",
+    "subtitle_premium": "Manage your account, privacy, access, and Jahiz experience.",
+    "plan": {
+      "section": "Plan & Access",
+      "beta_title": "Beta access",
+      "beta_desc": "You have full beta access. Payments are not enabled during the beta — there is nothing to buy and you won't be charged."
+    },
+    "privacy_data": {
+      "section": "Privacy & Data",
+      "privacy_overview": "Privacy overview",
+      "request_export": "Request data export",
+      "delete_account": "Delete account & request data removal"
+    },
+    "legal": {
+      "center": "Legal documents",
+      "center_subtitle": "Review the policies, terms, and data information that apply to Jahiz.",
+      "terms": "Terms of Use",
+      "privacy": "Privacy Policy",
+      "subscription_terms": "Subscription Terms",
+      "refund": "Refund & Cancellation",
+      "acceptable_use": "Acceptable Use Policy",
+      "data_deletion": "Data Deletion Policy",
+      "children_data": "Children & Minor Athlete Data",
+      "sports_disclaimer": "Sports Analytics Disclaimer",
+      "third_party": "Third-Party Services",
+      "open_source": "Open Source Licenses"
+    },
+    "support": {
+      "section": "Support",
+      "help_contact": "Help & contact",
+      "report_problem": "Report a problem",
+      "send_feedback": "Send feedback",
+      "email": "jahizanalytics@gmail.com",
+      "subjects": {
+        "export": "Jahiz — Data export request",
+        "problem": "Jahiz — Problem report",
+        "feedback": "Jahiz — Feedback"
+      }
+    },
+    "app_info": {
+      "version": "Version",
+      "environment": "Environment",
+      "env_dev": "Development",
+      "copyright": "© {{year}} Jahiz Analytics. All rights reserved."
+    }
+  },
+  "account": {
+    "title": "Account",
+    "description": "Manage your login, identity, support, and account settings.",
+    "unavailable": "Account details are unavailable. Please refresh and try again.",
+    "sections": {
+      "account_details": "Account details",
+      "account_actions": "Account settings"
+    },
+    "fields": {
+      "email": "Email",
+      "country": "Country",
+      "role": "Account type",
+      "status": "Status"
+    },
+    "actions": {
+      "view_account": "Account",
+      "view_profile": "Account",
+      "manage_subscription": "Manage Subscription",
+      "settings": "Settings",
+      "help_support": "Help & Support",
+      "sign_out": "Sign Out",
+      "delete_account": "Delete account"
+    },
+    "roles": {
+      "admin": "Admin",
+      "coach": "Coach",
+      "athlete": "Athlete",
+      "member": "Member"
+    },
+    "plans": {
+      "free": "Free",
+      "pro": "Pro",
+      "enterprise": "Enterprise"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "sheet": {
+      "quick_access_hint": "Quickly access your account, settings, and support."
+    },
+    "delete": {
+      "title": "Delete account",
+      "subtitle": "Permanently delete your account and data",
+      "heading": "Delete your account",
+      "summary": "This permanently deletes your Jahiz account. This action cannot be undone.",
+      "lose_title": "What you lose",
+      "lose_access": "Access to your account and sign-in is removed immediately.",
+      "lose_identity": "Your name, email and profile details are erased or anonymized.",
+      "lose_data_athlete": "Your athlete profile, matches and personal analytics are removed or anonymized.",
+      "lose_data_coach": "Your roster, teams, matches and analytics are removed or anonymized.",
+      "retain_title": "What we keep",
+      "retain_text": "Some records may be retained in anonymized form where required by law or for fraud prevention and audit.",
+      "read_policy": "Read our data deletion policy",
+      "confirm_title": "Confirm deletion",
+      "acknowledge": "I understand this is permanent and cannot be undone.",
+      "type_to_confirm": "Type {{keyword}} to confirm.",
+      "confirm_keyword": "DELETE",
+      "reason_label": "Reason (optional)",
+      "reason_placeholder": "Tell us why you are leaving (optional).",
+      "delete_cta": "Delete my account",
+      "keep_account": "Keep my account",
+      "confirm_header": "Delete your account?",
+      "confirm_subheader": "This permanently deletes your account and cannot be undone.",
+      "confirm_cta": "Delete account",
+      "deleting": "Deleting your account...",
+      "success": "Your account has been deleted.",
+      "error": "We couldn't delete your account. Please try again."
+    },
+    "errors": {
+      "deletion_failed": "We couldn't delete your account. Please try again."
+    }
+  },
+  "payment": {
+    "errors": {
+      "declined": "Payment was declined",
+      "invalid_card": "Payment card details are invalid",
+      "gateway_rejected": "Payment gateway rejected the transaction"
+    }
+  },
+  "subscription": {
+    "errors": {
+      "quota_exceeded": "Quota exceeded",
+      "feature_locked": "Feature locked"
+    }
+  },
+  "admin_billing": {
+    "title": "Admin billing access",
+    "internal_tool": "Internal admin tool",
+    "subtitle": "Inspect and manage manually granted billing access for a target user.",
+    "safety": {
+      "no_payment": "This does not process payment.",
+      "manual_access": "Manual access is not a Paymob payment."
+    },
+    "fields": {
+      "target_user_id": "Target user ID",
+      "package_code": "Package code",
+      "access_source": "Access source",
+      "starts_at": "Starts at",
+      "expires_at": "Expires at",
+      "effective_at": "Effective at",
+      "reason": "Reason",
+      "admin_note": "Admin note",
+      "idempotency_key": "Idempotency key"
+    },
+    "actions": {
+      "load": "Load access",
+      "activate": "Activate access",
+      "extend": "Extend access",
+      "cancel": "Cancel access"
+    },
+    "status": {
+      "title": "Current access",
+      "safe_dto": "Safe admin response only",
+      "empty": "Load a target user to inspect current access.",
+      "unavailable": "Access unavailable. Please verify the user and try again.",
+      "role": "Role",
+      "plan_code": "Plan code",
+      "package_code": "Package code",
+      "access_state": "Access state",
+      "access_source": "Access source",
+      "starts_at": "Starts at",
+      "expires_at": "Expires at",
+      "idempotency": "Idempotency",
+      "duplicate": "Duplicate key returned the prior response.",
+      "none": "None"
+    },
+    "activate": {
+      "title": "Activate",
+      "hint": "Package-first manual access grant."
+    },
+    "extend": {
+      "title": "Extend",
+      "hint": "Requires reason and a new expiry."
+    },
+    "cancel": {
+      "title": "Cancel",
+      "hint": "Cancels manual access only."
+    },
+    "messages": {
+      "loaded": "Access loaded.",
+      "updated": "Access updated.",
+      "duplicate": "Duplicate idempotency key returned the previous result."
+    }
+  }
+}
