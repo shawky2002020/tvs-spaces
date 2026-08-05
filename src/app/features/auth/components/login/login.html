@@ -14,6 +14,9 @@
 			<p class="mobile-tagline">Coworking Space in Heliopolis</p>
 		</div>
 		<div class="auth-title">Sign In</div>
+		<div class="server-status-banner" *ngIf="!(isServerReady$ | async)">
+			<i class="fas fa-bolt"></i> Backend server is waking up on Render (~1 min cold start). You can explore all pages or wait a moment to sign in.
+		</div>
 		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form" novalidate>
 			<div class="form-group">
 				<input type="email" formControlName="email" placeholder="Email Address" [class.invalid]="submitted && f['email'].invalid" />

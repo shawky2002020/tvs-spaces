@@ -214,3 +214,25 @@ select {
   }
 }
 
+.server-status-banner {
+  width: 100%;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  padding: 0.75rem 1rem;
+  border-radius: $border-radius-md;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  i {
+    font-size: 1rem;
+    flex-shrink: 0;
+    color: #f59e0b;
+  }
+}
+
+

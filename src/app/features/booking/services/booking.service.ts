@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, catchError } from 'rxjs';
 import { BOOKING_URLS, DASHBOARD_URLS } from '../../../shared/constants/urls/url';
-import { BookingPlan, BookingSelection, Space } from '../../../shared/constants/space.model';
+import { BookingPlan, BookingSelection, Space, SPACES } from '../../../shared/constants/space.model';
 
 @Injectable({ providedIn: 'root' })
 export class BookingService {
@@ -32,15 +32,27 @@ export class BookingService {
   }
 
   getAllSpaces(): Observable<Space[]> {
-    return this.http.get<Space[]>(BOOKING_URLS.SPACES);
+    return this.http.get<Space[]>(BOOKING_URLS.SPACES).pipe(
+      catchError(() => of(SPACES))
+    );
   }
 
   getSpaceById(id: string): Observable<Space> {
-    return this.http.get<Space>(BOOKING_URLS.SPACE_BY_ID(id));
+    return this.http.get<Space>(BOOKING_URLS.SPACE_BY_ID(id)).pipe(
+      catchError(() => {
+        const found = SPACES.find((s) => s.id === id);
+        return of(found || SPACES[0]);
+      })
+    );
   }
 
   getSpaceBySlug(slug: string): Observable<Space> {
-    return this.http.get<Space>(BOOKING_URLS.SPACE_BY_SLUG(slug));
+    return this.http.get<Space>(BOOKING_URLS.SPACE_BY_SLUG(slug)).pipe(
+      catchError(() => {
+        const found = SPACES.find((s) => s.slug === slug);
+        return of(found || SPACES[0]);
+      })
+    );
   }
 
   getDashboardStats(): Observable<any> {

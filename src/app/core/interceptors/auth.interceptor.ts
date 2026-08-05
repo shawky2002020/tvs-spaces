@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    if (request.url.includes('/auth/')) {
+    if (request.url.includes('/auth/') || request.url.includes('health')) {
       return next.handle(request);
     }
 
@@ -50,7 +50,9 @@ export class AuthInterceptor implements HttpInterceptor {
             )
           ),
           catchError((refreshError) => {
-            this.auth.logout();
+            if (this.auth.getToken()) {
+              this.auth.logout();
+            }
             return throwError(() => refreshError);
           })
         );

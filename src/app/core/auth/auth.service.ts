@@ -58,10 +58,20 @@ export class AuthService {
     return this.accessToken;
   }
 
+  private isLoggingOut = false;
+
   logout(): void {
+    if (this.isLoggingOut) return;
+    this.isLoggingOut = true;
     this.http.post(AUTH_URLS.LOGOUT, {}, { withCredentials: true }).subscribe({
-      next: () => this.clearLocalSession(),
-      error: () => this.clearLocalSession()
+      next: () => {
+        this.isLoggingOut = false;
+        this.clearLocalSession();
+      },
+      error: () => {
+        this.isLoggingOut = false;
+        this.clearLocalSession();
+      }
     });
   }
 
