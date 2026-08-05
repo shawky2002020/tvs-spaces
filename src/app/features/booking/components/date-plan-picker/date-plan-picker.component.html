@@ -1,212 +1,236 @@
 <div class="date-plan-picker-container slide-in--up-slow">
   <!-- Progress Header -->
   <div class="progress-bar">
-    <div class="step active">1. Choose Details</div>
-    <div class="step">2. Summary</div>
-    <div class="step">3. Checkout</div>
+    <div class="step active">
+      <span class="step-num">1</span>
+      <span class="step-text">. Choose Details</span>
+    </div>
+    <div class="step">
+      <span class="step-num">2</span>
+      <span class="step-text">. Summary</span>
+    </div>
+    <div class="step">
+      <span class="step-num">3</span>
+      <span class="step-text">. Checkout</span>
+    </div>
   </div>
 
-  <!-- Space Summary -->
-  <div class="space-summary-card" *ngIf="space">
-    <img [src]="space.imageUrl" class="space-thumbnail" alt="{{ space.name }} image" />
-    <div class="space-details">
-      <h2>{{ space.name }}</h2>
-      <p class="space-meta">
-        <span class="badge">{{ space.type | titlecase }}</span>
-        <span *ngIf="space.capacity">Max Capacity: {{ space.capacity }}</span>
-      </p>
-    </div>
-  <!-- Main Config Section (all sections stacked vertically) -->
-  <div class="config-grid">
+  <div class="booking-layout-grid">
+    <!-- Left Column: Booking Form and Availability Guide -->
+    <div class="booking-form-column">
+      
+      <div class="config-grid">
+        <!-- Row: Plan + Quantity side by side -->
+        <div class="config-row-2">
+          <!-- Step 1: Select Plan -->
+          <div class="form-section">
+            <h3>1. Select Booking Plan</h3>
+            <div class="plan-toggle-group">
+              <button type="button" class="plan-btn" [class.active]="plan === 'Hourly'" (click)="setPlan('Hourly')">
+                <i class="fas fa-clock"></i> Hourly
+              </button>
+              <button type="button" class="plan-btn" [class.active]="plan === 'Half-day'" (click)="setPlan('Half-day')">
+                <i class="fas fa-adjust"></i> Half-day
+              </button>
+              <button type="button" class="plan-btn" [class.active]="plan === 'Daily'" (click)="setPlan('Daily')">
+                <i class="fas fa-calendar-day"></i> Daily
+              </button>
+            </div>
+          </div>
 
-    <!-- Row: Plan + Quantity side by side -->
-    <div class="config-row-2">
-      <!-- Step 1: Select Plan -->
-      <div class="form-section">
-        <h3>1. Select Booking Plan</h3>
-        <div class="plan-toggle-group">
-          <button type="button" class="plan-btn" [class.active]="plan === 'Hourly'" (click)="setPlan('Hourly')">
-            <i class="fas fa-clock"></i> Hourly
-          </button>
-          <button type="button" class="plan-btn" [class.active]="plan === 'Half-day'" (click)="setPlan('Half-day')">
-            <i class="fas fa-adjust"></i> Half-day
-          </button>
-          <button type="button" class="plan-btn" [class.active]="plan === 'Daily'" (click)="setPlan('Daily')">
-            <i class="fas fa-calendar-day"></i> Daily
-          </button>
+          <!-- Step 4: Quantity (only when capacity > 1) -->
+          <div class="form-section" *ngIf="space && space.capacity && space.capacity > 1">
+            <h3>4. Quantity</h3>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Units</mat-label>
+              <input matInput type="number" [(ngModel)]="quantity" min="1" [max]="space.capacity"
+                     (change)="onQuantityChange()" placeholder="Quantity">
+              <mat-hint>Max available: {{ space.capacity }}</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Step 2: Select Date (full width) -->
+        <div class="form-section">
+          <h3>2. Select Date</h3>
+
+          <!-- Hourly and Half-Day: Single Date Picker -->
+          <div *ngIf="plan === 'Hourly' || plan === 'Half-day'">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select Date</mat-label>
+              <input matInput [matDatepicker]="picker" [min]="minDate" [matDatepickerFilter]="isDateFree"
+                     [(ngModel)]="pickerDate" (dateChange)="onPickerDateChange($event)"
+                     readonly placeholder="Choose a date">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <!-- Daily: Date Range Picker -->
+          <div *ngIf="plan === 'Daily'">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Enter a date range</mat-label>
+              <mat-date-range-input [min]="minDate" [rangePicker]="rangePicker" [dateFilter]="isDateFree">
+                <input matStartDate [(ngModel)]="pickerDate"
+                       (dateChange)="onPickerDateChange($event)" placeholder="Start date">
+                <input matEndDate [(ngModel)]="pickerEndDate"
+                       (dateChange)="onPickerEndDateChange($event)" placeholder="End date">
+              </mat-date-range-input>
+              <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+              <mat-date-range-picker #rangePicker></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Step 3: Time (full width, Hourly/Half-day only) -->
+        <div class="form-section" *ngIf="plan === 'Hourly' || plan === 'Half-day'">
+          <h3>3. Select Time</h3>
+
+          <!-- Hourly Time Selection -->
+          <div class="time-select-group" *ngIf="plan === 'Hourly'">
+            <mat-form-field appearance="outline">
+              <mat-label>Start Time</mat-label>
+              <mat-select [(ngModel)]="startTime" (selectionChange)="onTimeChange()" placeholder="Start Time">
+                <mat-option *ngFor="let h of startHoursOptions" [value]="h">
+                  {{ formatHour(h) }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>End Time</mat-label>
+              <mat-select [(ngModel)]="endTime" (selectionChange)="onTimeChange()" placeholder="End Time">
+                <mat-option *ngFor="let h of endHoursOptions" [value]="h" [disabled]="h <= startTime">
+                  {{ formatHour(h) }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Half-day Options -->
+          <div class="half-day-toggle-group" *ngIf="plan === 'Half-day'">
+            <button type="button" class="half-day-btn" [class.active]="halfDayPeriod === 'morning'"
+                    (click)="setHalfDayPeriod('morning')">
+              Morning
+              <span class="time-hint">(09:00 AM – 01:00 PM)</span>
+            </button>
+            <button type="button" class="half-day-btn" [class.active]="halfDayPeriod === 'afternoon'"
+                    (click)="setHalfDayPeriod('afternoon')">
+              Afternoon
+              <span class="time-hint">(02:00 PM – 06:00 PM)</span>
+            </button>
+          </div>
+        </div>
+      </div><!-- /.config-grid -->
+
+      <!-- 7-Day Slot Guide (Hourly only) -->
+      <div class="date-grid-section" *ngIf="plan === 'Hourly'">
+        <h3>Slot Availability Guide (9:00 AM – 6:00 PM)</h3>
+        <div class="month-nav">
+          <button type="button" class="nav-btn" (click)="prevDays()" aria-label="Previous week">&#8592; Previous Week</button>
+          <span class="month-label">{{ year }}-{{ month + 1 | number:'2.0' }}</span>
+          <button type="button" class="nav-btn" (click)="nextDays()" aria-label="Next week">Next Week &#8594;</button>
+        </div>
+        
+        <div class="date-hour-grid-wrapper">
+          <div class="date-hour-grid">
+            <div class="grid-header">
+              <div class="grid-cell header-cell">Day</div>
+              <div class="grid-cell header-cell" *ngFor="let hour of hoursGrid">{{ formatHour(hour) }}</div>
+            </div>
+            <div class="grid-row" *ngFor="let row of slotGrid">
+              <div class="grid-cell day-cell">{{ row.date | date:'d MMM' }}</div>
+              <div class="grid-cell slot-cell"
+                   *ngFor="let slot of row.slots"
+                   [ngClass]="{
+                     available: slot.available,
+                     unavailable: !slot.available,
+                     selected: date && formatDateToYYYYMMDD(row.date) === date && startTime === slot.hour
+                   }"
+                   (click)="slot.available ? selectSlot(row.date, slot.hour) : null">
+                <span [attr.aria-label]="slot.available ? 'Available' : 'Booked'">
+                  {{ slot.available ? '✔' : '✖' }}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Step 4: Quantity (only when capacity > 1) -->
-      <div class="form-section" *ngIf="space && space.capacity && space.capacity > 1">
-        <h3>4. Quantity</h3>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Units</mat-label>
-          <input matInput type="number" [(ngModel)]="quantity" min="1" [max]="space.capacity"
-                 (change)="onQuantityChange()" placeholder="Quantity">
-          <mat-hint>Max available: {{ space.capacity }}</mat-hint>
-        </mat-form-field>
-      </div>
     </div>
 
-    <!-- Step 2: Select Date (full width) -->
-    <div class="form-section">
-      <h3>2. Select Date</h3>
-
-      <!-- Hourly and Half-Day: Single Date Picker -->
-      <div *ngIf="plan === 'Hourly' || plan === 'Half-day'">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Select Date</mat-label>
-          <input matInput [matDatepicker]="picker" [min]="minDate" [matDatepickerFilter]="isDateFree"
-                 [(ngModel)]="pickerDate" (dateChange)="onPickerDateChange($event)"
-                 readonly placeholder="Choose a date">
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-
-      <!-- Daily: Date Range Picker -->
-      <div *ngIf="plan === 'Daily'">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Enter a date range</mat-label>
-          <mat-date-range-input [min]="minDate" [rangePicker]="rangePicker" [dateFilter]="isDateFree">
-            <input matStartDate [(ngModel)]="pickerDate"
-                   (dateChange)="onPickerDateChange($event)" placeholder="Start date">
-            <input matEndDate [(ngModel)]="pickerEndDate"
-                   (dateChange)="onPickerEndDateChange($event)" placeholder="End date">
-          </mat-date-range-input>
-          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
-          <mat-date-range-picker #rangePicker></mat-date-range-picker>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <!-- Step 3: Time (full width, Hourly/Half-day only) -->
-    <div class="form-section" *ngIf="plan === 'Hourly' || plan === 'Half-day'">
-      <h3>3. Select Time</h3>
-
-      <!-- Hourly Time Selection -->
-      <div class="time-select-group" *ngIf="plan === 'Hourly'">
-        <mat-form-field appearance="outline">
-          <mat-label>Start Time</mat-label>
-          <mat-select [(ngModel)]="startTime" (selectionChange)="onTimeChange()" placeholder="Start Time">
-            <mat-option *ngFor="let h of startHoursOptions" [value]="h">
-              {{ formatHour(h) }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>End Time</mat-label>
-          <mat-select [(ngModel)]="endTime" (selectionChange)="onTimeChange()" placeholder="End Time">
-            <mat-option *ngFor="let h of endHoursOptions" [value]="h" [disabled]="h <= startTime">
-              {{ formatHour(h) }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <!-- Half-day Options -->
-      <div class="half-day-toggle-group" *ngIf="plan === 'Half-day'">
-        <button type="button" class="half-day-btn" [class.active]="halfDayPeriod === 'morning'"
-                (click)="setHalfDayPeriod('morning')">
-          Morning
-          <span class="time-hint">(09:00 AM – 01:00 PM)</span>
-        </button>
-        <button type="button" class="half-day-btn" [class.active]="halfDayPeriod === 'afternoon'"
-                (click)="setHalfDayPeriod('afternoon')">
-          Afternoon
-          <span class="time-hint">(02:00 PM – 06:00 PM)</span>
-        </button>
-      </div>
-    </div>
-
-  </div><!-- /.config-grid -->
-
-  <!-- Live Pricing and Availability Status -->
-  <div class="status-price-card">
-    <div class="loading-overlay" *ngIf="loading">
-      <div class="spinner"></div>
-      <p>Validating availability &amp; loading quote...</p>
-    </div>
-
-    <div class="status-message error-message" *ngIf="error && !loading" role="alert">
-      <i class="fas fa-exclamation-circle"></i> {{ error }}
-    </div>
-
-    <div class="price-breakdown-details" *ngIf="!error && price > 0 && date && !loading">
-      <div class="price-row">
-        <span>Plan</span>
-        <strong>{{ plan }}</strong>
-      </div>
-      <div class="price-row">
-        <span>Date</span>
-        <strong>{{ date }}{{ endDate && endDate !== date ? ' → ' + endDate : '' }}</strong>
-      </div>
-      <div class="price-row" *ngIf="plan === 'Hourly'">
-        <span>Duration</span>
-        <strong>{{ endTime - startTime }} hour{{ endTime - startTime !== 1 ? 's' : '' }}</strong>
-      </div>
-      <div class="price-row" *ngIf="plan === 'Half-day'">
-        <span>Period</span>
-        <strong>{{ halfDayPeriod === 'morning' ? 'Morning (4h)' : 'Afternoon (4h)' }}</strong>
-      </div>
-      <div class="price-row" *ngIf="space && space.capacity && space.capacity > 1">
-        <span>Quantity</span>
-        <strong>{{ quantity }} unit{{ quantity !== 1 ? 's' : '' }}</strong>
-      </div>
-      <hr class="divider">
-      <div class="price-row total-row">
-        <span>Total Price</span>
-        <span class="total-price">{{ price | number:'1.0-2' }} EGP</span>
-      </div>
-    </div>
-
-    <div *ngIf="!loading && !error && (!date || price <= 0)" class="placeholder-text">
-      Select a plan, date, and time to see pricing.
-    </div>
-  </div>
-
-  <!-- 7-Day Slot Guide (Hourly only) -->
-  <div class="date-grid-section" *ngIf="plan === 'Hourly'">
-    <h3>Slot Availability Guide (9:00 AM – 6:00 PM)</h3>
-    <div class="month-nav">
-      <button class="nav-btn" (click)="prevDays()" aria-label="Previous week">&#8592; Previous Week</button>
-      <span class="month-label">{{ year }}-{{ month + 1 | number:'2.0' }}</span>
-      <button class="nav-btn" (click)="nextDays()" aria-label="Next week">Next Week &#8594;</button>
-    </div>
-    <div class="date-hour-grid">
-      <div class="grid-header">
-        <div class="grid-cell header-cell">Day</div>
-        <div class="grid-cell header-cell" *ngFor="let hour of hoursGrid">{{ formatHour(hour) }}</div>
-      </div>
-      <div class="grid-row" *ngFor="let row of slotGrid">
-        <div class="grid-cell day-cell">{{ row.date | date:'d MMM' }}</div>
-        <div class="grid-cell slot-cell"
-             *ngFor="let slot of row.slots"
-             [ngClass]="{
-               available: slot.available,
-               unavailable: !slot.available,
-               selected: date && formatDateToYYYYMMDD(row.date) === date && startTime === slot.hour
-             }">
-          <span [attr.aria-label]="slot.available ? 'Available' : 'Booked'">
-            {{ slot.available ? '✔' : '✖' }}
-          </span>
+    <!-- Right Column: Space Summary, Live Pricing, and Actions -->
+    <div class="booking-summary-column">
+      
+      <!-- Space Summary Card -->
+      <div class="space-summary-card" *ngIf="space">
+        <img [src]="space.imageUrl" class="space-thumbnail" alt="{{ space.name }} image" />
+        <div class="space-details">
+          <h2>{{ space.name }}</h2>
+          <p class="space-meta">
+            <span class="badge">{{ space.type | titlecase }}</span>
+            <span *ngIf="space.capacity">Max Capacity: {{ space.capacity }}</span>
+          </p>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Footer Actions -->
-  <div class="action-footer">
-    <button class="btn-back" (click)="back()" aria-label="Back to workspace selection">
-      <i class="fas fa-arrow-left"></i> Back
-    </button>
-    <button class="btn-continue" (click)="next()"
-            [disabled]="loading || !isFormValid || !!error"
-            aria-label="Continue to booking summary">
-      Continue <i class="fas fa-arrow-right"></i>
-    </button>
+      <!-- Live Pricing and Availability Status -->
+      <div class="status-price-card">
+        <div class="loading-overlay" *ngIf="loading">
+          <div class="spinner"></div>
+          <p>Validating availability &amp; loading quote...</p>
+        </div>
+
+        <div class="status-message error-message" *ngIf="error && !loading" role="alert">
+          <i class="fas fa-exclamation-circle"></i> {{ error }}
+        </div>
+
+        <div class="price-breakdown-details price-summary" *ngIf="!error && price > 0 && date && !loading">
+          <div class="price-row">
+            <span>Plan</span>
+            <strong>{{ plan }}</strong>
+          </div>
+          <div class="price-row">
+            <span>Date</span>
+            <strong>{{ date }}{{ endDate && endDate !== date ? ' → ' + endDate : '' }}</strong>
+          </div>
+          <div class="price-row" *ngIf="plan === 'Hourly'">
+            <span>Duration</span>
+            <strong>{{ endTime - startTime }} hour{{ endTime - startTime !== 1 ? 's' : '' }}</strong>
+          </div>
+          <div class="price-row" *ngIf="plan === 'Half-day'">
+            <span>Period</span>
+            <strong>{{ halfDayPeriod === 'morning' ? 'Morning (4h)' : 'Afternoon (4h)' }}</strong>
+          </div>
+          <div class="price-row" *ngIf="space && space.capacity && space.capacity > 1">
+            <span>Quantity</span>
+            <strong>{{ quantity }} unit{{ quantity !== 1 ? 's' : '' }}</strong>
+          </div>
+          <hr class="divider">
+          <div class="price-row total-row">
+            <span>Total Price</span>
+            <span class="total-price">{{ price | number:'1.0-2' }} EGP</span>
+          </div>
+        </div>
+
+        <div *ngIf="!loading && !error && (!date || price <= 0)" class="placeholder-text">
+          Select a plan, date, and time to see pricing.
+        </div>
+      </div>
+
+      <!-- Footer Actions (aligned at the bottom of the summary column) -->
+      <div class="action-footer">
+        <button type="button" class="btn-back" (click)="back()" aria-label="Back to workspace selection">
+          <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <button type="button" class="btn-continue" (click)="next()"
+                [disabled]="loading || !isFormValid || !!error"
+                aria-label="Proceed to next step">
+          Continue <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+    </div>
   </div>
 </div>

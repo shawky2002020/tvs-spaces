@@ -11,45 +11,39 @@ h4,
 h5,
 h6 {
   line-height: $line-height-heading;
+  color: $primary-color;
   font-weight: $font-weight-bold;
+  margin-top: 0;
   margin-bottom: $spacing-md;
 }
 
 h1 {
   font-family: $font-family-heading;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-xxxl;
-  @include respond-to(sm) {
-    font-size: $font-size-xxl;
-  }
-
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
 }
 
 h2 {
   font-family: $font-family-secondary;
-  font-size: $font-size-xxl;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-xxl;
-   @include respond-to(sm) {
-    font-size: $font-size-xl;
-  }
-  
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 h3 {
   font-family: $font-family-accent;
-  font-size: $font-size-xl;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-xl;
-   @include respond-to(sm) {
-    font-size: $font-size-lg;
-  }
-  
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.25;
 }
 
 h4 {
-  font-weight: $font-weight-medium;
-  font-size: $font-size-lg;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 p {

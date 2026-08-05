@@ -12,7 +12,7 @@
 
   <header class="detail-header">
     <div class="container">
-      <h2>{{ currentSpace.name }}</h2>
+      <h1>{{ currentSpace.name }}</h1>
       <p class="description">{{ currentSpace.description }}</p>
       <div class="capacity" *ngIf="currentSpace.capacity">
         <i class="fas fa-chair"></i> {{ currentSpace.capacity }} {{ currentSpace.capacity > 1 ? 'seats' : 'seat' }} available

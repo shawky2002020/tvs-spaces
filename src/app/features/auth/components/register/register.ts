@@ -118,6 +118,7 @@ export class Register {
       next: () => {
         this.isLoading = false;
         this.toastService.success('Welcome to TVS Spaces!', 'Account Created');
+        alert('registered successfully');
       },
       error: (err: any) => {
         this.isLoading = false;

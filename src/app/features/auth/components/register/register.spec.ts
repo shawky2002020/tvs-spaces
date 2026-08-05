@@ -4,6 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { Register } from './register';
+import { SharedModule } from '../../../../shared/shared.module';
 
 describe('Register', () => {
   let component: Register;
@@ -12,7 +13,7 @@ describe('Register', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [Register],
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, SharedModule],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),

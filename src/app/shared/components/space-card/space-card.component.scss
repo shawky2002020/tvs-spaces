@@ -55,11 +55,12 @@
   flex-direction: column;
   padding: 1.25rem 1.5rem 1.5rem;
 
-  h3.handwritten {
-    font-family: sec2; // You'll need to import this font
+  h3.space-title {
+    font-family: $font-family-base;
     color: $primary-color;
-    font-size: $font-size-xxl;
-    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
   }
 
   p {

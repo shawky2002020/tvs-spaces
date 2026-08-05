@@ -203,6 +203,18 @@ export class DatePlanPickerComponent implements OnInit, OnChanges {
     this.generateSlotGrid();
   }
 
+  selectSlot(selectedDate: Date, selectedHour: number) {
+    this.date = this.formatDateToYYYYMMDD(selectedDate);
+    this.pickerDate = selectedDate;
+    this.pickerEndDate = selectedDate;
+    this.endDate = this.date;
+    this.startTime = selectedHour;
+    this.endTime = selectedHour + 1; // default to 1 hour duration
+    this.calculatePrice();
+    this.validateAvailability();
+    this.generateSlotGrid();
+  }
+
   onPickerEndDateChange(event: any) {
     const d = this.getDateFromValue(event.value);
     this.endDate = d ? this.formatDateToYYYYMMDD(d) : null;

@@ -1,8 +1,13 @@
 <app-side-bar class="slide-in-left"></app-side-bar>
 <div class="auth-layout-wrapper">
   <main class="auth-main-content">
-    <header class="dashboard-header ">
-      <h2 class="dashboard-title">{{ pageTitle }}</h2>
+    <header class="dashboard-header">
+      <div class="header-left">
+        <button class="hamburger-menu" (click)="toggleSidebar()" aria-label="Open Navigation Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+        <h2 class="dashboard-title">{{ pageTitle }}</h2>
+      </div>
       <div class="dashboard-actions">
         <!-- <div class="search-bar">
               <i class="fas fa-search"></i>

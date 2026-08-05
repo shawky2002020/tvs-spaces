@@ -1,25 +1,32 @@
 @import "main.scss";
 
 .dashboard-container {
-  padding: $spacing-lg;
+  padding: clamp(1rem, 3vw, 2rem);
+  max-width: var(--content-max-width, 1440px);
+  margin: 0 auto;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 // Dashboard Overview Section
 .dashboard-overview {
-  margin-bottom: $spacing-xl;
-
+  margin-bottom: $spacing-lg;
 }
+
 h2 {
+  margin-top: 0;
   margin-bottom: $spacing-md;
   font-family: $font-family-heading;
   color: $primary-color;
-  font-size: 32px;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 700;
 }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: $spacing-md;
+  margin-bottom: $spacing-lg;
 }
 
 .stat-card {
@@ -29,44 +36,55 @@ h2 {
   display: flex;
   align-items: center;
   box-shadow: $shadow-sm;
-  transition: transform $transition-base, box-shadow $transition-base;
+  transition: transform $transition-fast, box-shadow $transition-fast;
+  border: 1px solid rgba($primary-color, 0.06);
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     box-shadow: $shadow-md;
   }
 
   .stat-icon {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     border-radius: $border-radius-circle;
-    background: rgba($primary-color, 0.1);
+    background: rgba($primary-color, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: $spacing-md;
+    flex-shrink: 0;
 
     i {
-      font-size: $font-size-lg;
+      font-size: 1.25rem;
       color: $primary-color;
     }
   }
 
   .stat-info {
     flex: 1;
+    min-width: 0;
   }
 
   .stat-value {
-    font-size: $font-size-xl;
-    font-weight: $font-weight-bold;
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 700;
     color: $primary-color;
     margin: 0;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .stat-title {
-    font-size: $font-size-sm;
+    font-size: 0.85rem;
     color: $grey-color;
     margin: 0;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -75,15 +93,18 @@ h2 {
   background: $white-color;
   border-radius: $border-radius-md;
   padding: $spacing-lg;
-  margin-bottom: $spacing-xl;
+  margin-bottom: $spacing-lg;
   box-shadow: $shadow-sm;
+  border: 1px solid rgba($primary-color, 0.06);
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: $spacing-md;
+  flex-flow: row wrap;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
 
   h2 {
     margin: 0;
@@ -97,22 +118,23 @@ h2 {
     gap: 0.5rem;
     background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 12%) 100%);
     color: #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-size: 0.8125rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: $border-radius-md;
+    font-size: 0.85rem;
     font-weight: 600;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all $transition-fast;
     box-shadow: 0 4px 10px rgba($primary-color, 0.15);
+    white-space: nowrap;
 
     i {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
     }
 
     &:hover {
       color: #ffffff;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 14px rgba($primary-color, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba($primary-color, 0.25);
       background: linear-gradient(135deg, lighten($primary-color, 5%) 0%, $primary-color 100%);
     }
   }

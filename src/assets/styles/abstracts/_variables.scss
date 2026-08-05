@@ -37,9 +37,20 @@ $danger-color: #DC2626; // Danger Red
 // `base` was never registered as an @font-face, so every body string in the app was
 // silently falling back to Arial. Geist Variable is the real body face now.
 $font-family-base: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-$font-family-heading: 'primary', Arial, sans-serif;
-$font-family-secondary:'secondary',Arial, sans-serif;
-$font-family-accent:'accent',Arial, sans-serif;
+$font-family-heading: $font-family-base;
+$font-family-secondary: $font-family-base;
+$font-family-accent: $font-family-base;
+
+// =========================
+// RESPONSIVE LAYOUT TOKENS
+// =========================
+$page-gutter-mobile: 1rem;
+$page-gutter-tablet: 1.5rem;
+$page-gutter-desktop: 2rem;
+$sidebar-desktop-width: 260px;
+$sidebar-tablet-width: 80px;
+$header-desktop-height: 72px;
+$header-mobile-height: 60px;
 
 $font-size-xxxl:56px;
 $font-size-xxl: 48px;

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { AuthService } from '../../../core/auth/auth.service';
 import { Title } from '@angular/platform-browser';
 import { User } from '../../../shared/models/user.model';
+import { SideBar } from '../../../shared/components/side-bar/side-bar';
 
 @Component({
   selector: 'app-auth-layout',
@@ -12,6 +13,7 @@ import { User } from '../../../shared/models/user.model';
   standalone: false,
 })
 export class AuthLayoutComponent implements OnInit {
+  @ViewChild(SideBar) sidebarComponent!: SideBar;
   pageTitle: string = 'Dashboard';
   user: User | null = {} as User;
 
@@ -71,5 +73,11 @@ export class AuthLayoutComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  toggleSidebar(): void {
+    if (this.sidebarComponent) {
+      this.sidebarComponent.toggleMobileMenu();
+    }
   }
 }

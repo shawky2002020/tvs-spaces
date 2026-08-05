@@ -4,7 +4,7 @@
     <img [src]="space.imageUrl" [alt]="space.name">
   </div>
   <div class="space-content">
-    <h3 class="handwritten">{{ space.name }}</h3>
+    <h3 class="space-title">{{ space.name }}</h3>
     <p>{{ space.description }}</p>
     <ul class="space-features">
       <li *ngFor="let amenity of space.amenities">

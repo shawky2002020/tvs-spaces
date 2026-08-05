@@ -29,6 +29,7 @@ export class SideBar implements OnInit {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.currentRoute = event.url;
+        this.isMobileMenuOpen = false;
       });
   }
 

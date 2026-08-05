@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, RouterOutlet } from '@angular/router';
 import { App } from './app';
+import { SharedModule } from './shared/shared.module';
 
 describe('App', () => {
   beforeEach(async () => {
@@ -9,7 +10,8 @@ describe('App', () => {
         App
       ],
       imports: [
-        RouterOutlet
+        RouterOutlet,
+        SharedModule
       ],
       providers: [
         provideRouter([])

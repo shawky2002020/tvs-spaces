@@ -1,22 +1,25 @@
 <aside class="auth-sidebar" [class.mobile-open]="isMobileMenuOpen">
   <div class="sidebar-header">
     <img src="/logo/logowhite.png" alt="TVS Spaces Logo" class="sidebar-logo" />
-    <button  class="mobile-toggle" (click)="toggleMobileMenu()">
+    <img src="/logo/logo-square.png" alt="TVS" class="sidebar-logo-compact" />
+    <button class="mobile-toggle" (click)="toggleMobileMenu()" aria-label="Toggle Navigation Menu">
       <i class="fas" [ngClass]="isMobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
     </button>
   </div>
   <nav class="sidebar-nav">
     <ul>
       <li *ngFor="let item of menuItems">
-        <a [routerLink]="item.path"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <i class="fas fa-{{ item.icon }}"></i> {{ item.label }}
+        <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [attr.aria-label]="item.label">
+          <i class="fas fa-{{ item.icon }}"></i> 
+          <span class="nav-label">{{ item.label }}</span>
         </a>
       </li>
     </ul>
   </nav>
   <div class="sidebar-footer">
-    <button class="btn btn-outline logout-btn" (click)="logout()">
-      <i class="fas fa-sign-out-alt"></i> Logout
+    <button class="nav-item logout-btn" (click)="logout()" aria-label="Logout">
+      <i class="fas fa-sign-out-alt"></i> 
+      <span class="logout-label">Logout</span>
     </button>
   </div>
 </aside>
