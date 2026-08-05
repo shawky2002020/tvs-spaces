@@ -50,11 +50,13 @@ export class Login {
       error: (err: any) => {
         this.isLoading = false;
         let msg = err.error?.message;
+        let isStarting = false;
         if (!msg || err.status === 0 || err.status === 502 || err.status === 503) {
           msg = 'The backend server is starting up (~1 minute on Render). Please wait a moment and try signing in again.';
+          isStarting = true;
         }
         this.loginForm.setErrors({ apiError: msg });
-        this.toastService.error(msg, 'Server Starting');
+        this.toastService.error(msg, isStarting ? 'Server Starting' : 'Login Failed');
       },
     });
   }
