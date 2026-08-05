@@ -59,7 +59,7 @@
   // content-sized columns would land at a different x on every row and the
   // rules and buttons would not line up down the section.
   @include tvs-up($tvs-bp-md) {
-    grid-template-columns: minmax(0, 1fr) 15rem 17rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 15rem) minmax(0, 17rem);
     gap: var(--tvs-6);
     align-items: center;
   }
@@ -133,12 +133,23 @@
   background: var(--tvs-surface-raised);
   justify-self: start;
   justify-content: space-between;
+  min-inline-size: 0;
+  overflow: hidden;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-inline-size: 0;
+    flex: 1;
+  }
 
   @include tvs-up($tvs-bp-md) {
     inline-size: 100%;
   }
 
   svg {
+    flex-shrink: 0;
     inline-size: 16px;
     block-size: 16px;
     fill: none;
