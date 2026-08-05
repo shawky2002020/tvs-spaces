@@ -55,16 +55,19 @@ test.describe('Comprehensive Documentation Screenshot Capture', () => {
       // Sign up or log in
       const testEmail = `testdocs_${Date.now()}@example.com`;
       await page.goto('/auth/register', { waitUntil: 'networkidle' });
-      await page.fill('input[type="email"], input[formcontrolname="email"]', testEmail);
-      await page.fill('input[type="password"], input[formcontrolname="password"]', 'Password123!');
       
-      const usernameInput = page.locator('input[formcontrolname="username"]');
-      if (await usernameInput.isVisible()) {
-        await usernameInput.fill('DocTester');
-      }
+      await page.fill('input[placeholder="Full Name"]', 'DocTester');
+      await page.fill('input[placeholder="Email Address"]', testEmail);
+      await page.fill('input[placeholder="Password"]', 'Password123!');
+      await page.fill('input[placeholder="Confirm Password"]', 'Password123!');
+      await page.selectOption('select', 'freelancer');
+
+      page.once('dialog', async (dialog) => {
+        await dialog.accept();
+      });
 
       await page.click('button[type="submit"]');
-      await page.waitForTimeout(1000);
+      await page.waitForURL('**/dashboard');
 
       // 7. Dashboard
       await page.goto('/dashboard', { waitUntil: 'networkidle' });

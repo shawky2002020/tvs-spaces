@@ -32,9 +32,7 @@ export class BookingService {
   }
 
   getAllSpaces(): Observable<Space[]> {
-    return this.http.get<Space[]>(BOOKING_URLS.SPACES).pipe(
-      catchError(() => of(SPACES))
-    );
+    return this.http.get<Space[]>(BOOKING_URLS.SPACES);
   }
 
   getSpaceById(id: string): Observable<Space> {

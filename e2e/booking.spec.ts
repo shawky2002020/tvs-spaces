@@ -65,11 +65,11 @@ test.describe('TVS Spaces Booking E2E Flow', () => {
     await expect(page).toHaveURL(/\/dashboard\/booking\/checkout$/);
 
     // 5. Checkout and Confirm
-    // Select Credit/Debit Card payment method
-    await page.click('text="Credit/Debit Card"');
+    // Select Pay at Venue payment method
+    await page.click('text="Pay at Venue"');
 
-    // Click pay now / place booking
-    await page.click('button:has-text("Complete Payment")');
+    // Click Confirm Booking button
+    await page.click('button:has-text("Confirm Booking")');
 
     // Wait for auto redirect back to dashboard
     await page.waitForURL(/\/dashboard$/, { timeout: 10000 });
@@ -77,18 +77,18 @@ test.describe('TVS Spaces Booking E2E Flow', () => {
     // 6. Verify on Dashboard and Cancel
     // Expect the booking to be in the table
     await expect(page.locator('table.bookings-table tbody tr').first()).toContainText('Shared Desk');
-    await expect(page.locator('table.bookings-table tbody tr').first()).toContainText('CONFIRMED');
+    await expect(page.locator('table.bookings-table tbody tr').first()).toContainText('Upcoming');
 
     // Setup dialog handler to accept cancellation confirm prompt
     page.on('dialog', async (dialog) => {
-      expect(dialog.message()).toContain('cancel this booking');
+      expect(dialog.message()).toContain('Cancel booking');
       await dialog.accept();
     });
 
     // Click Cancel
     await page.locator('table.bookings-table tbody tr').first().locator('button:has-text("Cancel")').click();
 
-    // Verify booking updates to CANCELLED
-    await expect(page.locator('table.bookings-table tbody tr').first()).toContainText('CANCELLED');
+    // Verify booking updates to Cancelled
+    await expect(page.locator('table.bookings-table tbody tr').first()).toContainText('Cancelled');
   });
 });
