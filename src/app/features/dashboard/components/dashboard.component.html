@@ -5,8 +5,7 @@
       <a routerLink="/dashboard/booking" class="view-all"><i class="fas fa-plus"></i> New Booking</a>
     </div>
 
-    <p class="error" *ngIf="error" role="alert">{{ error }}</p>
-    <p *ngIf="loading">Loading dashboard...</p>
+    <app-skeleton type="dashboard" [count]="4" *ngIf="loading"></app-skeleton>
 
     <div class="stats-grid">
       <div class="stat-card" *ngFor="let stat of stats">

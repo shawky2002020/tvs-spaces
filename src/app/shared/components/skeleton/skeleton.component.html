@@ -1,0 +1,59 @@
+<!-- Space Card Skeleton -->
+<ng-container *ngIf="type === 'card'">
+  <div class="skeleton-grid">
+    <div class="skeleton-card" *ngFor="let item of counterArray">
+      <div class="skeleton-rect image-skeleton"></div>
+      <div class="skeleton-card-body">
+        <div class="skeleton-text h-lg w-75"></div>
+        <div class="skeleton-text w-50"></div>
+        <div class="skeleton-features">
+          <div class="skeleton-text w-33"></div>
+          <div class="skeleton-text w-33"></div>
+        </div>
+        <div class="skeleton-footer">
+          <div class="skeleton-text w-25 h-lg"></div>
+          <div class="skeleton-rect btn-skeleton"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Detail Page Skeleton -->
+<ng-container *ngIf="type === 'detail'">
+  <div class="skeleton-detail-container">
+    <div class="skeleton-rect detail-hero-skeleton"></div>
+    <div class="skeleton-detail-body">
+      <div class="skeleton-text h-xl w-50"></div>
+      <div class="skeleton-text w-75"></div>
+      <div class="skeleton-text w-75"></div>
+      <div class="skeleton-specs-grid">
+        <div class="skeleton-card" *ngFor="let i of [1,2,3]">
+          <div class="skeleton-circle"></div>
+          <div class="skeleton-text w-50" style="margin-top: 10px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Dashboard Stats Skeleton -->
+<ng-container *ngIf="type === 'dashboard'">
+  <div class="skeleton-dashboard-grid">
+    <div class="skeleton-card stat-card-skeleton" *ngFor="let item of counterArray">
+      <div class="stat-top">
+        <div class="skeleton-circle"></div>
+        <div class="skeleton-text w-50"></div>
+      </div>
+      <div class="skeleton-text h-xl w-33" style="margin-top: 1rem;"></div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Custom Text / Rect Skeleton -->
+<ng-container *ngIf="type === 'text'">
+  <div class="skeleton-text" *ngFor="let item of counterArray"></div>
+</ng-container>
+<ng-container *ngIf="type === 'rect'">
+  <div class="skeleton-rect" *ngFor="let item of counterArray"></div>
+</ng-container>

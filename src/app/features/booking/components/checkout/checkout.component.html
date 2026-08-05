@@ -57,9 +57,8 @@
     <button class="btn btn-outline" (click)="back()" [disabled]="loading">
       <i class="fas fa-arrow-left"></i> Back
     </button>
-    <button class="btn btn-primary" (click)="confirmBooking()" [disabled]="!canProceed() || loading">
-      <span *ngIf="!loading">Confirm Booking</span>
-      <app-loader *ngIf="loading"></app-loader>
+    <button class="btn btn-primary" (click)="confirmBooking()" [disabled]="!canProceed() || loading" [appButtonLoading]="loading">
+      Confirm Booking
     </button>
   </div>
 

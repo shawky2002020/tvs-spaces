@@ -12,12 +12,15 @@ import { User } from '../../shared/models/user.model';
 import { UserService } from '../../core/services/user.service';
 import { ApiError, UserUpdateRequest } from '../../shared/models/api.model';
 
+import { ToastService } from '../../core/services/toast.service';
+import { ButtonLoadingDirective } from '../../shared/directives/button-loading.directive';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, ButtonLoadingDirective],
 })
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
@@ -28,7 +31,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -61,7 +65,7 @@ export class ProfileComponent implements OnInit {
 
     const formValue = this.profileForm.getRawValue();
     if (formValue.password && !formValue.currentPassword) {
-      alert('Enter your current password before choosing a new password.');
+      this.toastService.warning('Enter your current password before choosing a new password.');
       return;
     }
 
@@ -90,11 +94,11 @@ export class ProfileComponent implements OnInit {
         });
         this.editMode = false;
         this.saving = false;
-        alert(res.message);
+        this.toastService.success(res.message || 'Profile updated successfully.');
       },
       error: (err: ApiError) => {
         this.saving = false;
-        alert(err.error?.message || 'Unable to update profile.');
+        this.toastService.error(err.error?.message || 'Unable to update profile.');
       },
     });
   }

@@ -1,4 +1,4 @@
-<p *ngIf="loading">Loading desk details...</p>
+<app-skeleton type="detail" *ngIf="loading"></app-skeleton>
 <p class="error" *ngIf="error" role="alert">{{ error }}</p>
 
 <div class="detail-page" *ngIf="space as currentSpace">

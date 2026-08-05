@@ -5,10 +5,13 @@ import { BookingSelection } from '../../../../shared/constants/space.model';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { BookingService } from '../../services/booking.service';
 
+import { ToastService } from '../../../../core/services/toast.service';
+import { ButtonLoadingDirective } from '../../../../shared/directives/button-loading.directive';
+
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, LoaderComponent],
+  imports: [CommonModule, LoaderComponent, ButtonLoadingDirective],
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
 })
@@ -16,6 +19,7 @@ export class CheckoutComponent implements OnInit {
   private readonly bookingService = inject(BookingService);
   private readonly router = inject(Router);
   private readonly location = inject(Location);
+  private readonly toastService = inject(ToastService);
 
   selection: BookingSelection | undefined;
   loading = false;
@@ -126,14 +130,15 @@ export class CheckoutComponent implements OnInit {
         this.bookingReference = response.reference || '';
         this.success = true;
         this.loading = false;
+        this.toastService.success(`Booking ${this.bookingReference} confirmed!`, 'Booking Success');
         this.bookingService.reset();
-        this.router.navigate(['/dashboard']);
+        setTimeout(() => this.router.navigate(['/dashboard']), 1800);
       },
       error: (err) => {
         this.loading = false;
         const errorMessage =
           err.error?.message || 'Failed to place booking. Please try again.';
-        alert(errorMessage);
+        this.toastService.error(errorMessage, 'Booking Error');
       },
     });
   }

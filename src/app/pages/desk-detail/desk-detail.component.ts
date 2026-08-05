@@ -5,12 +5,14 @@ import { Meta, Title } from '@angular/platform-browser';
 import { BookingService } from '../../features/booking/services/booking.service';
 import { BookingPlan, Space } from '../../shared/constants/space.model';
 
+import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
+
 @Component({
   selector: 'app-desk-detail',
   templateUrl: './desk-detail.component.html',
   standalone: true,
   styleUrls: ['./desk-detail.component.scss'],
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, SkeletonComponent],
 })
 export class DeskDetailComponent implements OnInit {
   space?: Space;

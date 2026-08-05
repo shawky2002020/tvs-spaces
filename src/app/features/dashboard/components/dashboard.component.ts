@@ -13,15 +13,19 @@ interface DashboardBooking {
   canCancel: boolean;
 }
 
+import { SkeletonComponent } from '../../../shared/components/skeleton/skeleton.component';
+import { ToastService } from '../../../core/services/toast.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, SkeletonComponent],
 })
 export class DashboardComponent implements OnInit {
   private readonly bookingService = inject(BookingService);
+  private readonly toastService = inject(ToastService);
 
   stats = [
     { title: 'Total Reservations', value: '0', icon: 'calendar-alt' },
@@ -42,9 +46,14 @@ export class DashboardComponent implements OnInit {
     if (!booking.canCancel || !confirm(`Cancel booking ${booking.reference}?`)) return;
 
     this.bookingService.cancelBooking(booking.id).subscribe({
-      next: () => this.loadDashboard(),
+      next: () => {
+        this.toastService.success(`Booking ${booking.reference} cancelled successfully.`);
+        this.loadDashboard();
+      },
       error: (err) => {
-        this.error = err.error?.message || 'Unable to cancel this booking.';
+        const msg = err.error?.message || 'Unable to cancel this booking.';
+        this.error = msg;
+        this.toastService.error(msg, 'Cancellation Error');
       },
     });
   }

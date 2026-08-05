@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { ApiError } from '../../../../shared/models/api.model';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +13,13 @@ import { ApiError } from '../../../../shared/models/api.model';
 export class Login {
   loginForm: FormGroup;
   submitted = false;
+  isLoading = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private toastService: ToastService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -32,14 +35,20 @@ export class Login {
     if (this.loginForm.invalid) {
       return;
     }
+    this.isLoading = true;
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe({
       next: () => {
-        // Navigation to /dashboard is handled automatically by AuthService.tap()
+        this.isLoading = false;
+        this.toastService.success('Welcome back to TVS Spaces!', 'Login Successful');
       },
       error: (err: ApiError) => {
-        this.loginForm.setErrors({ apiError: err.error?.message || 'Login failed' });
+        this.isLoading = false;
+        const msg = err.error?.message || 'Login failed. Please check your credentials.';
+        this.loginForm.setErrors({ apiError: msg });
+        this.toastService.error(msg, 'Authentication Failed');
       },
     });
   }
 }
+

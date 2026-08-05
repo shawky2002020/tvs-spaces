@@ -1,0 +1,46 @@
+<div class="warmup-overlay" *ngIf="isWarming$ | async">
+  <div class="warmup-card">
+    <div class="server-pulse-container">
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring delay"></div>
+      <div class="server-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="20" height="8" x="2" y="2" rx="2" ry="2"/>
+          <rect width="20" height="8" x="2" y="14" rx="2" ry="2"/>
+          <line x1="6" x2="6.01" y1="6" y2="6"/>
+          <line x1="6" x2="6.01" y1="18" y2="18"/>
+        </svg>
+      </div>
+    </div>
+
+    <h2 class="warmup-title">Preparing Demo...</h2>
+    <p class="warmup-subtitle">
+      Our Render backend is waking up from a cold start.
+    </p>
+
+    <div class="status-box">
+      <div class="status-line">
+        <span class="spinner-sm"></span>
+        <span class="status-text">{{ statusMessage$ | async }}</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-badge">
+          <span class="stat-label">Elapsed</span>
+          <span class="stat-value">{{ (elapsedSeconds$ | async) || 0 }}s</span>
+        </div>
+        <div class="stat-badge">
+          <span class="stat-label">Retries</span>
+          <span class="stat-value">#{{ (retryCount$ | async) || 0 }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill"></div>
+    </div>
+
+    <p class="warmup-footer">
+      💡 Render free services spin down after inactivity. Cold starts typically take about 40–60 seconds.
+    </p>
+  </div>
+</div>

@@ -5,7 +5,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { SideBar } from './components/side-bar/side-bar';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
-// Import shared components, directives, pipes here
+import { BackendWarmupComponent } from './components/backend-warmup/backend-warmup.component';
+import { ToastContainerComponent } from './components/toast-container/toast-container.component';
+import { SkeletonComponent } from './components/skeleton/skeleton.component';
+import { ButtonLoadingDirective } from './directives/button-loading.directive';
 
 @NgModule({
   imports: [
@@ -14,8 +17,11 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     FooterComponent,
     SideBar,
     LoaderComponent,
-    SafeUrlPipe
-    // Shared standalone components, directives, pipes
+    SafeUrlPipe,
+    BackendWarmupComponent,
+    ToastContainerComponent,
+    SkeletonComponent,
+    ButtonLoadingDirective
   ],
   declarations: [
     // Shared pipes, directives, etc.
@@ -26,8 +32,12 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     FooterComponent,
     LoaderComponent,
     SideBar,
-    SafeUrlPipe
-    // Shared standalone components, directives, pipes
+    SafeUrlPipe,
+    BackendWarmupComponent,
+    ToastContainerComponent,
+    SkeletonComponent,
+    ButtonLoadingDirective
   ],
 })
 export class SharedModule {}
+

@@ -33,7 +33,7 @@
 				<span>{{ loginForm.errors?.['apiError'] }}</span>
 			</div>
 			<div class="auth-actions">
-				<button type="submit" class="btn btn-primary">Login</button>
+				<button type="submit" class="btn btn-primary" [appButtonLoading]="isLoading">Login</button>
 			</div>
 		</form>
 		<div class="auth-links">

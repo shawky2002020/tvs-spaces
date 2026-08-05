@@ -6,10 +6,9 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { ApiError, UserUpdateRequest } from '../../../../shared/models/api.model';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -20,8 +19,13 @@ import { ApiError, UserUpdateRequest } from '../../../../shared/models/api.model
 export class Register {
   registerForm: FormGroup;
   submitted = false;
+  isLoading = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private toastService: ToastService
+  ) {
     this.registerForm = this.fb.group(
       {
         name: ['', [Validators.required]],
@@ -63,7 +67,6 @@ export class Register {
       errors['number'] = true;
     }
 
-    // Return errors if any, otherwise null
     return Object.keys(errors).length ? errors : null;
   }
   get f() {
@@ -98,20 +101,26 @@ export class Register {
     if (this.registerForm.invalid) {
       return;
     }
-    const { name, email, password , userType } = this.registerForm.value;
-    const user : UserUpdateRequest =  {
-      username : name,
-      email:email,
-      password:password,
-      type:userType
-    }
+    this.isLoading = true;
+    const { name, email, password, userType } = this.registerForm.value;
+    const user: UserUpdateRequest = {
+      username: name,
+      email: email,
+      password: password,
+      type: userType,
+    };
     this.authService.signup(user).subscribe({
       next: () => {
-        // Navigation to /dashboard is handled automatically by AuthService.tap()
+        this.isLoading = false;
+        this.toastService.success('Welcome to TVS Spaces!', 'Account Created');
       },
       error: (err: ApiError) => {
-        this.registerForm.setErrors({ apiError: err.error?.message || 'Registration failed' });
+        this.isLoading = false;
+        const msg = err.error?.message || 'Registration failed. Please try again.';
+        this.registerForm.setErrors({ apiError: msg });
+        this.toastService.error(msg, 'Registration Error');
       },
     });
   }
 }
+

@@ -5,12 +5,14 @@ import { Meta, Title } from '@angular/platform-browser';
 import { BookingService } from '../../features/booking/services/booking.service';
 import { BookingPlan, Space } from '../../shared/constants/space.model';
 
+import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
+
 @Component({
   selector: 'app-room-detail',
   templateUrl: './room-detail.component.html',
   styleUrls: ['./room-detail.component.scss'],
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, SkeletonComponent],
 })
 export class RoomDetailComponent implements OnInit {
   space?: Space;

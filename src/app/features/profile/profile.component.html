@@ -62,8 +62,8 @@
         <button class="btn btn-outline" type="button" (click)="cancelEdit()" [disabled]="saving">
           Cancel
         </button>
-        <button class="btn btn-primary" type="submit" [disabled]="saving">
-          {{ saving ? 'Saving...' : 'Save' }}
+        <button class="btn btn-primary" type="submit" [disabled]="saving" [appButtonLoading]="saving">
+          Save
         </button>
       </div>
     </form>
