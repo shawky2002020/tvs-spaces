@@ -13,7 +13,7 @@
   background-color: #0b111e;
   padding: 1.5rem 0 0.5rem 0;
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.75);
   
   a {
     color: rgba(255, 255, 255, 0.7);
@@ -299,8 +299,13 @@ section {
     );
     button {
       font-weight: $font-weight-bold;
+      color: $white-color !important;
+      border-color: rgba($white-color, 0.6) !important;
+      background: transparent !important;
       &:hover {
-        color: $white-color;
+        background: rgba($white-color, 0.15) !important;
+        color: $white-color !important;
+        border-color: $white-color !important;
       }
     }
   }

@@ -70,10 +70,10 @@
       </div>
     </section>
 
-    <section class="images-section" *ngIf="currentSpace.additionalImages?.length">
+    <section class="images-section" *ngIf="galleryImages.length">
       <h2>More Images</h2>
       <div class="polaroid-gallery">
-        <div class="polaroid" *ngFor="let image of currentSpace.additionalImages" (click)="openPreview(image)">
+        <div class="polaroid" *ngFor="let image of galleryImages" (click)="openPreview(image)">
           <img [src]="image" [alt]="currentSpace.name" />
         </div>
       </div>

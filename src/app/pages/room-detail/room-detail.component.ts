@@ -20,6 +20,14 @@ export class RoomDetailComponent implements OnInit {
   error = '';
   previewImage: string | null = null;
 
+  /** additionalImages minus the hero imageUrl to prevent gallery duplicates */
+  get galleryImages(): string[] {
+    if (!this.space) return [];
+    return (this.space.additionalImages ?? []).filter(
+      (img) => img !== this.space!.imageUrl
+    );
+  }
+
   openPreview(url: string): void {
     this.previewImage = url;
   }
