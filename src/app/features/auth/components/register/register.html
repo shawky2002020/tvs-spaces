@@ -34,6 +34,7 @@
         />
         <div class="error" *ngIf="submitted && f['name'].errors">
           <span *ngIf="f['name'].errors['required']">Name is required.</span>
+          <span *ngIf="f['name'].errors['serverError']">{{ f['name'].errors['serverError'] }}</span>
         </div>
       </div>
 
@@ -47,6 +48,7 @@
         <div class="error" *ngIf="submitted && f['email'].errors">
           <span *ngIf="f['email'].errors['required']">Email is required.</span>
           <span *ngIf="f['email'].errors['email']">Enter a valid email.</span>
+          <span *ngIf="f['email'].errors['serverError']">{{ f['email'].errors['serverError'] }}</span>
         </div>
       </div>
       <div class="form-group">
@@ -71,6 +73,7 @@
             <div *ngIf="errs['specialChar']">
               Password must contain a special character.
             </div>
+            <div *ngIf="errs['serverError']">{{ errs['serverError'] }}</div>
           </div>
         </div>
       </div>
@@ -107,6 +110,7 @@
           <span *ngIf="f['userType'].errors['required']"
             >Please select your type.</span
           >
+          <span *ngIf="f['userType'].errors['serverError']">{{ f['userType'].errors['serverError'] }}</span>
         </div>
       </div>
       <div class="error" *ngIf="submitted && registerForm.errors?.['apiError']">

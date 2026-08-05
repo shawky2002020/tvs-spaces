@@ -37,6 +37,16 @@ export class Login {
 
   onSubmit() {
     this.submitted = true;
+
+    // Clear previous server errors
+    Object.keys(this.loginForm.controls).forEach(key => {
+      const control = this.loginForm.get(key);
+      if (control && control.errors?.['serverError']) {
+        control.setErrors(null);
+      }
+    });
+    this.loginForm.setErrors(null);
+
     if (this.loginForm.invalid) {
       return;
     }
@@ -56,6 +66,18 @@ export class Login {
           isStarting = true;
         }
         this.loginForm.setErrors({ apiError: msg });
+
+        // Handle field validation errors
+        const fields = err.error?.fields;
+        if (fields) {
+          Object.keys(fields).forEach(key => {
+            const control = this.loginForm.get(key);
+            if (control) {
+              control.setErrors({ serverError: fields[key] });
+            }
+          });
+        }
+
         this.toastService.error(msg, isStarting ? 'Server Starting' : 'Login Failed');
       },
     });

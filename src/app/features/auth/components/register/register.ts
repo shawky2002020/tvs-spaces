@@ -103,6 +103,16 @@ export class Register {
 
   onSubmit() {
     this.submitted = true;
+
+    // Clear previous server errors
+    Object.keys(this.registerForm.controls).forEach(key => {
+      const control = this.registerForm.get(key);
+      if (control && control.errors?.['serverError']) {
+        control.setErrors(null);
+      }
+    });
+    this.registerForm.setErrors(null);
+
     if (this.registerForm.invalid) {
       return;
     }
@@ -129,6 +139,22 @@ export class Register {
           isStarting = true;
         }
         this.registerForm.setErrors({ apiError: msg });
+
+        // Handle field validation errors
+        const fields = err.error?.fields;
+        if (fields) {
+          Object.keys(fields).forEach(key => {
+            let controlKey = key;
+            if (key === 'username') controlKey = 'name';
+            else if (key === 'type') controlKey = 'userType';
+
+            const control = this.registerForm.get(controlKey);
+            if (control) {
+              control.setErrors({ serverError: fields[key] });
+            }
+          });
+        }
+
         this.toastService.error(msg, isStarting ? 'Server Starting' : 'Registration Failed');
       },
     });

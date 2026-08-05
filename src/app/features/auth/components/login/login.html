@@ -23,6 +23,7 @@
 				<div class="error" *ngIf="submitted && f['email'].errors">
 					<span *ngIf="f['email'].errors['required']">Email is required.</span>
 					<span *ngIf="f['email'].errors['email']">Enter a valid email.</span>
+					<span *ngIf="f['email'].errors['serverError']">{{ f['email'].errors['serverError'] }}</span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -30,6 +31,7 @@
 				<div class="error" *ngIf="submitted && f['password'].errors">
 					<span *ngIf="f['password'].errors['required']">Password is required.</span>
 					<span *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters.</span>
+					<span *ngIf="f['password'].errors['serverError']">{{ f['password'].errors['serverError'] }}</span>
 				</div>
 			</div>
 			<div class="error" *ngIf="submitted && loginForm.errors?.['apiError']">
