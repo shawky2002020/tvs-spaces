@@ -11,9 +11,9 @@ A production-style **Angular 20 + Spring Boot** booking platform for coworking d
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4-6DB33F?style=flat-square&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Playwright](https://img.shields.io/badge/E2E-Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white)](https://playwright.dev/)
-[![Vercel](https://img.shields.io/badge/Frontend-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://client-three-zeta-29.vercel.app/)
+[![Vercel](https://img.shields.io/badge/Frontend-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://tvs-spaces.vercel.app/)
 
-**[🌐 Live App](https://client-three-zeta-29.vercel.app/)** · **[▶ Watch 69s Product Demo](https://client-three-zeta-29.vercel.app/tvs-spaces-demo-cv.mp4)** · **[⚙️ Backend Repository](https://github.com/shawky2002020/TvsSpaces-back)**
+**[🌐 Live App](https://tvs-spaces.vercel.app/)** · **[▶ Watch 69s Product Demo](https://tvs-spaces.vercel.app/tvs-spaces-demo-cv.mp4)** · **[⚙️ Backend Repository](https://github.com/shawky2002020/TvsSpaces-back)**
 
 </div>
 
@@ -24,7 +24,7 @@ A production-style **Angular 20 + Spring Boot** booking platform for coworking d
 The portfolio demo follows the complete customer journey — **discover → inspect → authenticate → configure → validate → price → review → checkout → confirm → manage**.
 
 <p align="center">
-  <a href="https://client-three-zeta-29.vercel.app/tvs-spaces-demo-cv.mp4">
+  <a href="https://tvs-spaces.vercel.app/tvs-spaces-demo-cv.mp4">
     <img src="docs/assets/readme/tvs-spaces-demo-thumbnail.webp" alt="Watch the TVS Spaces end-to-end booking demo" width="100%" />
   </a>
 </p>
@@ -369,9 +369,9 @@ It provides authentication, workspace catalog, availability checks, price calcul
 
 | Service | URL |
 | :--- | :--- |
-| **Frontend** | https://client-three-zeta-29.vercel.app/ |
+| **Frontend** | https://tvs-spaces.vercel.app/ |
 | **Backend** | https://tvs-spaces-back.onrender.com/api |
-| **Product demo** | https://client-three-zeta-29.vercel.app/tvs-spaces-demo-cv.mp4 |
+| **Product demo** | https://tvs-spaces.vercel.app/tvs-spaces-demo-cv.mp4 |
 
 > The Render backend may require a short cold-start period on the first request after inactivity.
 
@@ -390,6 +390,6 @@ It provides authentication, workspace catalog, availability checks, price calcul
 
 **Angular · Spring Boot · MySQL · Secure Auth · Real Booking Flow · Responsive UI**
 
-**[Open Live App](https://client-three-zeta-29.vercel.app/)** · **[Watch Demo](https://client-three-zeta-29.vercel.app/tvs-spaces-demo-cv.mp4)** · **[Backend](https://github.com/shawky2002020/TvsSpaces-back)**
+**[Open Live App](https://tvs-spaces.vercel.app/)** · **[Watch Demo](https://tvs-spaces.vercel.app/tvs-spaces-demo-cv.mp4)** · **[Backend](https://github.com/shawky2002020/TvsSpaces-back)**
 
 </div>
